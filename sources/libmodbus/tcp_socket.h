@@ -7,7 +7,7 @@
 #include <boost/asio/deadline_timer.hpp>
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/ip/tcp.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 #include <iostream>
 
@@ -40,7 +40,6 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
                         size_t timeout,
                         io_service &io) {
     deadline_timer timer(io);
-    optional<error_code> read_result;
     received_bytes = 0;
 
     bool data_available;

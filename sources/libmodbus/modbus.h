@@ -242,7 +242,7 @@ class ModbusClient {
   inline bool isConnected() {
     // КОСТЫЛЬ, потом поменять
     uint16_t value;
-    return readInputRegister(0, value);
+    return readInputRegister(0, value) == modbus::NO_ERROR;
   };
 
   ModbusClient();

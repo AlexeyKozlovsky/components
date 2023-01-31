@@ -1,5 +1,5 @@
-#ifndef MODBUS_TEST__TCP_SOCKET_H_
-#define MODBUS_TEST__TCP_SOCKET_H_
+#ifndef DIALTEK_COMPONENTS_LIBMODBUS_TCP_SOCKET_H_
+#define DIALTEK_COMPONENTS_LIBMODBUS_TCP_SOCKET_H_
 
 #include <boost/noncopyable.hpp>
 #include <boost/enable_shared_from_this.hpp>
@@ -84,4 +84,4 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
   }
 };
 
-#endif //MODBUS_TEST__TCP_SOCKET_H_
+#endif //DIALTEK_COMPONENTS_LIBMODBUS_TCP_SOCKET_H_

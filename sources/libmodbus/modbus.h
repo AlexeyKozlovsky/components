@@ -1,5 +1,5 @@
-#ifndef SWITCHMODBUS_MODBUS_MODBUS_H_
-#define SWITCHMODBUS_MODBUS_MODBUS_H_
+#ifndef DIALTEK_COMPONENTS_LIBMODBUS_MODBUS_H_
+#define DIALTEK_COMPONENTS_LIBMODBUS_MODBUS_H_
 
 #include <boost/asio.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
@@ -404,4 +404,4 @@ class ModbusClient {
 
 };
 }
-#endif //SWITCHMODBUS_MODBUS_MODBUS_H_
+#endif //DIALTEK_COMPONENTS_LIBMODBUS

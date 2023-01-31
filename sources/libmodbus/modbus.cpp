@@ -172,7 +172,7 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, u
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
     return modbus::NO_SOCKET_CONNECTION;
 
-  auto error_status = handleError(raw_request, request_size, raw_request, recieved_bytes);
+  auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
   if (error_status != modbus::NO_ERROR) return error_status;
 
   fromMsbLsb(*(raw_response + 3), *(raw_response + 4), result);

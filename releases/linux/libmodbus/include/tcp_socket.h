@@ -1,5 +1,5 @@
-#ifndef MODBUS_TEST__TCP_SOCKET_H_
-#define MODBUS_TEST__TCP_SOCKET_H_
+#ifndef DIALTEK_COMPONENTS_LIBMODBUS_TCP_SOCKET_H_
+#define DIALTEK_COMPONENTS_LIBMODBUS_TCP_SOCKET_H_
 
 #include <boost/noncopyable.hpp>
 #include <boost/enable_shared_from_this.hpp>
@@ -7,7 +7,7 @@
 #include <boost/asio/deadline_timer.hpp>
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/ip/tcp.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 #include <iostream>
 
@@ -40,7 +40,6 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
                         size_t timeout,
                         io_service &io) {
     deadline_timer timer(io);
-    optional<error_code> read_result;
     received_bytes = 0;
 
     bool data_available;
@@ -84,4 +83,4 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
   }
 };
 
-#endif //MODBUS_TEST__TCP_SOCKET_H_
+#endif //DIALTEK_COMPONENTS_LIBMODBUS_TCP_SOCKET_H_

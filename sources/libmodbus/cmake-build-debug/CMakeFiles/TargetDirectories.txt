@@ -1,0 +1,7 @@
+/home/alexeykozlovsky/Documents/Career/Dialtek/components/sources/libmodbus/cmake-build-debug/CMakeFiles/libmodbus.dir
+/home/alexeykozlovsky/Documents/Career/Dialtek/components/sources/libmodbus/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/alexeykozlovsky/Documents/Career/Dialtek/components/sources/libmodbus/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/alexeykozlovsky/Documents/Career/Dialtek/components/sources/libmodbus/cmake-build-debug/CMakeFiles/list_install_components.dir
+/home/alexeykozlovsky/Documents/Career/Dialtek/components/sources/libmodbus/cmake-build-debug/CMakeFiles/install.dir
+/home/alexeykozlovsky/Documents/Career/Dialtek/components/sources/libmodbus/cmake-build-debug/CMakeFiles/install/local.dir
+/home/alexeykozlovsky/Documents/Career/Dialtek/components/sources/libmodbus/cmake-build-debug/CMakeFiles/install/strip.dir

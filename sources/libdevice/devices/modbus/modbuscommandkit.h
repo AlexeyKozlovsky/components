@@ -6,7 +6,7 @@
 
 class ConnectCommand: public ModbusCommand {
  public:
-  ConnectCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
+  ConnectCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
   VARIANT execute(const VARIANT &argin, ErrorCode * error_code) override;
@@ -14,7 +14,7 @@ class ConnectCommand: public ModbusCommand {
 
 class UpdateAddressCommand: public ModbusCommand {
  public:
-  UpdateAddressCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
+  UpdateAddressCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
   VARIANT execute(const VARIANT &argin, ErrorCode * error_code) override;
@@ -22,7 +22,7 @@ class UpdateAddressCommand: public ModbusCommand {
 
 class UpdateModbusIDCommand: public ModbusCommand {
  public:
-  UpdateModbusIDCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
+  UpdateModbusIDCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
   VARIANT execute(const VARIANT &argin, ErrorCode * error_code) override;
@@ -30,7 +30,7 @@ class UpdateModbusIDCommand: public ModbusCommand {
 
 class GetIPCommand: public ModbusCommand {
  public:
-  GetIPCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
+  GetIPCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
   VARIANT execute(const VARIANT &argin, ErrorCode * error_code) override;
@@ -38,7 +38,7 @@ class GetIPCommand: public ModbusCommand {
 
 class GetPortCommand: public ModbusCommand {
  public:
-  GetPortCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
+  GetPortCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
   VARIANT execute(const VARIANT &argin, ErrorCode * error_code) override;
@@ -46,7 +46,7 @@ class GetPortCommand: public ModbusCommand {
 
 class GetConnectionStatusCommand: public ModbusCommand {
  public:
-  GetConnectionStatusCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
+  GetConnectionStatusCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
   VARIANT execute(const VARIANT &argin, ErrorCode * error_code) override;

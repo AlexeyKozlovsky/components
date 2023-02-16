@@ -47,12 +47,16 @@ class Device {
     return description;
   }
 
+  const DeviceState getState() const {
+    return state;
+  }
+
   void addProperty(std::shared_ptr<Property> property, ErrorCode *error_code = nullptr);
   void addCommand(std::shared_ptr<Command> commands, ErrorCode *error_code = nullptr);
 
   void setAvailableStates(const std::set<DeviceState> &states);
 
-  void changeState(DeviceState state, ErrorCode *error_code);
+  void changeState(DeviceState state, ErrorCode *error_code = nullptr);
 
   std::shared_ptr<Property> getPropertyByName(const std::string &name, ErrorCode *error_code = nullptr);
   std::shared_ptr<Command> getCommandByName(const std::string &name, ErrorCode *error_code = nullptr);

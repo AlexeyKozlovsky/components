@@ -54,7 +54,7 @@ void Device::changeState(DeviceState state, ErrorCode *error_code) {
   if (available_states.count(state) == 0) *error_code = ErrorCode::DEVICE_DOESNT_HAVE_ATTRIBUTE;
   else {
     this->state = state;
-    *error_code = ErrorCode::SUCCESS;
+    SET_ERROR_CODE(error_code, ErrorCode::SUCCESS)
   }
 }
 

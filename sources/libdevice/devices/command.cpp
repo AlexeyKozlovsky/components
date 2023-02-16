@@ -1,6 +1,6 @@
 #include "command.h"
 
-Command::Command(const std::string &name): DeviceAttribute(name) {
+Command::Command(const std::string &name, const std::shared_ptr<Device> &device): DeviceAttribute(name, device) {
 
 }
 

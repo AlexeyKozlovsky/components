@@ -5,12 +5,15 @@
 #include <set>
 #include <chrono>
 #include <functional>
+#include <memory>
 
 #include "enums.h"
 #include "macros.h"
 
 using device::DeviceState;
 using device::ErrorCode;
+
+class Device;
 
 /**
  * Базовый класс для свойств и команд девайса. НЕ ПУТАТЬ С TANGO ATTRIBUTE (НЕ АНАЛОГИЯ)
@@ -56,6 +59,7 @@ class DeviceAttribute {
  protected:
   std::string name;
   std::string description;
+  std::shared_ptr<Device> device;
 
   std::set<DeviceState> available_states;
 
@@ -72,7 +76,7 @@ class DeviceAttribute {
   std::function<void(VARIANT&, ErrorCode*)> polling_callback;
 
 
-  DeviceAttribute(const std::string &name);
+  DeviceAttribute(const std::string &name, const std::shared_ptr<Device> &device);
 };
 
 #endif //DIALTEK_LIBDEVICE_DEVICES_DEVICEATTRIBUTE_H_

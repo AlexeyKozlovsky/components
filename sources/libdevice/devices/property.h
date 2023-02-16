@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "macros.h"
 #include "enums.h"
@@ -71,7 +72,7 @@ class Property: public DeviceAttribute {
    */
   VARIANT value;
 
-  Property(const std::string &name);
+  Property(const std::string &name, const std::shared_ptr<Device> &device);
 
   /**
    * Оберточный метод для чтения свойства. Всегда срабатывает перед чтением.

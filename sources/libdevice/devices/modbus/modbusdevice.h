@@ -5,6 +5,17 @@
 
 #include "devices/device.h"
 
+#define MODBUS_RW_DEVICE_ERROR_HANDLE(condition, positive_instruction, negative_instruction, error_code) {modbus::ModbusResult error_status; \
+MODBUS_RW_ERROR_HANDLE( \
+    condition, \
+    SET_ERROR_CODE_SUCCESS(error_code)                                                                                                                                        \
+    positive_instruction;, \
+        if (error_status == modbus::NO_SOCKET_CONNECTION || error_status == modbus::TCP_TIMEOUT_ERROR) \
+          device->changeState(DeviceState::CLOSE);     \
+        negative_instruction;, \
+    error_status \
+) SET_ERROR_CODE(error_code, device::toErrorCode(error_status));}
+
 using modbus::ModbusClient;
 
 class ModbusDevice: public Device {
@@ -17,7 +28,7 @@ class ModbusDevice: public Device {
 
   const std::shared_ptr<ModbusClient> &getModbusClient();
 
-  const std::string &getIP() const;
+  std::string getIP() const;
   int getPort() const;
   int getModbusID() const;
 

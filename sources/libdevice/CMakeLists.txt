@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories("${PROJECT_SOURCE_DIR}/include/")
 
 file(GLOB SRC
+        "${PROJECT_SOURCE_DIR}/services/*.cpp"
         "${PROJECT_SOURCE_DIR}/devices/*.cpp"
         "${PROJECT_SOURCE_DIR}/managers/*.cpp"
         "${PROJECT_SOURCE_DIR}/devices/modbus/*.cpp")

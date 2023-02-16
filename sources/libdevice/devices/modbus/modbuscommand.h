@@ -5,14 +5,13 @@
 
 #include "devices/command.h"
 
+class ModbusDevice;
+
 using modbus::ModbusClient;
 
 class ModbusCommand: public Command {
  public:
-  ModbusCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
-
- protected:
-  std::shared_ptr<ModbusClient> modbus_client;
+  ModbusCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 };
 
 #endif //LIBDEVICE_DEVICES_MODBUS_MODBUSCOMMAND_H_

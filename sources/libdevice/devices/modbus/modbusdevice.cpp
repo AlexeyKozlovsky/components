@@ -12,12 +12,12 @@ std::shared_ptr<ModbusDevice> ModbusDevice::createModbusDevice(const std::string
   auto modbus_client = std::make_shared<ModbusClient>(ip, port);
   auto device = std::shared_ptr<ModbusDevice>(new ModbusDevice(name, modbus_client));
 
-  auto connect_command = std::make_shared<ConnectCommand>("connect", modbus_client);
-  auto update_address_command = std::make_shared<UpdateAddressCommand>("update_address", modbus_client);
-  auto update_modbus_id_command = std::make_shared<UpdateModbusIDCommand>("update_modbus_id", modbus_client);
-  auto get_ip_command = std::make_shared<GetIPCommand>("get_ip", modbus_client);
-  auto get_port_command = std::make_shared<GetPortCommand>("get_port", modbus_client);
-  auto get_connection_status_command = std::make_shared<GetConnectionStatusCommand>("get_connection_status", modbus_client);
+  auto connect_command = std::make_shared<ConnectCommand>("connect", device);
+  auto update_address_command = std::make_shared<UpdateAddressCommand>("update_address", device);
+  auto update_modbus_id_command = std::make_shared<UpdateModbusIDCommand>("update_modbus_id", device);
+  auto get_ip_command = std::make_shared<GetIPCommand>("get_ip", device);
+  auto get_port_command = std::make_shared<GetPortCommand>("get_port", device);
+  auto get_connection_status_command = std::make_shared<GetConnectionStatusCommand>("get_connection_status", device);
 
   device->addCommand(connect_command, error_code);
   IS_ERROR(
@@ -55,6 +55,9 @@ std::shared_ptr<ModbusDevice> ModbusDevice::createModbusDevice(const std::string
       return nullptr;
       );
 
+  device->setAvailableStates({DeviceState::OPEN, DeviceState::CLOSE});
+  device->changeState(DeviceState::CLOSE);
+
   return device;
 }
 
@@ -67,7 +70,7 @@ const std::shared_ptr<ModbusClient> &ModbusDevice::getModbusClient() {
   return modbus_client;
 }
 
-const std::string &ModbusDevice::getIP() const {
+std::string ModbusDevice::getIP() const {
   return std::move(modbus_client->getIP());
 }
 int ModbusDevice::getPort() const {

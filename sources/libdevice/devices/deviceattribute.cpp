@@ -1,6 +1,8 @@
 #include "deviceattribute.h"
 
-DeviceAttribute::DeviceAttribute(const std::string &name): name(name) {
+
+DeviceAttribute::DeviceAttribute(const std::string &name, const std::shared_ptr<Device> &device)
+  : name(name), device(device) {
 
 }
 

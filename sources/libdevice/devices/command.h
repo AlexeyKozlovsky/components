@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "macros.h"
 #include "enums.h"
@@ -20,7 +21,7 @@ class Command: public DeviceAttribute {
   void poll() override;
 
  protected:
-  Command(const std::string &name);
+  Command(const std::string &name, const std::shared_ptr<Device> &device);
 
   virtual void beforeExecute(ErrorCode *error_code = nullptr);
   virtual VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr) = 0;

@@ -68,7 +68,7 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
     }
 
     received_bytes += bytes_transferred;
-    std::cout << bytes_transferred << " " << received_bytes << std::endl;
+//    std::cout << bytes_transferred << " " << received_bytes << std::endl;
     timeout.cancel();  // will cause waitCallback to fire with an error
     data_available = true;
   }

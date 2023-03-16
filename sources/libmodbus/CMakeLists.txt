@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.2) #VERSION 3.24
 project(libmodbus VERSION 1.0.1 DESCRIPTION "libmodbus description")
 include(GNUInstallDirs)
 
@@ -16,3 +16,10 @@ install(TARGETS libmodbus
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(FILES ${CMAKE_BINARY_DIR}/libmodbus.pc
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
+
+
+set(EXAMPLE_NAME example)
+include_directories(${CMAKE_SOURCE_DIR})
+add_executable(${EXAMPLE_NAME} ${CMAKE_SOURCE_DIR}/example/main.cpp)
+add_compile_options("-fno-stack-protector")
+target_link_libraries(${EXAMPLE_NAME} libmodbus)

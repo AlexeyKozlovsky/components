@@ -2,6 +2,7 @@
 #include "modbus.h"
 #include "tcp_socket.h"
 
+// TODO: Надо решить проблемы с некорреткным количеством байт в ответе по модбас, которое иногда возникает. В следствие чего, пока не понятно
 
 using modbus::ModbusClient;
 
@@ -137,11 +138,16 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num, 
   toMsbLsb(reg_count, *(raw_request + 4), *(raw_request + 5));
   crcRTU(raw_request, 6, *(raw_request + 6), *(raw_request + 7));
 
-  uint8_t raw_response[5 + 2 * reg_count];
+  // Здесь размер был 5 + 2 * reg_count
+  uint16_t req_received_bytes = 5 + 2 * reg_count;
+  uint8_t raw_response[256];
   uint16_t recieved_bytes;
 
   bool is_connected = sendRawRequest(raw_request, 8, raw_response, recieved_bytes);
   if (!is_connected) return modbus::NO_SOCKET_CONNECTION;
+
+  // Здесь делаем проверки на то, чтобы размер ответа соответствовал запросу
+  if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
   if (error_status != modbus::NO_ERROR) return error_status;
@@ -166,11 +172,15 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, u
   toMsbLsb(1, *(raw_request + 4), *(raw_request + 5));
   crcRTU(raw_request, 6, *(raw_request + 6), *(raw_request + 7));
 
-  uint8_t raw_response[7];
+  // Здесь размер был 7
+  uint16_t req_received_bytes = 7;
+  uint8_t raw_response[256];
   uint16_t recieved_bytes;
 
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
     return modbus::NO_SOCKET_CONNECTION;
+
+  if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
   if (error_status != modbus::NO_ERROR) return error_status;
@@ -190,10 +200,14 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num
   toMsbLsb(reg_count, *(raw_request + 4), *(raw_request + 5));
   crcRTU(raw_request, 6, *(raw_request + 6), *(raw_request + 7));
 
-  uint8_t raw_response[5 + 2 * reg_count];
+  // Здесь размер был 5 + 2 * reg_count.
+  uint16_t req_received_bytes = 5 + 2 * reg_count;
+  uint8_t raw_response[256];
   uint16_t recieved_bytes;
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
     return modbus::NO_SOCKET_CONNECTION;
+
+  if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
   if (error_status != modbus::NO_ERROR) return error_status;
@@ -218,10 +232,14 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num,
   toMsbLsb(1, *(raw_request + 4), *(raw_request + 5));
   crcRTU(raw_request, 6, *(raw_request + 6), *(raw_request + 7));
 
-  uint8_t raw_response[7];
+  // Здесь был размер 7
+  uint16_t req_received_bytes = 7;
+  uint8_t raw_response[256];
   uint16_t recieved_bytes;
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
     return modbus::NO_SOCKET_CONNECTION;
+
+  if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
   if (error_status != modbus::NO_ERROR) return error_status;
@@ -239,11 +257,15 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegister(uint16_t reg_num
   toMsbLsb(value, *(raw_request + 4), *(raw_request + 5));
   crcRTU(raw_request, 6, *(raw_request + 6), *(raw_request + 7));
 
-  uint8_t raw_response[8];
+  // Здесь размер был 8
+  uint16_t req_received_bytes = 8;
+  uint8_t raw_response[256];
   uint16_t recieved_bytes;
 
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
     return modbus::NO_SOCKET_CONNECTION;
+
+  if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
   return error_status;
@@ -256,25 +278,39 @@ bool modbus::ModbusClient::sendRawRequest(uint8_t *raw_request,
 //  bool is_connected = socket.socket().is_open();
 //  if (!is_connected) socket.socket().connect(endpoint, ec);
 
+  comm_mutex.lock();
   if (socket.socket().is_open()) {
-    uint8_t read_buffer[256];
+    static uint8_t read_buffer[256];
     boost::asio::streambuf asio_buffer;
-    make_stream_from_buffer(asio_buffer, raw_request, 8);
+    make_stream_from_buffer(asio_buffer, raw_request, raw_request_size);
     socket.socket().write_some(asio_buffer.data(), ec);
 
     // TODO: Непонятно, работает или нет. Лучше, наверное оставить, если не будет мешать.
-//    const std::chrono::time_point<std::chrono::steady_clock> time_point =
-//        std::chrono::steady_clock::now() + std::chrono::seconds(timeout);
-//    socket.expires_at(time_point);
+    const std::chrono::time_point<std::chrono::steady_clock> time_point =
+        std::chrono::steady_clock::now() + std::chrono::seconds(timeout);
+    socket.expires_at(time_point);
 
     raw_response_size = connection.read_with_timeout(socket.socket(), boost::asio::buffer(read_buffer), timeout, service);
 //    raw_response_size = socket.read_some(boost::asio::buffer(read_buffer), ec);
-    if (raw_response_size == 0) return false;
+//    raw_response_size = 0;
+    if (raw_response_size == 0) {
+      comm_mutex.unlock();
+      return false;
+    }
 
     // Здесь будет блок кода, который возвращает false, если ответ по таймауту не пришел
-    for (size_t i = 0; i < raw_response_size; i++)
+    for (size_t i = 0; i < raw_response_size; i++) {
+      std::cout << unsigned (read_buffer[i]) << " ";
       raw_response[i] = read_buffer[i];
-  } else return false;
+    }
+
+    std::cout << std::endl;
+  } else {
+    comm_mutex.unlock();
+    return false;
+  }
+
+  comm_mutex.unlock();
 
   return true;
 }
@@ -301,11 +337,15 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t re
 
   crcRTU(raw_request, current_index, raw_request[current_index], raw_request[current_index + 1]);
 
-  uint8_t raw_response[8];
+  // Здесь размер задавался явно и был равен 8. Сейчас, на всякий случай, установим размер с запасом
+  uint16_t req_received_bytes = 8;
+  uint8_t raw_response[256];
   uint16_t recieved_bytes;
 
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
     return modbus::NO_SOCKET_CONNECTION;
+
+  if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
   return error_status;

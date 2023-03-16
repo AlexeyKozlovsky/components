@@ -5,6 +5,8 @@
 #include <boost/beast/core/tcp_stream.hpp>
 #include "tcp_socket.h"
 
+#include <mutex>
+
 /**
  * Макрос для удобства обработки ошибок при чтении и записи по протоколу модбас через ModbusClient
  */
@@ -378,6 +380,11 @@ class ModbusClient {
    * Сокет для взаимодействия с физическим устройством
    */
   boost::beast::tcp_stream socket;
+
+  /**
+   * Мьютекст для того, чтобы не допускать нескольких чтений и записи одновременно
+   */
+  std::mutex comm_mutex;
 
   /**
    * Вспомогательный метод для отправки сырого запроса по MODBUS.

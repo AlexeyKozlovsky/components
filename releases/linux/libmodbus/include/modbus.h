@@ -3,14 +3,17 @@
 
 #include <boost/asio.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
+//#include <boost/
 #include "tcp_socket.h"
+
+#include <mutex>
 
 /**
  * Макрос для удобства обработки ошибок при чтении и записи по протоколу модбас через ModbusClient
  */
 #define MODBUS_RW_ERROR_HANDLE(request_method, positive_instructions, negative_instructions, error_status) \
 error_status = request_method; \
-if (error_status == modbus::NO_ERROR) {positive_instructions} else { negative_instructions; }
+if (error_status == modbus::NO_MODBUS_ERROR) {positive_instructions} else { negative_instructions; }
 
 /**
  * Пространство имен, содержащие основные функции и классы для взаимодействия танго девайса с физическим
@@ -25,7 +28,7 @@ enum ModbusResult {
   /**
    * Ошибок нет
    */
-  NO_ERROR = 0,
+  NO_MODBUS_ERROR = 0,
 
   /**
    * Принятый код функции не может быть обработан.
@@ -242,7 +245,7 @@ class ModbusClient {
   inline bool isConnected() {
     // КОСТЫЛЬ, потом поменять
     uint16_t value;
-    return readInputRegister(0, value) == modbus::NO_ERROR;
+    return readInputRegister(0, value) == modbus::NO_MODBUS_ERROR;
   };
 
   ModbusClient();
@@ -275,7 +278,7 @@ class ModbusClient {
    * @param result -- набор 16-битных значений, которые были прочитаны из регистров
    * @return true, если все прошло без ошибок, иначе -- false
    */
-  modbus::ModbusResult readInputRegister(uint16_t reg_num, uint16_t &result);
+  modbus::ModbusResult readInputRegister(uint16_t reg_num, uint16_t &result, uint8_t modbus_id = 1);
 
   /**
    * Метод для чтения Input регистров. Можно читать как один, так и несколько регистров
@@ -284,7 +287,7 @@ class ModbusClient {
    * @param result -- набор 16-битных значений, которые были прочитаны из регистров
    * @return true, если все прошло без ошибок, иначе -- false
    */
-  modbus::ModbusResult readInputRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result);
+  modbus::ModbusResult readInputRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result, uint8_t modbus_id = 1);
 
   /**
     * Метод для чтения Holding регистра. Рекомендуется использовать его, когда
@@ -294,7 +297,7 @@ class ModbusClient {
     * @param result -- набор 16-битных значений, которые были прочитаны из регистров
     * @return true, если все прошло без ошибок, иначе -- false
     */
-  modbus::ModbusResult readHoldingRegister(uint16_t reg_num, uint16_t &result);
+  modbus::ModbusResult readHoldingRegister(uint16_t reg_num, uint16_t &result, uint8_t modbus_id = 1);
 
   /**
     * Метод для чтения Holding регистров. Можно читать как один, так и несколько регистров
@@ -303,7 +306,7 @@ class ModbusClient {
     * @param result -- набор 16-битных значений, которые были прочитаны из регистров
     * @return true, если все прошло без ошибок, иначе -- false
     */
-  modbus::ModbusResult readHoldingRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result);
+  modbus::ModbusResult readHoldingRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result, uint8_t modbus_id = 1);
 
   /**
    * Метод для записи значения в Holding регистр
@@ -311,7 +314,7 @@ class ModbusClient {
    * @param value -- значение для записи
    * @return true, если все прошло без ошибок, иначе -- false
    */
-  modbus::ModbusResult writeHoldingRegister(uint16_t reg_num, uint16_t value);
+  modbus::ModbusResult writeHoldingRegister(uint16_t reg_num, uint16_t value, uint8_t modbus_id = 1);
 
   /**
    * Метод, который пишет несколько регистров за один запрос
@@ -319,7 +322,7 @@ class ModbusClient {
    * @param values
    * @return
    */
-  modbus::ModbusResult writeHoldingRegistersTrue(uint16_t reg_num, std::vector<uint16_t> values);
+  modbus::ModbusResult writeHoldingRegistersTrue(uint16_t reg_num, std::vector<uint16_t> values, uint8_t modbus_id = 1);
 
   /**
    * Метод для записи значенией в Holding регистры (последовательно). За несколько запросов
@@ -328,7 +331,7 @@ class ModbusClient {
    * с первого переданного
    * @return true если запись прошла успешно, false -- иначе
    */
-  modbus::ModbusResult writeHoldingRegisters(uint16_t reg_num, std::vector<uint16_t> values);
+  modbus::ModbusResult writeHoldingRegisters(uint16_t reg_num, std::vector<uint16_t> values, uint8_t modbus_id = 1);
 
  private:
 
@@ -378,6 +381,11 @@ class ModbusClient {
    * Сокет для взаимодействия с физическим устройством
    */
   boost::beast::tcp_stream socket;
+
+  /**
+   * Мьютекст для того, чтобы не допускать нескольких чтений и записи одновременно
+   */
+  std::mutex comm_mutex;
 
   /**
    * Вспомогательный метод для отправки сырого запроса по MODBUS.

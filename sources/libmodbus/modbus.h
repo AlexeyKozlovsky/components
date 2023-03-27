@@ -3,6 +3,7 @@
 
 #include <boost/asio.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
+//#include <boost/
 #include "tcp_socket.h"
 
 #include <mutex>
@@ -12,7 +13,7 @@
  */
 #define MODBUS_RW_ERROR_HANDLE(request_method, positive_instructions, negative_instructions, error_status) \
 error_status = request_method; \
-if (error_status == modbus::NO_ERROR) {positive_instructions} else { negative_instructions; }
+if (error_status == modbus::NO_MODBUS_ERROR) {positive_instructions} else { negative_instructions; }
 
 /**
  * Пространство имен, содержащие основные функции и классы для взаимодействия танго девайса с физическим
@@ -27,7 +28,7 @@ enum ModbusResult {
   /**
    * Ошибок нет
    */
-  NO_ERROR = 0,
+  NO_MODBUS_ERROR = 0,
 
   /**
    * Принятый код функции не может быть обработан.
@@ -244,7 +245,7 @@ class ModbusClient {
   inline bool isConnected() {
     // КОСТЫЛЬ, потом поменять
     uint16_t value;
-    return readInputRegister(0, value) == modbus::NO_ERROR;
+    return readInputRegister(0, value) == modbus::NO_MODBUS_ERROR;
   };
 
   ModbusClient();

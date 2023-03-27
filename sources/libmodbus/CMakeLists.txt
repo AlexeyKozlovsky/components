@@ -2,24 +2,11 @@ cmake_minimum_required(VERSION 3.2) #VERSION 3.24
 project(libmodbus VERSION 1.0.1 DESCRIPTION "libmodbus description")
 include(GNUInstallDirs)
 
-FILE (GLOB SRC "${PROJECT_SOURCE_DIR}/*.cpp")
-
-add_library(libmodbus SHARED ${SRC})
-set_target_properties(libmodbus PROPERTIES
-        VERSION ${PROJECT_VERSION}
-        SOVERSION 1
-        PUBLIC_HEADER api/libmodbus.h)
-configure_file(libmodbus.pc.in libmodbus.pc @ONLY)
-target_include_directories(libmodbus PRIVATE .)
-install(TARGETS libmodbus
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(FILES ${CMAKE_BINARY_DIR}/libmodbus.pc
-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
-
-
-set(EXAMPLE_NAME example)
-include_directories(${CMAKE_SOURCE_DIR})
-add_executable(${EXAMPLE_NAME} ${CMAKE_SOURCE_DIR}/example/main.cpp)
-add_compile_options("-fno-stack-protector")
-target_link_libraries(${EXAMPLE_NAME} libmodbus)
+message(${BUILD_SYSTEM})
+if (${BUILD_SYSTEM} STREQUAL "linux")
+    include(build-linux.cmake)
+elseif(${BUILD_SYSTEM} STREQUAL "win")
+    include(build-win.cmake)
+else()
+    message(SEND_ERROR "Build system may be: linux or win")
+endif()

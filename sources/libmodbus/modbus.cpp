@@ -150,7 +150,7 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num, 
   if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
-  if (error_status != modbus::NO_ERROR) return error_status;
+  if (error_status != modbus::NO_MODBUS_ERROR) return error_status;
 
   uint16_t values_count = *(raw_response + 2) / 2;
   for (uint16_t i = 0; i < values_count; i++) {
@@ -183,7 +183,7 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, u
   if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
-  if (error_status != modbus::NO_ERROR) return error_status;
+  if (error_status != modbus::NO_MODBUS_ERROR) return error_status;
 
   fromMsbLsb(*(raw_response + 3), *(raw_response + 4), result);
   return error_status;
@@ -210,7 +210,7 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num
   if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
-  if (error_status != modbus::NO_ERROR) return error_status;
+  if (error_status != modbus::NO_MODBUS_ERROR) return error_status;
 
   uint16_t  values_count = *(raw_response + 2) / 2;
   for (uint16_t i = 0; i < values_count; i++) {
@@ -242,7 +242,7 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num,
   if (recieved_bytes != req_received_bytes) return modbus::INVALID_RESPONSE;
 
   auto error_status = handleError(raw_request, request_size, raw_response, recieved_bytes);
-  if (error_status != modbus::NO_ERROR) return error_status;
+  if (error_status != modbus::NO_MODBUS_ERROR) return error_status;
 
   fromMsbLsb(*(raw_response + 3), *(raw_response + 4), result);
   return error_status;
@@ -299,6 +299,12 @@ bool modbus::ModbusClient::sendRawRequest(uint8_t *raw_request,
     }
 
     // Здесь будет блок кода, который возвращает false, если ответ по таймауту не пришел
+    std::cout << "[LIBMODBUS LOG] REQUEST: ";
+    for (size_t i = 0; i < raw_request_size; i++) {
+      std::cout << unsigned (raw_request[i]) << " ";
+    }
+
+    std::cout << "\tRESPONSE: ";
     for (size_t i = 0; i < raw_response_size; i++) {
       std::cout << unsigned (read_buffer[i]) << " ";
       raw_response[i] = read_buffer[i];
@@ -355,10 +361,10 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegisters(uint16_t reg_nu
   bool result = true;
   for (uint8_t i = 0; i < values.size(); i++) {
     auto error_status = writeHoldingRegister(reg_num + i, values[i]);
-    if (error_status != modbus::NO_ERROR) return error_status;
+    if (error_status != modbus::NO_MODBUS_ERROR) return error_status;
   }
 
-  return modbus::NO_ERROR;
+  return modbus::NO_MODBUS_ERROR;
 }
 
 void modbus::ModbusClient::update() {
@@ -397,5 +403,5 @@ modbus::ModbusResult modbus::ModbusClient::handleError(uint8_t *request,
     }
   }
 
-  return modbus::NO_ERROR;
+  return modbus::NO_MODBUS_ERROR;
 }

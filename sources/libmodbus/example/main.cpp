@@ -2,6 +2,10 @@
 
 #include "modbus.h"
 
+#ifdef FOR_WIN
+#pragma comment(lib, "ws2_32")
+#endif
+
 using namespace modbus;
 
 int main() {

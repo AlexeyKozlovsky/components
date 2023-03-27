@@ -278,7 +278,7 @@ class ModbusClient {
    * @param result -- набор 16-битных значений, которые были прочитаны из регистров
    * @return true, если все прошло без ошибок, иначе -- false
    */
-  modbus::ModbusResult readInputRegister(uint16_t reg_num, uint16_t &result);
+  modbus::ModbusResult readInputRegister(uint16_t reg_num, uint16_t &result, uint8_t modbus_id = 1);
 
   /**
    * Метод для чтения Input регистров. Можно читать как один, так и несколько регистров
@@ -287,7 +287,7 @@ class ModbusClient {
    * @param result -- набор 16-битных значений, которые были прочитаны из регистров
    * @return true, если все прошло без ошибок, иначе -- false
    */
-  modbus::ModbusResult readInputRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result);
+  modbus::ModbusResult readInputRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result, uint8_t modbus_id = 1);
 
   /**
     * Метод для чтения Holding регистра. Рекомендуется использовать его, когда
@@ -297,7 +297,7 @@ class ModbusClient {
     * @param result -- набор 16-битных значений, которые были прочитаны из регистров
     * @return true, если все прошло без ошибок, иначе -- false
     */
-  modbus::ModbusResult readHoldingRegister(uint16_t reg_num, uint16_t &result);
+  modbus::ModbusResult readHoldingRegister(uint16_t reg_num, uint16_t &result, uint8_t modbus_id = 1);
 
   /**
     * Метод для чтения Holding регистров. Можно читать как один, так и несколько регистров
@@ -306,7 +306,7 @@ class ModbusClient {
     * @param result -- набор 16-битных значений, которые были прочитаны из регистров
     * @return true, если все прошло без ошибок, иначе -- false
     */
-  modbus::ModbusResult readHoldingRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result);
+  modbus::ModbusResult readHoldingRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result, uint8_t modbus_id = 1);
 
   /**
    * Метод для записи значения в Holding регистр
@@ -314,7 +314,7 @@ class ModbusClient {
    * @param value -- значение для записи
    * @return true, если все прошло без ошибок, иначе -- false
    */
-  modbus::ModbusResult writeHoldingRegister(uint16_t reg_num, uint16_t value);
+  modbus::ModbusResult writeHoldingRegister(uint16_t reg_num, uint16_t value, uint8_t modbus_id = 1);
 
   /**
    * Метод, который пишет несколько регистров за один запрос
@@ -322,7 +322,7 @@ class ModbusClient {
    * @param values
    * @return
    */
-  modbus::ModbusResult writeHoldingRegistersTrue(uint16_t reg_num, std::vector<uint16_t> values);
+  modbus::ModbusResult writeHoldingRegistersTrue(uint16_t reg_num, std::vector<uint16_t> values, uint8_t modbus_id = 1);
 
   /**
    * Метод для записи значенией в Holding регистры (последовательно). За несколько запросов
@@ -331,7 +331,7 @@ class ModbusClient {
    * с первого переданного
    * @return true если запись прошла успешно, false -- иначе
    */
-  modbus::ModbusResult writeHoldingRegisters(uint16_t reg_num, std::vector<uint16_t> values);
+  modbus::ModbusResult writeHoldingRegisters(uint16_t reg_num, std::vector<uint16_t> values, uint8_t modbus_id = 1);
 
  private:
 

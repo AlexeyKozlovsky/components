@@ -127,12 +127,13 @@ void modbus::ModbusClient::setTimeout(int timeout) {
 //  socket.expires_after(std::chrono::milliseconds(timeout));
 }
 
-modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result) {
+modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result,
+                                                              uint8_t modbus_id) {
   result.resize(0);
   uint16_t request_size = 8;
 
   uint8_t raw_request[request_size];
-  *raw_request = 1;
+  *raw_request = modbus_id;
   *(raw_request + 1) = 0x04;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
   toMsbLsb(reg_count, *(raw_request + 4), *(raw_request + 5));
@@ -162,11 +163,11 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num, 
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, uint16_t &result) {
+modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, uint16_t &result, uint8_t modbus_id) {
   uint16_t request_size = 8;
   uint8_t raw_request[request_size];
 
-  *raw_request = 1;
+  *raw_request = modbus_id;
   *(raw_request + 1) = 0x04;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
   toMsbLsb(1, *(raw_request + 4), *(raw_request + 5));
@@ -189,12 +190,14 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, u
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result) {
+modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num, uint16_t reg_count,
+                                                                std::vector<uint16_t> &result,
+                                                                uint8_t modbus_id) {
   result.resize(0);
   uint16_t request_size = 8;
 
   uint8_t raw_request[request_size];
-  *raw_request = 1;
+  *raw_request = modbus_id;
   *(raw_request + 1) = 0x03;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
   toMsbLsb(reg_count, *(raw_request + 4), *(raw_request + 5));
@@ -222,11 +225,11 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num, uint16_t &result) {
+modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num, uint16_t &result, uint8_t modbus_id) {
   uint16_t request_size = 8;
 
   uint8_t raw_request[request_size];
-  *raw_request = 1;
+  *raw_request = modbus_id;
   *(raw_request + 1) = 0x03;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
   toMsbLsb(1, *(raw_request + 4), *(raw_request + 5));
@@ -248,10 +251,10 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num,
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::writeHoldingRegister(uint16_t reg_num, uint16_t value) {
+modbus::ModbusResult modbus::ModbusClient::writeHoldingRegister(uint16_t reg_num, uint16_t value, uint8_t modbus_id) {
   uint16_t request_size = 8;
   uint8_t raw_request[request_size];
-  *raw_request = 1;
+  *raw_request = modbus_id;
   *(raw_request + 1) = 0x06;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
   toMsbLsb(value, *(raw_request + 4), *(raw_request + 5));
@@ -321,7 +324,8 @@ bool modbus::ModbusClient::sendRawRequest(uint8_t *raw_request,
   return true;
 }
 
-modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t reg_num, std::vector<uint16_t> values) {
+modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t reg_num, std::vector<uint16_t> values,
+                                                                     uint8_t modbus_id) {
   if (values.empty()) return modbus::INVALID_REQUEST;
 
   // адрес устройства (1 байт) + функц. код (1 байт) + адрес первого регистра (2 байта)
@@ -329,7 +333,7 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t re
   // сами данные (2 * values.size()) = 9 + 2 * values.size()
   uint16_t request_size = 9 + 2 * values.size();
   uint8_t raw_request[request_size];
-  raw_request[0] = 0x01;
+  raw_request[0] = modbus_id;
   raw_request[1] = 0x10;
   toMsbLsb(reg_num, raw_request[2], raw_request[3]);
   toMsbLsb((uint16_t) values.size(), raw_request[4], raw_request[5]);
@@ -357,10 +361,11 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t re
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::writeHoldingRegisters(uint16_t reg_num, std::vector<uint16_t> values) {
+modbus::ModbusResult modbus::ModbusClient::writeHoldingRegisters(uint16_t reg_num, std::vector<uint16_t> values,
+                                                                 uint8_t modbus_id) {
   bool result = true;
   for (uint8_t i = 0; i < values.size(); i++) {
-    auto error_status = writeHoldingRegister(reg_num + i, values[i]);
+    auto error_status = writeHoldingRegister(reg_num + i, values[i], modbus_id);
     if (error_status != modbus::NO_MODBUS_ERROR) return error_status;
   }
 

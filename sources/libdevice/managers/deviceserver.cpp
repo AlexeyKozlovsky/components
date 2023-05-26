@@ -8,11 +8,13 @@ DeviceServer::DeviceServer(): polling_tact(DEFAULT_POLLING_TACT), polling_proces
 
 }
 
-VARIANT DeviceServer::readProperty(const std::shared_ptr<Device> &device,
-                                   const std::string &property_name,
-                                   ErrorCode *error_code) {
+VARIANT__D DeviceServer::readProperty(const std::shared_ptr<Device> &device,
+                                      const std::string &property_name,
+                                      ErrorCode *error_code) {
+  CHECK_DEVICE_INIT(error_code, device, {})
+
   auto property = device_config->getDevicePropertyByName(device, property_name, error_code);
-  if (*error_code != ErrorCode::SUCCESS) return VARIANT();
+  if (*error_code != ErrorCode::SUCCESS) return VARIANT__D();
 
   polling_mutex.lock();
   auto result = property->readValue(error_code);
@@ -21,8 +23,10 @@ VARIANT DeviceServer::readProperty(const std::shared_ptr<Device> &device,
 }
 void DeviceServer::writeProperty(const std::shared_ptr<Device> &device,
                                  const std::string &property_name,
-                                 const VARIANT &value,
+                                 const VARIANT__D &value,
                                  ErrorCode * error_code) {
+  CHECK_DEVICE_INIT(error_code, device,)
+
   auto property = device_config->getDevicePropertyByName(device, property_name, error_code);
   if (*error_code != ErrorCode::SUCCESS) return;
 
@@ -30,12 +34,14 @@ void DeviceServer::writeProperty(const std::shared_ptr<Device> &device,
   property->writeValue(value, error_code);
   polling_mutex.unlock();
 }
-VARIANT DeviceServer::executeCommand(const std::shared_ptr<Device> &device,
-                                     const std::string &command_name,
-                                     const VARIANT &value,
-                                     ErrorCode * error_code) {
+VARIANT__D DeviceServer::executeCommand(const std::shared_ptr<Device> &device,
+                                        const std::string &command_name,
+                                        const VARIANT__D &value,
+                                        ErrorCode * error_code) {
+  CHECK_DEVICE_INIT(error_code, device, {})
+
   auto command = device_config->getDeviceCommandByName(device, command_name, error_code);
-  if (*error_code != ErrorCode::SUCCESS) return VARIANT();
+  if (*error_code != ErrorCode::SUCCESS) return VARIANT__D();
 
   polling_mutex.lock();
   auto result = command->executeCommand(value, error_code);
@@ -50,13 +56,14 @@ void DeviceServer::startPolling(ErrorCode *error_code) {
 
 void DeviceServer::stopPolling(ErrorCode *error_code) {
   polling_processing_flag = false;
+  polling_thread.join();
 }
 
 void DeviceServer::polling() {
   while (polling_processing_flag) {
 //    polling_mutex.lock();
 
-    for (auto device_pair: device_config->getAllDevices()) {
+      for (auto device_pair: device_config->getAllDevices()) {
       auto device = device_pair.second;
       if (device == nullptr) continue;
 

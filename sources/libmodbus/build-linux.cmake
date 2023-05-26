@@ -15,6 +15,8 @@ install(FILES ${CMAKE_BINARY_DIR}/libmodbus.pc
         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 
 
+add_subdirectory(tests)
+
 set(EXAMPLE_NAME example)
 include_directories(${CMAKE_SOURCE_DIR})
 add_executable(${EXAMPLE_NAME} ${CMAKE_SOURCE_DIR}/example/main.cpp)

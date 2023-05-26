@@ -3,7 +3,7 @@
 
 device::ErrorCode device::toErrorCode(modbus::ModbusResult input_code) {
   switch (input_code) {
-    case modbus::NO_ERROR:
+    case modbus::NO_MODBUS_ERROR:
       return ErrorCode::SUCCESS;
     case modbus::ILLEGAL_FUNCTION:
       return ErrorCode::MODBUS_ILLEGAL_FUNCTION;

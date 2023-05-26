@@ -107,6 +107,9 @@ class EPSSDevice: public ModbusDevice {
  protected:
   EPSSDevice(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
 
+  void init() override;
+  void initChannels(int channel_count);
+
  private:
   ModuleStatuses sync_module_statuses;
   ModuleStatuses rf_module_statuses;
@@ -132,8 +135,6 @@ class EPSSDevice: public ModbusDevice {
 
   int channel_count;
   std::vector<std::string> channel_names;
-
-  void initChannels(int channel_count);
 };
 
 

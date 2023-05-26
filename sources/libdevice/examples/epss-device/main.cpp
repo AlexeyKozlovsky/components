@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   }
 
   std::cout << "AFTER CONNECT" << std::endl;
-  device_server->startPolling(&error_code);
+//  device_server->startPolling(&error_code);
   if (error_code != ErrorCode::SUCCESS) {
     std::cerr << "Unable to start polling " << std::endl;
     return EXIT_FAILURE;

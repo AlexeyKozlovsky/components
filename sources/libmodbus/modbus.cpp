@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "modbus.h"
 #include "tcp_socket.h"
 
@@ -103,36 +104,120 @@ int modbus::make_stream_from_buffer(boost::asio::streambuf &asio_buffer, uint8_t
 
 modbus::ModbusClient::ModbusClient(): ip(default_ip), port(default_port), socket(service) {
   update();
+//  socket.socket(service)
   setTimeout(DEFAULT_TIMEOUT);
+
 }
 
-modbus::ModbusClient::ModbusClient(std::string ip, uint16_t port): ip(ip), port(port), socket(service) {
+modbus::ModbusClient::ModbusClient(std::string ip, uint16_t port): ip(ip), port(port),
+  socket(service) {
   update();
   setTimeout(DEFAULT_TIMEOUT);
 }
 
 bool modbus::ModbusClient::connect() {
+  std::cout << "CONNECTION..." << std::endl;
+  typedef boost::asio::detail::socket_option::integer<SOL_SOCKET, SO_RCVTIMEO> rcv_timeout_option; //somewhere in your headers to be used everywhere you need it
+//...
+  socket.socket().set_option(rcv_timeout_option{ 200 });
   endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::make_address(ip, ec), port);
-  socket.socket().connect(endpoint, ec);
+//  service.run();
+//  socket.expires_after(std::chrono::seconds(timeout));
+//  socket.async_connect(endpoint, [](error_code _ec) {
+//    std::cout << "TEEEEEEEEEEEEEEEST" << std::endl;
+//    if (_ec == beast::error::timeout) {
+//      std::cerr << "Timeout error while connection attempt" << std::endl;
+//    }
+//  });
+//
+//  service.stop();
+////  socket.expires_never();
 
+//  socket.socket().close();
+  socket.socket().open(tcp::v4());
+//  std::cout<< "TIIIILT: " << socket.socket().is_open() << std::endl;
+//  socket.socket().bind(endpoint);
+//  socket.expires_after(std::chrono::seconds(timeout));
+
+  auto log = [&](error_code ec, tcp::endpoint const& next) {
+    std::cout << ec.message() << " next:" << next << " "
+              << (socket.socket().is_open() ? "open" : "closed")
+              << " bound:" << socket.socket().local_endpoint()
+              << std::endl;
+    return true;
+  };
+
+//  boost::asio::deadline_timer timer(service, boost::posix_time::seconds(4));
+  boost::asio::steady_timer timer(service);
+  socket.socket().async_connect(endpoint, [&](auto ec) {
+//    std::cout << " --> Final " << ec.message() << " local "
+//              << socket.socket().local_endpoint() << " to "
+//              << socket.socket().remote_endpoint() << "\n\n";
+    if (!ec) {
+      std::cout << " --> Final " << ec.message() << " local "
+          << socket.socket().local_endpoint() << " to "
+          << socket.socket().remote_endpoint() << "\n\n";
+    }
+
+    timer.cancel();
+  });
+
+  timer.expires_after(std::chrono::seconds(timeout));
+  timer.async_wait([&](auto &_ec) {
+    socket.socket().cancel();
+    std::cout << "Socket cancel connection" << std::endl;
+//    socket.close();
+  });
+
+  service.run();
+
+// TODO:
+//
+//  socket.async_connect(endpoint,
+//                       [](error_code _ec) {
+//    if (_ec == beast::error::timeout) {
+//      std::cerr << "TIMEOUT ERROR WHILE CONNECTION ATTEMPT" << std::endl;
+//    } else {
+//      std::cout << "Connected to ep" << std::endl;
+//    }
+//  });
+
+//  socket.expires_never();
+//  auto future = socket.async_connect(endpoint, beast::net::use_future);
+//  if (future.wait_for(std::chrono::seconds(timeout)) == std::future_status::timeout) {
+//    std::cerr << "Timeout error while connection attempt" << std::endl;
+//    socket.close();
+//    return false;
+//  }
+
+//  connection.connect(socket, endpoint, service);
+//  socket.socket().connect(endpoint, ec);
+//  socket.socket().connect(endpoint, ec);
   return isConnected();
 }
 
 void modbus::ModbusClient::disconnect() {
   if (socket.socket().is_open()) socket.socket().close();
+//  if (socket.socket().is_open()) socket.socket().shutdown();
 }
 
 void modbus::ModbusClient::setTimeout(int timeout) {
+//  ::setsockopt(socket.socket().native_handle(), SOL_SOCKET, SO_RCVTIMEO, (const char *)&timeout, sizeof timeout);//SO_SNDTIMEO for send ops
   this->timeout = timeout;
 //  socket.expires_after(std::chrono::milliseconds(timeout));
 }
 
-modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num, uint16_t reg_count, std::vector<uint16_t> &result,
-                                                              uint8_t modbus_id) {
+modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num,
+                                                              uint16_t reg_count,
+                                                              std::vector<uint16_t> &result,
+                                                              uint8_t modbus_id,
+                                                              uint8_t *raw_response,
+                                                              uint8_t *raw_request) {
   result.resize(0);
   uint16_t request_size = 8;
 
-  uint8_t raw_request[request_size];
+//  uint8_t raw_request[request_size];
+  raw_request = new uint8_t[request_size];
   *raw_request = modbus_id;
   *(raw_request + 1) = 0x04;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
@@ -141,7 +226,8 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num, 
 
   // Здесь размер был 5 + 2 * reg_count
   uint16_t req_received_bytes = 5 + 2 * reg_count;
-  uint8_t raw_response[256];
+//  uint8_t raw_response[256];
+  raw_response = new uint8_t[256];
   uint16_t recieved_bytes;
 
   bool is_connected = sendRawRequest(raw_request, 8, raw_response, recieved_bytes);
@@ -163,9 +249,14 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegisters(uint16_t reg_num, 
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, uint16_t &result, uint8_t modbus_id) {
+modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num,
+                                                             uint16_t &result,
+                                                             uint8_t modbus_id,
+                                                             uint8_t *raw_response,
+                                                             uint8_t *raw_request) {
   uint16_t request_size = 8;
-  uint8_t raw_request[request_size];
+//  uint8_t raw_request[request_size];
+  raw_request = new uint8_t[request_size];
 
   *raw_request = modbus_id;
   *(raw_request + 1) = 0x04;
@@ -175,7 +266,8 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, u
 
   // Здесь размер был 7
   uint16_t req_received_bytes = 7;
-  uint8_t raw_response[256];
+//  uint8_t raw_response[256];
+  raw_response = new uint8_t[256];
   uint16_t recieved_bytes;
 
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
@@ -190,13 +282,17 @@ modbus::ModbusResult modbus::ModbusClient::readInputRegister(uint16_t reg_num, u
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num, uint16_t reg_count,
+modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num,
+                                                                uint16_t reg_count,
                                                                 std::vector<uint16_t> &result,
-                                                                uint8_t modbus_id) {
+                                                                uint8_t modbus_id,
+                                                                uint8_t *raw_response,
+                                                                uint8_t *raw_request) {
   result.resize(0);
   uint16_t request_size = 8;
 
-  uint8_t raw_request[request_size];
+//  uint8_t raw_request[request_size];
+  raw_request = new uint8_t[request_size];
   *raw_request = modbus_id;
   *(raw_request + 1) = 0x03;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
@@ -205,7 +301,8 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num
 
   // Здесь размер был 5 + 2 * reg_count.
   uint16_t req_received_bytes = 5 + 2 * reg_count;
-  uint8_t raw_response[256];
+//  uint8_t raw_response[256];
+  raw_response = new uint8_t[256];
   uint16_t recieved_bytes;
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
     return modbus::NO_SOCKET_CONNECTION;
@@ -225,10 +322,15 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegisters(uint16_t reg_num
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num, uint16_t &result, uint8_t modbus_id) {
+modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num,
+                                                               uint16_t &result,
+                                                               uint8_t modbus_id,
+                                                               uint8_t *raw_response,
+                                                               uint8_t *raw_request) {
   uint16_t request_size = 8;
 
-  uint8_t raw_request[request_size];
+//  uint8_t raw_request[request_size];
+  raw_request = new uint8_t[request_size];
   *raw_request = modbus_id;
   *(raw_request + 1) = 0x03;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
@@ -237,7 +339,8 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num,
 
   // Здесь был размер 7
   uint16_t req_received_bytes = 7;
-  uint8_t raw_response[256];
+//  uint8_t raw_response[256];
+  raw_response = new uint8_t[256];
   uint16_t recieved_bytes;
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
     return modbus::NO_SOCKET_CONNECTION;
@@ -251,9 +354,14 @@ modbus::ModbusResult modbus::ModbusClient::readHoldingRegister(uint16_t reg_num,
   return error_status;
 }
 
-modbus::ModbusResult modbus::ModbusClient::writeHoldingRegister(uint16_t reg_num, uint16_t value, uint8_t modbus_id) {
+modbus::ModbusResult modbus::ModbusClient::writeHoldingRegister(uint16_t reg_num,
+                                                                uint16_t value,
+                                                                uint8_t modbus_id,
+                                                                uint8_t *raw_response,
+                                                                uint8_t *raw_request) {
   uint16_t request_size = 8;
-  uint8_t raw_request[request_size];
+//  uint8_t raw_request[request_size];
+  raw_request = new uint8_t[request_size];
   *raw_request = modbus_id;
   *(raw_request + 1) = 0x06;
   toMsbLsb(reg_num, *(raw_request + 2), *(raw_request + 3));
@@ -262,7 +370,8 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegister(uint16_t reg_num
 
   // Здесь размер был 8
   uint16_t req_received_bytes = 8;
-  uint8_t raw_response[256];
+//  uint8_t raw_response[256];
+  raw_response = new uint8_t[256];
   uint16_t recieved_bytes;
 
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
@@ -282,7 +391,9 @@ bool modbus::ModbusClient::sendRawRequest(uint8_t *raw_request,
 //  if (!is_connected) socket.socket().connect(endpoint, ec);
 
   comm_mutex.lock();
-  if (socket.socket().is_open()) {
+  beast::error_code _ec;
+  socket.socket().remote_endpoint(_ec);
+  if (!_ec) {
     static uint8_t read_buffer[256];
     boost::asio::streambuf asio_buffer;
     make_stream_from_buffer(asio_buffer, raw_request, raw_request_size);
@@ -324,15 +435,21 @@ bool modbus::ModbusClient::sendRawRequest(uint8_t *raw_request,
   return true;
 }
 
-modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t reg_num, std::vector<uint16_t> values,
-                                                                     uint8_t modbus_id) {
+modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t reg_num,
+                                                                     std::vector<uint16_t> values,
+                                                                     uint8_t modbus_id,
+                                                                     uint8_t *raw_response,
+                                                                     uint8_t *raw_request) {
   if (values.empty()) return modbus::INVALID_REQUEST;
 
   // адрес устройства (1 байт) + функц. код (1 байт) + адрес первого регистра (2 байта)
   // + количество регистров (2 байта) + количество байт далее (1 байт) + crc (2 байта) +
   // сами данные (2 * values.size()) = 9 + 2 * values.size()
   uint16_t request_size = 9 + 2 * values.size();
-  uint8_t raw_request[request_size];
+  if (raw_request == nullptr) {
+    raw_request = new uint8_t[request_size];
+  }
+
   raw_request[0] = modbus_id;
   raw_request[1] = 0x10;
   toMsbLsb(reg_num, raw_request[2], raw_request[3]);
@@ -349,7 +466,11 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t re
 
   // Здесь размер задавался явно и был равен 8. Сейчас, на всякий случай, установим размер с запасом
   uint16_t req_received_bytes = 8;
-  uint8_t raw_response[256];
+
+  if (raw_response == nullptr) {
+    raw_response = new uint8_t[256];
+  }
+
   uint16_t recieved_bytes;
 
   if (!sendRawRequest(raw_request, request_size, raw_response, recieved_bytes))
@@ -362,7 +483,8 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t re
 }
 
 modbus::ModbusResult modbus::ModbusClient::writeHoldingRegisters(uint16_t reg_num, std::vector<uint16_t> values,
-                                                                 uint8_t modbus_id) {
+                                                                 uint8_t modbus_id,
+                                                                 uint8_t *raw_request, uint8_t *raw_response) {
   bool result = true;
   for (uint8_t i = 0; i < values.size(); i++) {
     auto error_status = writeHoldingRegister(reg_num + i, values[i], modbus_id);
@@ -373,7 +495,9 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegisters(uint16_t reg_nu
 }
 
 void modbus::ModbusClient::update() {
-  if (socket.socket().is_open()) socket.socket().close();
+//  context.reset();
+//  context.run();
+//  if (socket.socket().is_open()) socket.socket().close();
   endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::make_address(ip, ec), port);
 //  socket.socket().connect(endpoint, ec);
 }

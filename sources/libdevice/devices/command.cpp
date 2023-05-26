@@ -4,10 +4,12 @@ Command::Command(const std::string &name, const std::shared_ptr<Device> &device)
 
 }
 
-VARIANT Command::executeCommand(const VARIANT & value, ErrorCode *error_code) {
+VARIANT__D Command::executeCommand(const VARIANT__D & value, ErrorCode *error_code) {
+//  exec_mutex.lock();
   beforeExecute(error_code);
   auto result = execute(value, error_code);
   afterExecute(error_code);
+//  exec_mutex.unlock();
   return result;
 }
 

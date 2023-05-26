@@ -1,7 +1,9 @@
 #include "epssdevice.h"
 
-#include "examples/epss-device/src/epssproperties.h"
 #include "examples/epss-device/src/epsscommands.h"
+#include "examples/epss-device/src/epssproperties.h"
+
+#include "examples/epss-device/src/consts.h"
 
 static const int CHANNEL_COUNT = 12;
 static const int DEFAULT_NANO_DISCRETE = 25;
@@ -18,59 +20,64 @@ std::shared_ptr<EPSSDevice> EPSSDevice::createEPSSDevice(const std::string &name
                                                          int port,
                                                          int modbus_id,
                                                          ErrorCode *error_code) {
-  auto base_modbus_device = ModbusDevice::createModbusDevice(name, ip, port, modbus_id, error_code);
-  IS_ERROR(
+  auto modbus_client = std::make_shared<ModbusClient>(ip, port);
+  std::shared_ptr<ModbusDevice> base_device = std::shared_ptr<EPSSDevice>(new EPSSDevice(name, modbus_client));
+
+  ModbusDevice::createModbusDevice(base_device, error_code);
+//  std::shared_ptr<EPSSDevice> base_modbus_device = std::static_pointer_cast<EPSSDevice>(ModbusDevice::createModbusDevice(name, ip, port, modbus_id, error_code));
+  IS_ERROR__D(
       error_code,
       return nullptr;
-      );
+  );
 
-  auto device = std::static_pointer_cast<EPSSDevice>(base_modbus_device);
+  std::shared_ptr<EPSSDevice> device = std::static_pointer_cast<EPSSDevice>(base_device);
+  device->initChannels(CHANNEL_COUNT);
 
-  auto inner_start_period_property = std::make_shared<InnerStartPeriodProperty>("inner_start_period", device);
-  auto inner_start_width_property = std::make_shared<InnerStartPeriodProperty>("inner_start_width", device);
-  auto inner_start_on_property = std::make_shared<InnerStartOnProperty>("inner_start_on", device);
-  auto inner_start_inv_property = std::make_shared<InnerStartInvProperty>("inner_start_inv", device);
-  auto channels_delay_property = std::make_shared<ChannelsDelayProperty>("channels_delay", device);
-  auto channels_width_property = std::make_shared<ChannelsWidthProperty>("channels_width", device);
-  auto channels_on_property = std::make_shared<ChannelsOnProperty>("channels_on", device);
-  auto channels_inv_property = std::make_shared<ChannelsInvProperty>("channels_inv", device);
-  auto channels_start_source_property = std::make_shared<ChannelsStartSourceProperty>("channels_start_source", device);
-  auto channels_start_mode_property = std::make_shared<ChannelsStartModeProperty>("channels_start_mode", device);
-  auto sync_module_sfp_statuses_property = std::make_shared<SyncModuleSFPStatusesProperty>("sync_module_sfp_statuses", device);
-  auto rf_module_sfp_statuses_property = std::make_shared<RFModuleSFPStatusesProperty>("rf_module_sfp_statuses", device);
-  auto sync_module_statuses_property = std::make_shared<SyncModuleStatusesProperty>("sync_module_statuses", device);
-  auto rf_module_statuses_property = std::make_shared<RFModuleStatusesProperty>("rf_module_statuses", device);
-  auto sync_module_des_lock_property = std::make_shared<SyncModuleDesLockProperty>("sync_module_des_lock", device);
-  auto sync_module_osc_lock_property = std::make_shared<SyncModuleOscLockProperty>("sync_module_osc_lock", device);
+  auto inner_start_period_property = std::make_shared<InnerStartPeriodProperty>(INNER_START_PERIOD_PROP_NAME, device);
+  auto inner_start_width_property = std::make_shared<InnerStartPeriodProperty>(INNER_START_WIDTH_PROP_NAME, device);
+  auto inner_start_on_property = std::make_shared<InnerStartOnProperty>(INNER_START_ON_PROP_NAME, device);
+  auto inner_start_inv_property = std::make_shared<InnerStartInvProperty>(INNER_START_INV_PROP_NAME, device);
+  auto channels_delay_property = std::make_shared<ChannelsDelayProperty>(CHANNELS_DELAY_PROP_NAME, device);
+  auto channels_width_property = std::make_shared<ChannelsWidthProperty>(CHANNELS_WIDTH_PROP_NAME, device);
+  auto channels_on_property = std::make_shared<ChannelsOnProperty>(CHANNELS_ON_PROP_NAME, device);
+  auto channels_inv_property = std::make_shared<ChannelsInvProperty>(CHANNELS_INV_PROP_NAME, device);
+  auto channels_start_source_property = std::make_shared<ChannelsStartSourceProperty>(CHANNELS_START_SOURCE_PROP_NAME, device);
+  auto channels_start_mode_property = std::make_shared<ChannelsStartModeProperty>(CHANNELS_START_MODE_PROP_NAME, device);
+  auto sync_module_sfp_statuses_property = std::make_shared<SyncModuleSFPStatusesProperty>(SYNC_MODULE_SFP_STATUSES_PROP_NAME, device);
+  auto rf_module_sfp_statuses_property = std::make_shared<RFModuleSFPStatusesProperty>(RF_MODULE_SFP_STATUSES_PROP_NAME, device);
+  auto sync_module_statuses_property = std::make_shared<SyncModuleStatusesProperty>(SYNC_MODULE_STATUSES_PROP_NAME, device);
+  auto rf_module_statuses_property = std::make_shared<RFModuleStatusesProperty>(RF_MODULE_STATUSES_PROP_NAME, device);
+  auto sync_module_des_lock_property = std::make_shared<SyncModuleDesLockProperty>(SYNC_MODULE_DES_LOCK_PROP_NAME, device);
+  auto sync_module_osc_lock_property = std::make_shared<SyncModuleOscLockProperty>(SYNC_MODULE_OSC_LOCK_PROP_NAME, device);
 
-  auto set_channel_delay_command = std::make_shared<SetChannelDelayCommand>("set_channel_delay", device);
-  auto get_channel_delay_command = std::make_shared<GetChannelDelayCommand>("get_channel_delay", device);
-  auto set_channel_width_command = std::make_shared<SetChannelWidthCommand>("set_channel_width", device);
-  auto get_channel_width_command = std::make_shared<GetChannelWidthCommand>("get_channel_width", device);
-  auto set_channel_enabled_command = std::make_shared<SetChannelEnabledCommand>("set_channel_enabled", device);
-  auto is_channel_enabled_command = std::make_shared<IsChannelEnabledCommand>("is_channel_enabled", device);
-  auto set_channel_inverted_command = std::make_shared<SetChannelInvertedCommand>("set_channel_inverted", device);
-  auto is_channel_inverted_command = std::make_shared<IsChannelInvertedCommand>("is_channel_inverted", device);
-  auto set_channel_start_source_command = std::make_shared<SetChannelStartSourceCommand>("set_channel_start_source", device);
-  auto get_channel_start_source_command = std::make_shared<GetChannelStartSourceCommand>("get_channel_start_source", device);
-  auto set_channel_start_mode_command = std::make_shared<SetChannelStartModeCommand>("set_channel_start_mode", device);
-  auto get_channel_start_mode_command = std::make_shared<GetChannelStartModeCommand>("get_channel_start_mode", device);
-  auto set_channel_name_command = std::make_shared<SetChannelNameCommand>("set_channel_name", device);
-  auto get_channel_name_command = std::make_shared<GetChannelNameCommand>("get_channel_name", device);
-  auto set_inner_start_period_command = std::make_shared<SetInnerStartPeriodCommand>("set_inner_start_period", device);
-  auto get_inner_start_period_command = std::make_shared<GetInnerStartPeriodCommand>("get_inner_start_period", device);
-  auto set_inner_start_width_command = std::make_shared<SetInnerStartWidthCommand>("set_inner_start_width", device);
-  auto get_inner_start_width_command = std::make_shared<GetInnerStartWidthCommand>("get_inner_start_width", device);
-  auto set_inner_start_enabled_command = std::make_shared<SetInnerStartEnabledCommand>("set_inner_start_enabled", device);
-  auto is_inner_start_enabled_command = std::make_shared<IsInnerStartEnabledCommand>("is_inner_start_enabled", device);
-  auto set_inner_start_inverted_command = std::make_shared<SetInnerStartEnabledCommand>("set_inner_start_inverted", device);
-  auto is_inner_start_inverted_command = std::make_shared<IsInnerStartEnabledCommand>("is_inner_start_inverted", device);
-  auto get_sync_module_statuses_command = std::make_shared<GetSyncModuleStatusesCommand>("get_sync_module_statuses", device);
-  auto get_rf_module_statuses_command = std::make_shared<GetRFModuleStatusesCommand>("get_rf_module_statuses", device);
-  auto get_sync_sfp_params_command = std::make_shared<GetSyncSFPParamsCommand>("get_sync_sfp_params", device);
-  auto get_rf_sfp_params_command = std::make_shared<GetRFSFPParamsCommand>("get_rf_sfp_params", device);
-  auto get_sync_des_lock_command = std::make_shared<GetSyncDesLockCommand>("get_sync_des_lock", device);
-  auto get_sync_osc_lock_command = std::make_shared<GetSyncOscLockCommand>("get_sync_osc_lock", device);
+  auto set_channel_delay_command = std::make_shared<SetChannelDelayCommand>(SET_CHANNEL_DELAY_COMM_NAME, device);
+  auto get_channel_delay_command = std::make_shared<GetChannelDelayCommand>(GET_CHANNEL_DELAY_COMM_NAME, device);
+  auto set_channel_width_command = std::make_shared<SetChannelWidthCommand>(SET_CHANNEL_WIDTH_COMM_NAME, device);
+  auto get_channel_width_command = std::make_shared<GetChannelWidthCommand>(GET_CHANNEL_WIDTH_COMM_NAME, device);
+  auto set_channel_enabled_command = std::make_shared<SetChannelEnabledCommand>(SET_CHANNEL_ENABLED_COMM_NAME, device);
+  auto is_channel_enabled_command = std::make_shared<IsChannelEnabledCommand>(IS_CHANNEL_ENABLED_COMM_NAME, device);
+  auto set_channel_inverted_command = std::make_shared<SetChannelInvertedCommand>(SET_CHANNEL_INVERTED_COMM_NAME, device);
+  auto is_channel_inverted_command = std::make_shared<IsChannelInvertedCommand>(IS_CHANNEL_INVERTED_COMM_NAME, device);
+  auto set_channel_start_source_command = std::make_shared<SetChannelStartSourceCommand>(SET_CHANNEL_START_SOURCE_COMM_NAME, device);
+  auto get_channel_start_source_command = std::make_shared<GetChannelStartSourceCommand>(GET_CHANNEL_START_SOURCE_COMM_NAME, device);
+  auto set_channel_start_mode_command = std::make_shared<SetChannelStartModeCommand>(SET_CHANNEL_START_MODE_COMM_NAME, device);
+  auto get_channel_start_mode_command = std::make_shared<GetChannelStartModeCommand>(GET_CHANNEL_START_MODE_COMM_NAME, device);
+  auto set_channel_name_command = std::make_shared<SetChannelNameCommand>(SET_CHANNEL_NAME_COMM_NAME, device);
+  auto get_channel_name_command = std::make_shared<GetChannelNameCommand>(GET_CHANNEL_NAME_COMM_NAME, device);
+  auto set_inner_start_period_command = std::make_shared<SetInnerStartPeriodCommand>(SET_INNER_START_PERIOD_COMM_NAME, device);
+  auto get_inner_start_period_command = std::make_shared<GetInnerStartPeriodCommand>(GET_INNER_START_PERIOD_COMM_NAME, device);
+  auto set_inner_start_width_command = std::make_shared<SetInnerStartWidthCommand>(SET_INNER_START_WIDTH_COMM_NAME, device);
+  auto get_inner_start_width_command = std::make_shared<GetInnerStartWidthCommand>(GET_INNER_START_WIDTH_COMM_NAME, device);
+  auto set_inner_start_enabled_command = std::make_shared<SetInnerStartEnabledCommand>(SET_INNER_START_ENABLED_COMM_NAME, device);
+  auto is_inner_start_enabled_command = std::make_shared<IsInnerStartEnabledCommand>(IS_INNER_START_ENABLED_COMM_NAME, device);
+  auto set_inner_start_inverted_command = std::make_shared<SetInnerStartInvertedCommand>(SET_INNER_START_INVERTED_COMM_NAME, device);
+  auto is_inner_start_inverted_command = std::make_shared<IsInnerStartInvertedCommand>(IS_INNER_START_INVERTED_COMM_NAME, device);
+  auto get_sync_module_statuses_command = std::make_shared<GetSyncModuleStatusesCommand>(GET_SYNC_MODULE_STATUSES_COMM_NAME, device);
+  auto get_rf_module_statuses_command = std::make_shared<GetRFModuleStatusesCommand>(GET_RF_MODULE_STATUSES_COMM_NAME, device);
+  auto get_sync_sfp_params_command = std::make_shared<GetSyncSFPParamsCommand>(GET_SYNC_SFP_PARAMS_COMM_NAME, device);
+  auto get_rf_sfp_params_command = std::make_shared<GetRFSFPParamsCommand>(GET_RF_SFP_PARAMS_COMM_NAME, device);
+  auto get_sync_des_lock_command = std::make_shared<GetSyncDesLockCommand>(GET_SYNC_DES_LOCK_COMM_NAME, device);
+  auto get_sync_osc_lock_command = std::make_shared<GetSyncOscLockCommand>(GET_SYNC_OSC_LOCK_COMM_NAME, device);
 
   sync_module_statuses_property->setPollingPeriod(3000, error_code);
   rf_module_statuses_property->setPollingPeriod(3000, error_code);
@@ -122,17 +129,20 @@ std::shared_ptr<EPSSDevice> EPSSDevice::createEPSSDevice(const std::string &name
   CREATE_DEVICE_ADD_COMMAND(get_sync_osc_lock_command, device, error_code)
 
   SET_ERROR_CODE(error_code, ErrorCode::SUCCESS);
+
+  device->init();
   return device;
 }
 
 EPSSDevice::EPSSDevice(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client) :
-  ModbusDevice(name, modbus_client) {
-  initChannels(CHANNEL_COUNT);
+    ModbusDevice(name, modbus_client) {
+  init();
 }
 
-void EPSSDevice::initChannels(int channel_count) {
+void EPSSDevice::init() {
+  channel_count = CHANNEL_COUNT;
   if (channel_count <= 0) return;
-  this->channel_count = channel_count;
+//  this->channel_count = channel_count;
 
   channel_delays.resize(channel_count);
   channel_widths.resize(channel_count);
@@ -141,6 +151,23 @@ void EPSSDevice::initChannels(int channel_count) {
   channel_start_sources.resize(channel_count);
   channel_start_modes.resize(channel_count);
   channel_names.resize(channel_count);
+  inited = true;
+}
+
+void EPSSDevice::initChannels(int channel_count) {
+  this->channel_count = channel_count;
+  if (channel_count <= 0) return;
+//  this->channel_count = channel_count;
+
+  channel_delays.resize(channel_count);
+  channel_widths.resize(channel_count);
+  channel_enables.resize(channel_count);
+  channel_invs.resize(channel_count);
+  channel_start_sources.resize(channel_count);
+  channel_start_modes.resize(channel_count);
+  channel_names.resize(channel_count);
+
+  inited = true;
 }
 
 uint64_t EPSSDevice::getInnerStartPeriod(ErrorCode *error_code) const {
@@ -308,9 +335,9 @@ modbus::ModbusResult EPSSDevice::read_inner_start_enabled() {
 }
 
 modbus::ModbusResult EPSSDevice::write_inner_start_enabled(bool enabled) {
-  uint16_t value;
+  uint16_t value = enabled ? 1: 0;
   modbus::ModbusResult error_status = modbus_client->readHoldingRegister(6, value);
-  if (error_status == modbus::NO_ERROR) {
+  if (error_status == modbus::NO_MODBUS_ERROR) {
     if (!modbus::writeByteValue(0, 1, enabled, value))
       return modbus::UNHANDLED_ERROR;
 
@@ -340,16 +367,16 @@ modbus::ModbusResult EPSSDevice::read_inner_start_inv() {
 }
 
 modbus::ModbusResult EPSSDevice::write_inner_start_inv(bool inverted) {
-  uint16_t value;
+  uint16_t value = inverted ? 1: 0;
   modbus::ModbusResult error_status = modbus_client->readHoldingRegister(6, value);
 
-  if (error_status == modbus::NO_ERROR) {
+  if (error_status == modbus::NO_MODBUS_ERROR) {
     if (!modbus::writeByteValue(1, 1, inverted, value))
       return modbus::UNHANDLED_ERROR;
 
     MODBUS_RW_ERROR_HANDLE(
         modbus_client->writeHoldingRegister(6, value),
-        inner_start_enabled = inverted;,
+        inner_start_inverted = inverted;,
     ,
         error_status
     );
@@ -786,7 +813,7 @@ modbus::ModbusResult EPSSDevice::write_channel_enabled(uint16_t channel_num, boo
 
   uint16_t value;
   modbus::ModbusResult error_status = modbus_client->readHoldingRegister(14 + channel_num * 5, value);
-  if (error_status == modbus::NO_ERROR) {
+  if (error_status == modbus::NO_MODBUS_ERROR) {
     if (!modbus::writeByteValue(0, 1, enabled, value)) return modbus::INVALID_RESPONSE;
 
     MODBUS_RW_ERROR_HANDLE(
@@ -819,7 +846,7 @@ modbus::ModbusResult EPSSDevice::write_channel_inverted(uint16_t channel_num, bo
 
   uint16_t value;
   modbus::ModbusResult error_status = modbus_client->readHoldingRegister(14 + channel_num * 5, value);
-  if (error_status == modbus::NO_ERROR) {
+  if (error_status == modbus::NO_MODBUS_ERROR) {
     if (!modbus::writeByteValue(1, 1, inverted, value)) return modbus::INVALID_RESPONSE;
 
     MODBUS_RW_ERROR_HANDLE(
@@ -829,6 +856,8 @@ modbus::ModbusResult EPSSDevice::write_channel_inverted(uint16_t channel_num, bo
     );
     return error_status;
   }
+
+  return error_status;
 }
 
 modbus::ModbusResult EPSSDevice::read_channel_source(uint16_t channel_num) {
@@ -855,7 +884,7 @@ modbus::ModbusResult EPSSDevice::write_channel_source(uint16_t channel_num, int1
   uint16_t value;
   modbus::ModbusResult error_status = modbus_client->readHoldingRegister(14 + channel_num * 5, value);
 
-  if (error_status == modbus::NO_ERROR) {
+  if (error_status == modbus::NO_MODBUS_ERROR) {
     if (!modbus::writeByteValue(2, 5, source, value)) return modbus::INVALID_RESPONSE;
 
     MODBUS_RW_ERROR_HANDLE(
@@ -889,7 +918,7 @@ modbus::ModbusResult EPSSDevice::write_channel_mode(uint16_t channel_num, int16_
 
   uint16_t value;
   modbus::ModbusResult error_status = modbus_client->readHoldingRegister(14 + channel_num * 5, value);
-  if (error_status == modbus::NO_ERROR) {
+  if (error_status == modbus::NO_MODBUS_ERROR) {
     if (!modbus::writeByteValue(7, 1, mode, value)) return modbus::INVALID_RESPONSE;
     MODBUS_RW_ERROR_HANDLE(
         modbus_client->writeHoldingRegister(14 + channel_num * 5, value),

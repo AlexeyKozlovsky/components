@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -g -shared -Wl,-soname,liblibmodbus.so.1 -o liblibmodbus.so.1.0.1 CMakeFiles/libmodbus.dir/main.cpp.o CMakeFiles/libmodbus.dir/modbus.cpp.o 

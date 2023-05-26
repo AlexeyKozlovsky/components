@@ -6,7 +6,7 @@ DeviceAttribute::DeviceAttribute(const std::string &name, const std::shared_ptr<
 
 }
 
-void DeviceAttribute::setPollingCallback(const std::function<void(VARIANT&, ErrorCode*)> &callback) {
+void DeviceAttribute::setPollingCallback(const std::function<void(VARIANT__D&, ErrorCode*)> &callback) {
   polling_callback = callback;
 }
 

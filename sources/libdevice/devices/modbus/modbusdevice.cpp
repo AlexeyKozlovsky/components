@@ -12,6 +12,13 @@ std::shared_ptr<ModbusDevice> ModbusDevice::createModbusDevice(const std::string
   auto modbus_client = std::make_shared<ModbusClient>(ip, port);
   auto device = std::shared_ptr<ModbusDevice>(new ModbusDevice(name, modbus_client));
 
+  ModbusDevice::createModbusDevice(device, error_code);
+
+  return device;
+}
+
+void ModbusDevice::createModbusDevice(std::shared_ptr<ModbusDevice> &device,
+                                      ErrorCode *error_code) {
   auto connect_command = std::make_shared<ConnectCommand>("connect", device);
   auto update_address_command = std::make_shared<UpdateAddressCommand>("update_address", device);
   auto update_modbus_id_command = std::make_shared<UpdateModbusIDCommand>("update_modbus_id", device);
@@ -20,50 +27,53 @@ std::shared_ptr<ModbusDevice> ModbusDevice::createModbusDevice(const std::string
   auto get_connection_status_command = std::make_shared<GetConnectionStatusCommand>("get_connection_status", device);
 
   device->addCommand(connect_command, error_code);
-  IS_ERROR(
+  IS_ERROR__D(
       error_code,
-      return nullptr;
-      );
+      return;
+  );
 
   device->addCommand(update_address_command, error_code);
-  IS_ERROR(
+  IS_ERROR__D(
       error_code,
-      return nullptr;
-      );
+      return;
+  );
 
   device->addCommand(update_modbus_id_command, error_code);
-  IS_ERROR(
+  IS_ERROR__D(
       error_code,
-      return nullptr;
-      );
+      return;
+  );
 
   device->addCommand(get_ip_command, error_code);
-  IS_ERROR(
+  IS_ERROR__D(
       error_code,
-      return nullptr;
-      );
+      return;
+  );
 
   device->addCommand(get_port_command, error_code);
-  IS_ERROR(
+  IS_ERROR__D(
       error_code,
-      return nullptr;
-      );
+      return;
+  );
 
   device->addCommand(get_connection_status_command, error_code);
-  IS_ERROR(
+  IS_ERROR__D(
       error_code,
-      return nullptr;
-      );
+      return;
+  );
 
   device->setAvailableStates({DeviceState::OPEN, DeviceState::CLOSE});
   device->changeState(DeviceState::CLOSE);
 
-  return device;
 }
 
 ModbusDevice::ModbusDevice(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client):
   Device(name), modbus_client(modbus_client) {
 
+}
+
+void ModbusDevice::init() {
+  Device::init();
 }
 
 const std::shared_ptr<ModbusClient> &ModbusDevice::getModbusClient() {

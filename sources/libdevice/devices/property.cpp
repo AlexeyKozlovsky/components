@@ -8,24 +8,28 @@ Property::Property(const std::string &name, const std::shared_ptr<Device> &devic
 
 }
 
-VARIANT Property::getValue(ErrorCode *error_code) {
+VARIANT__D Property::getValue(ErrorCode *error_code) {
   return value;
 }
 
-VARIANT Property::readValue(ErrorCode *error_code) {
+VARIANT__D Property::readValue(ErrorCode *error_code) {
+//  read_mutex.lock();
   beforeRead(error_code);
-  IS_ERROR(error_code, return {};)
+  IS_ERROR__D(error_code, return {};)
   value = read(error_code);
-  IS_ERROR(error_code, return {};)
+  IS_ERROR__D(error_code, return {};)
   afterRead(error_code);
+//  read_mutex.unlock();
   return getValue(error_code);
 }
 
-void Property::writeValue(const VARIANT &value, ErrorCode * error_code) {
+void Property::writeValue(const VARIANT__D &value, ErrorCode * error_code) {
+//  write_mutex.lock();
   beforeWrite(error_code);
-  IS_ERROR(error_code, return)
+  IS_ERROR__D(error_code, return)
   write(value, error_code);
-  IS_ERROR(error_code, return)
+  IS_ERROR__D(error_code, return)
+//  write_mutex.unlock();
   afterWrite(error_code);
 }
 

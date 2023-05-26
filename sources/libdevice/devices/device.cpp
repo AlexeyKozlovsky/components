@@ -30,6 +30,14 @@ void Device::setDescription(const std::string &description) {
   this->description = description;
 }
 
+void Device::init() {
+  // inited надо ставить в true после всех необходимых действий самому!!
+  // Так как создание происходится в статическом методе и изначально создается объект более базового класса,
+  // по отношению к тому, который надо создать, то в этом процессе inited может стать true раньше, чем
+  // создание объекта класса наследника и его инициализация произойдут.
+//  inited = true;
+}
+
 void Device::addProperty(std::shared_ptr<Property> property, ErrorCode *error_code) {
   if (properties.count(property) != 0) *error_code = ErrorCode::PROPERTY_OR_COMMAND_ALREADY_EXISTS;
   else {
@@ -58,28 +66,28 @@ void Device::changeState(DeviceState state, ErrorCode *error_code) {
   }
 }
 
-VARIANT Device::readProperty(const std::string &property_name, ErrorCode *error_code) {
+VARIANT__D Device::readProperty(const std::string &property_name, ErrorCode *error_code) {
   std::shared_ptr<Property> property = getPropertyByName(property_name, error_code);
-  if (property == nullptr) return VARIANT();
+  if (property == nullptr) return VARIANT__D();
 
   auto result = property->readValue(error_code);
   return result;
 }
 
-VARIANT Device::writeProperty(const std::string &property_name,
-                              const VARIANT &value,
-                              ErrorCode * error_code) {
+VARIANT__D Device::writeProperty(const std::string &property_name,
+                                 const VARIANT__D &value,
+                                 ErrorCode * error_code) {
   std::shared_ptr<Property> property = getPropertyByName(property_name, error_code);
-  if (property == nullptr) return VARIANT();
+  if (property == nullptr) return VARIANT__D();
 
   property->writeValue(value, error_code);
   return value;
 }
-VARIANT Device::executeCommand(const std::string &command_name,
-                               const VARIANT &argin,
-                               ErrorCode * error_code) {
+VARIANT__D Device::executeCommand(const std::string &command_name,
+                                  const VARIANT__D &argin,
+                                  ErrorCode * error_code) {
   std::shared_ptr<Command> command = getCommandByName(command_name, error_code);
-  if (command == nullptr) return VARIANT();
+  if (command == nullptr) return VARIANT__D();
 
   auto result = command->executeCommand(argin, error_code);
   return result;

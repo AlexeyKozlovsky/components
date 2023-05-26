@@ -524,7 +524,7 @@ VARIANT GetSyncSFPParamsCommand::execute(const VARIANT &argin,
   MODBUS_RW_DEVICE_ERROR_HANDLE(spec_device->read_sfp_sync_module_tx_power(),,,error_code)
   MODBUS_RW_DEVICE_ERROR_HANDLE(spec_device->read_sfp_sync_module_rx_power(),,,error_code)
   auto sfp_statuses = spec_device->getSyncSFPStatuses(error_code);
-  IS_ERROR(error_code, return {})
+  IS_ERROR__D(error_code, return {})
 
   auto result = {
       SCALAR_VARIANT(sfp_statuses.temperature),
@@ -552,7 +552,7 @@ VARIANT GetRFSFPParamsCommand::execute(const VARIANT &argin,
   MODBUS_RW_DEVICE_ERROR_HANDLE(spec_device->read_sfp_rf_module_tx_power(),,,error_code)
   MODBUS_RW_DEVICE_ERROR_HANDLE(spec_device->read_sfp_rf_module_rx_power(),,,error_code)
   auto sfp_statuses = spec_device->getRFSFPStatuses(error_code);
-  IS_ERROR(error_code, return {})
+  IS_ERROR__D(error_code, return {})
 
   auto result = {
       SCALAR_VARIANT(sfp_statuses.temperature),

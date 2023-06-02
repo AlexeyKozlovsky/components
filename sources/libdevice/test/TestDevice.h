@@ -6,16 +6,12 @@
 
 #include <modbus.h>
 #include <devices/device.h>
+#include <devices/modbus/modbusproperty.h>
+#include <devices/modbus/modbuscommand.h>
+#include <devices/modbus/modbuscommandkit.h>
+
 
 using modbus::ModbusClient;
-
-class ModbusProperty: public Property {
- public:
-  ModbusProperty(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
-
- protected:
-  std::shared_ptr<ModbusClient> modbus_client;
-};
 
 
 class PeriodProperty: public ModbusProperty {
@@ -26,30 +22,12 @@ class PeriodProperty: public ModbusProperty {
 
  protected:
   void beforeRead(ErrorCode *error_code) override;
-  VARIANT read(ErrorCode *error_code) override;
+  VARIANT__D read(ErrorCode *error_code) override;
   void afterRead(ErrorCode *error_code) override;
   void beforeWrite(ErrorCode *error_code) override;
-  void write(const VARIANT& value, ErrorCode * error_code) override;
+  void write(const VARIANT__D& value, ErrorCode * error_code) override;
   void afterWrite(ErrorCode *error_code) override;
 };
-
-class ModbusCommand: public Command {
- public:
-  ModbusCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
-
- protected:
-  std::shared_ptr<ModbusClient> modbus_client;
-};
-
-
-class ConnectCommand: public ModbusCommand {
- public:
-  ConnectCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client);
-
- protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode * error_code) override;
-};
-
 
 class TestDevice: public Device {
  public:

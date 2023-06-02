@@ -2,10 +2,6 @@
 
 #include "modbus.h"
 
-ModbusProperty::ModbusProperty(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client):
-    Property(name), modbus_client(modbus_client) {
-}
-
 PeriodProperty::PeriodProperty(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client):
   ModbusProperty(name, modbus_client) {
 }
@@ -18,7 +14,7 @@ void PeriodProperty::beforeRead(ErrorCode *error_code) {
   Property::beforeRead(error_code);
 }
 
-VARIANT PeriodProperty::read(ErrorCode * error_code) {
+VARIANT__D PeriodProperty::read(ErrorCode * error_code) {
   uint16_t value;
   modbus::ModbusResult error_status;
   MODBUS_RW_ERROR_HANDLE(
@@ -39,7 +35,7 @@ void PeriodProperty::beforeWrite(ErrorCode *error_code) {
   Property::beforeWrite(error_code);
 }
 
-void PeriodProperty::write(const VARIANT &value, ErrorCode * error_code) {
+void PeriodProperty::write(const VARIANT__D &value, ErrorCode * error_code) {
 
 }
 
@@ -56,16 +52,12 @@ const std::shared_ptr<ModbusClient> &TestDevice::getModbusClient() const {
   return modbus_client;
 }
 
-ModbusCommand::ModbusCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client):
-  Command(name), modbus_client(modbus_client) {
-}
-
 ConnectCommand::ConnectCommand(const std::string &name, const std::shared_ptr<ModbusClient> &modbus_client):
     ModbusCommand(name, modbus_client) {
 }
 
-VARIANT ConnectCommand::execute( const VARIANT &argin, ErrorCode * error_code) {
-  bool argin_value = std::get<bool>(argin);
+VARIANT__D ConnectCommand::execute( const VARIANT__D &argin, ErrorCode * error_code) {
+  bool argin_value = std::get<bool>(std::get<SCALAR_VARIANT__D>(argin));
 
   bool result = true;
   if (argin_value) {

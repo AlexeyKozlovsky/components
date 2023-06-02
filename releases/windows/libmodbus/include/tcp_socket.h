@@ -57,6 +57,23 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
     return received_bytes;
   }
 
+  void connect(boost::beast::tcp_stream& stream, ip::tcp::endpoint &ep, io_service &io) {
+    io.reset();
+    io.run();
+
+
+    stream.expires_after(std::chrono::seconds(4));
+    stream.async_connect(ep, [&] (beast::error_code _ec) {
+      std::cout << "TTTTT" << std::endl;
+      if (_ec == beast::error::timeout) {
+        std::cerr << "TILTTT" << std::endl;
+        stream.close();
+      }
+    });
+
+    io.reset();
+  }
+
  private:
   size_t received_bytes;
 

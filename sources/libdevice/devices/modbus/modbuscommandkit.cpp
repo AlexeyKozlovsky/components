@@ -24,7 +24,10 @@ VARIANT__D ConnectCommand::execute(const VARIANT__D &argin, ErrorCode * error_co
   bool result;
   if (to_connect) {
     result = modbus_client->connect();
-  } else modbus_client->disconnect();
+  } else {
+    modbus_client->disconnect();
+    result = true;
+  }
 
 //  bool result = modbus_client->isConnected();
   if (result) {

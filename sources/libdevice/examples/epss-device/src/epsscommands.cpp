@@ -10,7 +10,7 @@ SetChannelDelayCommand::SetChannelDelayCommand(const std::string &name,
 
 }
 
-VARIANT SetChannelDelayCommand::execute(const VARIANT &argin,
+VARIANT__D SetChannelDelayCommand::execute(const VARIANT__D &argin,
                                         ErrorCode *error_code) {
   uint16_t channel_num;
   uint64_t delay;
@@ -37,7 +37,7 @@ GetChannelDelayCommand::GetChannelDelayCommand(const std::string &name,
 
 }
 
-VARIANT GetChannelDelayCommand::execute(const VARIANT &argin,
+VARIANT__D GetChannelDelayCommand::execute(const VARIANT__D &argin,
                                         ErrorCode *error_code) {
   uint16_t channel_num;
 
@@ -60,7 +60,7 @@ SetChannelWidthCommand::SetChannelWidthCommand(const std::string &name,
 
 }
 
-VARIANT SetChannelWidthCommand::execute(const VARIANT &argin,
+VARIANT__D SetChannelWidthCommand::execute(const VARIANT__D &argin,
                                         ErrorCode *error_code) {
   uint16_t channel_num;
   uint64_t width;
@@ -87,7 +87,7 @@ GetChannelWidthCommand::GetChannelWidthCommand(const std::string &name,
 
 }
 
-VARIANT GetChannelWidthCommand::execute(const VARIANT &argin,
+VARIANT__D GetChannelWidthCommand::execute(const VARIANT__D &argin,
                                         ErrorCode *error_code) {
   uint16_t channel_num;
 
@@ -110,7 +110,7 @@ SetChannelStartSourceCommand::SetChannelStartSourceCommand(const std::string &na
 
 }
 
-VARIANT SetChannelStartSourceCommand::execute(const VARIANT &argin,
+VARIANT__D SetChannelStartSourceCommand::execute(const VARIANT__D &argin,
                                         ErrorCode *error_code) {
   uint16_t channel_num;
   int16_t start_source;
@@ -138,7 +138,7 @@ GetChannelStartSourceCommand::GetChannelStartSourceCommand(const std::string &na
 
 }
 
-VARIANT GetChannelStartSourceCommand::execute(const VARIANT &argin,
+VARIANT__D GetChannelStartSourceCommand::execute(const VARIANT__D &argin,
                                               ErrorCode *error_code) {
   uint16_t channel_num;
   REQUEST_PREPROCESS(
@@ -159,7 +159,7 @@ SetChannelStartModeCommand::SetChannelStartModeCommand(const std::string &name,
 
 }
 
-VARIANT SetChannelStartModeCommand::execute(const VARIANT &argin,
+VARIANT__D SetChannelStartModeCommand::execute(const VARIANT__D &argin,
                                               ErrorCode *error_code) {
   uint16_t channel_num;
   int16_t start_mode;
@@ -187,7 +187,7 @@ GetChannelStartModeCommand::GetChannelStartModeCommand(const std::string &name,
 
 }
 
-VARIANT GetChannelStartModeCommand::execute(const VARIANT &argin,
+VARIANT__D GetChannelStartModeCommand::execute(const VARIANT__D &argin,
                                             ErrorCode *error_code) {
   uint16_t channel_num;
   REQUEST_PREPROCESS(
@@ -208,7 +208,7 @@ SetChannelEnabledCommand::SetChannelEnabledCommand(const std::string &name,
 
 }
 
-VARIANT SetChannelEnabledCommand::execute(const VARIANT &argin,
+VARIANT__D SetChannelEnabledCommand::execute(const VARIANT__D &argin,
                                             ErrorCode *error_code) {
   uint16_t channel_num;
   bool enabled;
@@ -235,7 +235,7 @@ IsChannelEnabledCommand::IsChannelEnabledCommand(const std::string &name,
 
 }
 
-VARIANT IsChannelEnabledCommand::execute(const VARIANT &argin,
+VARIANT__D IsChannelEnabledCommand::execute(const VARIANT__D &argin,
                                           ErrorCode *error_code) {
   uint16_t channel_num;
   REQUEST_PREPROCESS(
@@ -257,7 +257,7 @@ SetChannelInvertedCommand::SetChannelInvertedCommand(const std::string &name,
 
 }
 
-VARIANT SetChannelInvertedCommand::execute(const VARIANT &argin,
+VARIANT__D SetChannelInvertedCommand::execute(const VARIANT__D &argin,
                                           ErrorCode *error_code) {
   uint16_t channel_num;
   bool inverted;
@@ -284,7 +284,7 @@ IsChannelInvertedCommand::IsChannelInvertedCommand(const std::string &name,
 
 }
 
-VARIANT IsChannelInvertedCommand::execute(const VARIANT &argin,
+VARIANT__D IsChannelInvertedCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   uint16_t channel_num;
   REQUEST_PREPROCESS(
@@ -306,7 +306,7 @@ SetChannelNameCommand::SetChannelNameCommand(const std::string &name,
 
 }
 
-VARIANT SetChannelNameCommand::execute(const VARIANT &argin,
+VARIANT__D SetChannelNameCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   uint16_t channel_num;
   std::string name;
@@ -333,7 +333,7 @@ GetChannelNameCommand::GetChannelNameCommand(const std::string &name,
 
 }
 
-VARIANT GetChannelNameCommand::execute(const VARIANT &argin,
+VARIANT__D GetChannelNameCommand::execute(const VARIANT__D &argin,
                                        ErrorCode *error_code) {
   uint16_t channel_num;
   REQUEST_PREPROCESS(
@@ -353,7 +353,7 @@ SetInnerStartPeriodCommand::SetInnerStartPeriodCommand(const std::string &name,
 
 }
 
-VARIANT SetInnerStartPeriodCommand::execute(const VARIANT &argin,
+VARIANT__D SetInnerStartPeriodCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   uint64_t period;
   REQUEST_PREPROCESS(
@@ -373,7 +373,7 @@ GetInnerStartPeriodCommand::GetInnerStartPeriodCommand(const std::string &name,
 
 }
 
-VARIANT GetInnerStartPeriodCommand::execute(const VARIANT &argin,
+VARIANT__D GetInnerStartPeriodCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   uint64_t period;
   auto spec_device = static_pointer_cast<EPSSDevice>(device);
@@ -388,7 +388,7 @@ SetInnerStartWidthCommand::SetInnerStartWidthCommand(const std::string &name,
 
 }
 
-VARIANT SetInnerStartWidthCommand::execute(const VARIANT &argin,
+VARIANT__D SetInnerStartWidthCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   uint64_t width;
   REQUEST_PREPROCESS(
@@ -408,7 +408,7 @@ GetInnerStartWidthCommand::GetInnerStartWidthCommand(const std::string &name,
 
 }
 
-VARIANT GetInnerStartWidthCommand::execute(const VARIANT &argin,
+VARIANT__D GetInnerStartWidthCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   uint64_t width;
   auto spec_device = static_pointer_cast<EPSSDevice>(device);
@@ -423,7 +423,7 @@ SetInnerStartEnabledCommand::SetInnerStartEnabledCommand(const std::string &name
 
 }
 
-VARIANT SetInnerStartEnabledCommand::execute(const VARIANT &argin,
+VARIANT__D SetInnerStartEnabledCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   bool enabled;
   REQUEST_PREPROCESS(
@@ -443,7 +443,7 @@ IsInnerStartEnabledCommand::IsInnerStartEnabledCommand(const std::string &name,
 
 }
 
-VARIANT IsInnerStartEnabledCommand::execute(const VARIANT &argin,
+VARIANT__D IsInnerStartEnabledCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   bool enabled;
   auto spec_device = static_pointer_cast<EPSSDevice>(device);
@@ -458,7 +458,7 @@ SetInnerStartInvertedCommand::SetInnerStartInvertedCommand(const std::string &na
 
 }
 
-VARIANT SetInnerStartInvertedCommand::execute(const VARIANT &argin,
+VARIANT__D SetInnerStartInvertedCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   bool inverted;
   REQUEST_PREPROCESS(
@@ -478,7 +478,7 @@ IsInnerStartInvertedCommand::IsInnerStartInvertedCommand(const std::string &name
 
 }
 
-VARIANT IsInnerStartInvertedCommand::execute(const VARIANT &argin,
+VARIANT__D IsInnerStartInvertedCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   bool inverted;
   auto spec_device = static_pointer_cast<EPSSDevice>(device);
@@ -493,7 +493,7 @@ GetSyncModuleStatusesCommand::GetSyncModuleStatusesCommand(const std::string &na
 
 }
 
-VARIANT GetSyncModuleStatusesCommand::execute(const VARIANT &argin,
+VARIANT__D GetSyncModuleStatusesCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   return {};
 }
@@ -504,7 +504,7 @@ GetRFModuleStatusesCommand::GetRFModuleStatusesCommand(const std::string &name,
 
 }
 
-VARIANT GetRFModuleStatusesCommand::execute(const VARIANT &argin,
+VARIANT__D GetRFModuleStatusesCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   return {};
 }
@@ -515,7 +515,7 @@ GetSyncSFPParamsCommand::GetSyncSFPParamsCommand(const std::string &name,
 
 }
 
-VARIANT GetSyncSFPParamsCommand::execute(const VARIANT &argin,
+VARIANT__D GetSyncSFPParamsCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   auto spec_device = static_pointer_cast<EPSSDevice>(device);
   MODBUS_RW_DEVICE_ERROR_HANDLE(spec_device->read_sfp_sync_module_temperature(),,,error_code)
@@ -543,7 +543,7 @@ GetRFSFPParamsCommand::GetRFSFPParamsCommand(const std::string &name,
 
 }
 
-VARIANT GetRFSFPParamsCommand::execute(const VARIANT &argin,
+VARIANT__D GetRFSFPParamsCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   auto spec_device = static_pointer_cast<EPSSDevice>(device);
   MODBUS_RW_DEVICE_ERROR_HANDLE(spec_device->read_sfp_rf_module_temperature(),,,error_code)
@@ -571,7 +571,7 @@ GetSyncDesLockCommand::GetSyncDesLockCommand(const std::string &name,
 
 }
 
-VARIANT GetSyncDesLockCommand::execute(const VARIANT &argin,
+VARIANT__D GetSyncDesLockCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   return {};
 }
@@ -582,7 +582,7 @@ GetSyncOscLockCommand::GetSyncOscLockCommand(const std::string &name,
 
 }
 
-VARIANT GetSyncOscLockCommand::execute(const VARIANT &argin,
+VARIANT__D GetSyncOscLockCommand::execute(const VARIANT__D &argin,
                                            ErrorCode *error_code) {
   return {};
 }

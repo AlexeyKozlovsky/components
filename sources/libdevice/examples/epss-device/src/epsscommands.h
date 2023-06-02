@@ -9,7 +9,7 @@ class SetChannelDelayCommand: public ModbusCommand {
   SetChannelDelayCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetChannelDelayCommand: public ModbusCommand {
@@ -17,7 +17,7 @@ class GetChannelDelayCommand: public ModbusCommand {
   GetChannelDelayCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetChannelWidthCommand: public ModbusCommand {
@@ -25,7 +25,7 @@ class SetChannelWidthCommand: public ModbusCommand {
   SetChannelWidthCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetChannelWidthCommand: public ModbusCommand {
@@ -33,7 +33,7 @@ class GetChannelWidthCommand: public ModbusCommand {
   GetChannelWidthCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetChannelStartSourceCommand: public ModbusCommand {
@@ -41,7 +41,7 @@ class SetChannelStartSourceCommand: public ModbusCommand {
   SetChannelStartSourceCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetChannelStartSourceCommand: public ModbusCommand {
@@ -49,7 +49,7 @@ class GetChannelStartSourceCommand: public ModbusCommand {
   GetChannelStartSourceCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetChanelStartModeCommand: public ModbusCommand {
@@ -57,7 +57,7 @@ class SetChanelStartModeCommand: public ModbusCommand {
   SetChanelStartModeCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetChannelStartModeCommand: public ModbusCommand {
@@ -65,7 +65,7 @@ class SetChannelStartModeCommand: public ModbusCommand {
   SetChannelStartModeCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetChannelStartModeCommand: public ModbusCommand {
@@ -73,7 +73,7 @@ class GetChannelStartModeCommand: public ModbusCommand {
   GetChannelStartModeCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 
@@ -82,7 +82,7 @@ class SetChannelEnabledCommand: public ModbusCommand {
   SetChannelEnabledCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class IsChannelEnabledCommand: public ModbusCommand {
@@ -90,7 +90,7 @@ class IsChannelEnabledCommand: public ModbusCommand {
   IsChannelEnabledCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetChannelInvertedCommand: public ModbusCommand {
@@ -98,7 +98,7 @@ class SetChannelInvertedCommand: public ModbusCommand {
   SetChannelInvertedCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class IsChannelInvertedCommand: public ModbusCommand {
@@ -106,7 +106,7 @@ class IsChannelInvertedCommand: public ModbusCommand {
   IsChannelInvertedCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetChannelNameCommand: public Command {
@@ -114,7 +114,7 @@ class SetChannelNameCommand: public Command {
   SetChannelNameCommand(const std::string &name, const std::shared_ptr<Device> &device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetChannelNameCommand: public Command {
@@ -122,7 +122,7 @@ class GetChannelNameCommand: public Command {
   GetChannelNameCommand(const std::string &name, const std::shared_ptr<Device> &device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetInnerStartPeriodCommand: public ModbusCommand {
@@ -130,7 +130,7 @@ class SetInnerStartPeriodCommand: public ModbusCommand {
   SetInnerStartPeriodCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetInnerStartPeriodCommand: public ModbusCommand {
@@ -138,7 +138,7 @@ class GetInnerStartPeriodCommand: public ModbusCommand {
   GetInnerStartPeriodCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetInnerStartWidthCommand: public ModbusCommand {
@@ -146,7 +146,7 @@ class SetInnerStartWidthCommand: public ModbusCommand {
   SetInnerStartWidthCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetInnerStartWidthCommand: public ModbusCommand {
@@ -154,7 +154,7 @@ class GetInnerStartWidthCommand: public ModbusCommand {
   GetInnerStartWidthCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetInnerStartEnabledCommand: public ModbusCommand {
@@ -162,7 +162,7 @@ class SetInnerStartEnabledCommand: public ModbusCommand {
   SetInnerStartEnabledCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class IsInnerStartEnabledCommand: public ModbusCommand {
@@ -170,7 +170,7 @@ class IsInnerStartEnabledCommand: public ModbusCommand {
   IsInnerStartEnabledCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class SetInnerStartInvertedCommand: public ModbusCommand {
@@ -178,7 +178,7 @@ class SetInnerStartInvertedCommand: public ModbusCommand {
   SetInnerStartInvertedCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class IsInnerStartInvertedCommand: public ModbusCommand {
@@ -186,7 +186,7 @@ class IsInnerStartInvertedCommand: public ModbusCommand {
   IsInnerStartInvertedCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetSyncModuleStatusesCommand: public ModbusCommand {
@@ -194,7 +194,7 @@ class GetSyncModuleStatusesCommand: public ModbusCommand {
   GetSyncModuleStatusesCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetRFModuleStatusesCommand: public ModbusCommand {
@@ -202,7 +202,7 @@ class GetRFModuleStatusesCommand: public ModbusCommand {
   GetRFModuleStatusesCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetSyncSFPParamsCommand: public ModbusCommand {
@@ -210,7 +210,7 @@ class GetSyncSFPParamsCommand: public ModbusCommand {
   GetSyncSFPParamsCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetRFSFPParamsCommand: public ModbusCommand {
@@ -218,7 +218,7 @@ class GetRFSFPParamsCommand: public ModbusCommand {
   GetRFSFPParamsCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetSyncDesLockCommand: public ModbusCommand {
@@ -226,7 +226,7 @@ class GetSyncDesLockCommand: public ModbusCommand {
   GetSyncDesLockCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 class GetSyncOscLockCommand: public ModbusCommand {
@@ -234,7 +234,7 @@ class GetSyncOscLockCommand: public ModbusCommand {
   GetSyncOscLockCommand(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT execute(const VARIANT &argin, ErrorCode *error_code = nullptr);
+  VARIANT__D execute(const VARIANT__D &argin, ErrorCode *error_code = nullptr);
 };
 
 #endif //LIBDEVICE_EXAMPLES_EPSS_DEVICE_COMMANDS_H_

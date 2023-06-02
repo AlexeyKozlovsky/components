@@ -1,21 +1,50 @@
 #include <iostream>
 
-#include "modbus.h"
+#include <modbus.h>
 
 #ifdef FOR_WIN
 #pragma comment(lib, "ws2_32")
 #endif
 
+#include <Windows.h>
+
 using namespace modbus;
 
 int main() {
-  ModbusClient client("192.168.127.1", 4001);
-  client.setTimeout(1);
+  SetConsoleCP(1251);
+  SetConsoleOutputCP(1251);
+
+  ModbusClient client("192.168.127.10", 4001);
   bool is_connected = client.connect();
   if (!is_connected) {
     std::cout << "Connection failure" << std::endl;
     return EXIT_FAILURE;
   }
+
+  sleep(2);
+  client.disconnect();
+  sleep(2);
+  is_connected = client.connect();
+  if (!is_connected) {
+    std::cerr << "Connection failuer" << std::endl;
+    return EXIT_FAILURE;
+  }
+
+  sleep(2);
+  is_connected = client.connect();
+  if (!is_connected) {
+    std::cerr << "Connection failuer" << std::endl;
+    return EXIT_FAILURE;
+  }
+
+
+  sleep(2);
+  is_connected = client.connect();
+  if (!is_connected) {
+    std::cerr << "Connection failuer" << std::endl;
+    return EXIT_FAILURE;
+  } else return EXIT_SUCCESS;
+
 
 //  sleep(7);
 

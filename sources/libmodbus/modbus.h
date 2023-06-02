@@ -7,7 +7,7 @@
 #include "tcp_socket.h"
 
 #include <mutex>
-
+#include "export/libmodbus_Export.h"
 /**
  * Макрос для удобства обработки ошибок при чтении и записи по протоколу модбас через ModbusClient
  */

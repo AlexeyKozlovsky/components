@@ -7,7 +7,7 @@
 
 using modbus::ModbusClient;
 
-static const int DEFAULT_TIMEOUT = 5;
+static const int DEFAULT_TIMEOUT = 6;
 
 const std::string ModbusClient::default_ip = "192.168.127.1";
 const uint16_t ModbusClient::default_port = 4001;
@@ -46,7 +46,6 @@ bool modbus::writeByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value
   std::cout << "VALUE AFTER: " << unsigned(value) << std::endl;
 
   return true;
-
 }
 
 void modbus::toMsbLsb(uint16_t data, uint8_t &lsb, uint8_t &msb) {
@@ -117,7 +116,6 @@ modbus::ModbusClient::ModbusClient(std::string ip, uint16_t port): ip(ip), port(
 
 bool modbus::ModbusClient::connect() {
   std::cout << "CONNECTION..." << std::endl;
-  comm_mutex.lock();
 //  typedef boost::asio::detail::socket_option::integer<SOL_SOCKET, SO_RCVTIMEO> rcv_timeout_option; //somewhere in your headers to be used everywhere you need it
 //...
 //  socket.socket().set_option(rcv_timeout_option{ 200 });
@@ -221,13 +219,14 @@ bool modbus::ModbusClient::connect() {
 //  connection.connect(socket, endpoint, service);
 //  socket.socket().connect(endpoint, ec);
 //  socket.socket().connect(endpoint, ec);
-
-  comm_mutex.unlock();
   return isConnected();
 }
 
 void modbus::ModbusClient::disconnect() {
-  if (socket.socket().is_open()) socket.socket().close();
+  if (socket.socket().is_open()) {
+    socket.socket().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+    socket.socket().close();
+  }
 //  if (socket.socket().is_open()) socket.socket().shutdown();
 }
 
@@ -422,7 +421,9 @@ bool modbus::ModbusClient::sendRawRequest(uint8_t *raw_request,
 
   comm_mutex.lock();
   beast::error_code _ec;
+  service.stop();
   socket.socket().remote_endpoint(_ec);
+  std::cout << "Remote endpoint ec: " << _ec.message() << _ec << std::endl;
   if (!_ec) {
     static uint8_t read_buffer[256];
     boost::asio::streambuf asio_buffer;

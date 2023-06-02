@@ -10,8 +10,8 @@ class InnerStartPeriodProperty: public ModbusProperty {
   InnerStartPeriodProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class InnerStartWidthProperty: public ModbusProperty {
@@ -19,8 +19,8 @@ class InnerStartWidthProperty: public ModbusProperty {
   InnerStartWidthProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class InnerStartOnProperty: public ModbusProperty {
@@ -28,8 +28,8 @@ class InnerStartOnProperty: public ModbusProperty {
   InnerStartOnProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class InnerStartInvProperty: public ModbusProperty {
@@ -37,8 +37,8 @@ class InnerStartInvProperty: public ModbusProperty {
   InnerStartInvProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class ChannelsDelayProperty: public ModbusProperty {
@@ -46,8 +46,8 @@ class ChannelsDelayProperty: public ModbusProperty {
   ChannelsDelayProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class ChannelsWidthProperty: public ModbusProperty {
@@ -55,8 +55,8 @@ class ChannelsWidthProperty: public ModbusProperty {
   ChannelsWidthProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class ChannelsOnProperty: public ModbusProperty {
@@ -64,8 +64,8 @@ class ChannelsOnProperty: public ModbusProperty {
   ChannelsOnProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class ChannelsInvProperty: public ModbusProperty {
@@ -73,8 +73,8 @@ class ChannelsInvProperty: public ModbusProperty {
   ChannelsInvProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 
@@ -83,8 +83,8 @@ class ChannelsStartSourceProperty: public ModbusProperty {
   ChannelsStartSourceProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class ChannelsStartModeProperty: public ModbusProperty {
@@ -92,8 +92,8 @@ class ChannelsStartModeProperty: public ModbusProperty {
   ChannelsStartModeProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class SyncModuleSFPStatusesProperty: public ModbusProperty {
@@ -101,8 +101,8 @@ class SyncModuleSFPStatusesProperty: public ModbusProperty {
   SyncModuleSFPStatusesProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 
@@ -111,8 +111,8 @@ class RFModuleSFPStatusesProperty: public ModbusProperty {
   RFModuleSFPStatusesProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class SyncModuleStatusesProperty: public ModbusProperty {
@@ -120,8 +120,8 @@ class SyncModuleStatusesProperty: public ModbusProperty {
   SyncModuleStatusesProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class RFModuleStatusesProperty: public ModbusProperty {
@@ -129,8 +129,8 @@ class RFModuleStatusesProperty: public ModbusProperty {
   RFModuleStatusesProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class SyncModuleDesLockProperty: public ModbusProperty {
@@ -138,8 +138,8 @@ class SyncModuleDesLockProperty: public ModbusProperty {
   SyncModuleDesLockProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 class SyncModuleOscLockProperty: public ModbusProperty {
@@ -147,8 +147,8 @@ class SyncModuleOscLockProperty: public ModbusProperty {
   SyncModuleOscLockProperty(const std::string &name, const std::shared_ptr<ModbusDevice> &modbus_device);
 
  protected:
-  VARIANT read(ErrorCode *error_code = nullptr) override;
-  void write(const VARIANT &value, ErrorCode *error_code = nullptr) override;
+  VARIANT__D read(ErrorCode *error_code = nullptr) override;
+  void write(const VARIANT__D &value, ErrorCode *error_code = nullptr) override;
 };
 
 

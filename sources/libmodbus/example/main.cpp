@@ -9,7 +9,8 @@
 using namespace modbus;
 
 int main() {
-  ModbusClient client("192.168.127.10", 4001);
+  ModbusClient client("192.168.127.1", 4001);
+  client.setTimeout(1);
   bool is_connected = client.connect();
   if (!is_connected) {
     std::cout << "Connection failure" << std::endl;

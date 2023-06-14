@@ -117,6 +117,7 @@ modbus::ModbusClient::ModbusClient(std::string ip, uint16_t port): ip(ip), port(
 
 bool modbus::ModbusClient::connect() {
   std::cout << "CONNECTION..." << std::endl;
+  comm_mutex.lock();
 //  typedef boost::asio::detail::socket_option::integer<SOL_SOCKET, SO_RCVTIMEO> rcv_timeout_option; //somewhere in your headers to be used everywhere you need it
 //...
 //  socket.socket().set_option(rcv_timeout_option{ 200 });
@@ -220,6 +221,8 @@ bool modbus::ModbusClient::connect() {
 //  connection.connect(socket, endpoint, service);
 //  socket.socket().connect(endpoint, ec);
 //  socket.socket().connect(endpoint, ec);
+
+  comm_mutex.unlock();
   return isConnected();
 }
 

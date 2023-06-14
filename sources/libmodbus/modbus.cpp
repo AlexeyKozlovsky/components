@@ -117,9 +117,9 @@ modbus::ModbusClient::ModbusClient(std::string ip, uint16_t port): ip(ip), port(
 
 bool modbus::ModbusClient::connect() {
   std::cout << "CONNECTION..." << std::endl;
-  typedef boost::asio::detail::socket_option::integer<SOL_SOCKET, SO_RCVTIMEO> rcv_timeout_option; //somewhere in your headers to be used everywhere you need it
+//  typedef boost::asio::detail::socket_option::integer<SOL_SOCKET, SO_RCVTIMEO> rcv_timeout_option; //somewhere in your headers to be used everywhere you need it
 //...
-  socket.socket().set_option(rcv_timeout_option{ 200 });
+//  socket.socket().set_option(rcv_timeout_option{ 200 });
   endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::make_address(ip, ec), port);
 //  service.run();
 //  socket.expires_after(std::chrono::seconds(timeout));
@@ -134,7 +134,8 @@ bool modbus::ModbusClient::connect() {
 ////  socket.expires_never();
 
 //  socket.socket().close();
-  socket.socket().open(tcp::v4());
+  if (!socket.socket().is_open())
+    socket.socket().open(tcp::v4());
 //  std::cout<< "TIIIILT: " << socket.socket().is_open() << std::endl;
 //  socket.socket().bind(endpoint);
 //  socket.expires_after(std::chrono::seconds(timeout));
@@ -147,29 +148,55 @@ bool modbus::ModbusClient::connect() {
     return true;
   };
 
-//  boost::asio::deadline_timer timer(service, boost::posix_time::seconds(4));
+
+  boost::system::error_code connect_ec = boost::asio::error::would_block;
+//  boost::asio::deadline_timer timer(service, boost::posix_time::seconds(timeout));
   boost::asio::steady_timer timer(service);
-  socket.socket().async_connect(endpoint, [&](auto ec) {
+  std::cout << "timer defined" << std::endl;
+  socket.socket().async_connect(endpoint, [&](auto &_ec) {
 //    std::cout << " --> Final " << ec.message() << " local "
 //              << socket.socket().local_endpoint() << " to "
 //              << socket.socket().remote_endpoint() << "\n\n";
-    if (!ec) {
-      std::cout << " --> Final " << ec.message() << " local "
+    timer.cancel();
+    std::cout << "CCC" << _ec.message() << " " << _ec << std::endl;
+    if (_ec.value() == 10061) {
+      std::cout << "TIIIILT" << std::endl;
+      service.stop();
+    } else if (_ec.value() == 0) {
+      std::cout << " --> Final " << _ec.message() << " local "
           << socket.socket().local_endpoint() << " to "
           << socket.socket().remote_endpoint() << "\n\n";
     }
-
-    timer.cancel();
   });
 
-  timer.expires_after(std::chrono::seconds(timeout));
+  std::cout << "socket started connection process" << std::endl;
+
+//  boost::posix_time::time_duration time_duration = boost::posix_time::seconds(timeout);
+  timer.expires_at(std::chrono::steady_clock::now() + std::chrono::seconds(timeout));
   timer.async_wait([&](auto &_ec) {
-    socket.socket().cancel();
-    std::cout << "Socket cancel connection" << std::endl;
-//    socket.close();
+    std::cout << "_EC in timer " << _ec.message() << _ec << std::endl;
+    if (_ec.value() == 0) {
+      socket.socket().cancel();
+      std::cout << "Socket cancel connection " << _ec.message() << " " << _ec << std::endl;
+//      socket.socket().close();
+      service.stop();
+    }
+//      socket.socket().close();
   });
 
+  std::cout << "timer started" << std::endl;
+
+
+  // !!!!!!!!!!!!!!! ЗДЕСЬ ОБЯЗАТЕЛЬНО reset перед run
+  service.reset();
   service.run();
+//  service.stop();
+//  service.reset();
+
+  std::cout << "service run" << std::endl;
+//  while (connect_ec == boost::asio::error::would_block);
+
+//  service.stop();
 
 // TODO:
 //

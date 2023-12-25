@@ -8,7 +8,6 @@
 
 #include "devices/device.h"
 #include "enums.h"
-#include "macros.h"
 
 class DeviceServerBuilder;
 

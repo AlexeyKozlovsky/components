@@ -7,7 +7,6 @@
 #include <chrono>
 #include <atomic>
 
-#include "macros.h"
 #include "enums.h"
 #include "devices/device.h"
 #include "deviceconfig.h"

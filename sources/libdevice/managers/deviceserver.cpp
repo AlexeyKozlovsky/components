@@ -1,6 +1,9 @@
 #include <iostream>
 #include "deviceserver.h"
 
+#include <utils/baseutils.h>
+#include <utils/deviceutils.h>
+
 static const int DEFAULT_POLLING_TACT = 500;
 
 

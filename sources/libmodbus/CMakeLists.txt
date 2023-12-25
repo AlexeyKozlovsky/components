@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4.0) #VERSION 3.24
+cmake_minimum_required(VERSION 3.13) #VERSION 3.24
 project(modbusd)
 #include(GenerateExportHeader)
 
@@ -6,11 +6,18 @@ set(LIB_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/libmodbusd)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_DEBUG_POSTFIX d)
 set(BOOST_HEADERS_DIR "C:/Users/User/Documents/Soft/boost_include")
+
+add_compile_definitions(_WIN32_WINNT=0x0A00)
 
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${BOOST_HEADERS_DIR})
 file(GLOB SRC "${PROJECT_SOURCE_DIR}/*.cpp")
+
+set(UTILS_LIB_DIR "c:/Users/User/Documents/Career/Dialtek/components/releases/windows/libutilsd")
+include_directories(${UTILS_LIB_DIR}/include)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS 1)
 add_library(${PROJECT_NAME} SHARED ${SRC})
@@ -24,12 +31,12 @@ endif()
 #        EXPORT_FILE_NAME ${PROJECT_NAME}_Export.h
 #        )
 
-set(EXAMPLE_EXEC_NAME example)
-add_executable(${EXAMPLE_EXEC_NAME} ${PROJECT_SOURCE_DIR}/example/main.cpp)
-target_link_libraries(${EXAMPLE_EXEC_NAME} ${PROJECT_NAME})
-if(WIN32)
-    target_link_libraries(${EXAMPLE_EXEC_NAME} wsock32 ws2_32)
-endif()
+#set(EXAMPLE_EXEC_NAME example)
+#add_executable(${EXAMPLE_EXEC_NAME} ${PROJECT_SOURCE_DIR}/example/main.cpp)
+#target_link_libraries(${EXAMPLE_EXEC_NAME} ${PROJECT_NAME})
+#if(WIN32)
+#    target_link_libraries(${EXAMPLE_EXEC_NAME} wsock32 ws2_32)
+#endif()
 
 file(GLOB HEADERS "${PROJECT_SOURCE_DIR}/*.h")
 

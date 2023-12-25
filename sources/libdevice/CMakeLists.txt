@@ -1,12 +1,26 @@
-cmake_minimum_required(VERSION 3.2) # VERSION 3.24cd
+cmake_minimum_required(VERSION 3.13) # VERSION 3.24cd
 project(deviced VERSION 1.0.1 DESCRIPTION "libdevice description")
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_INSTALL_PREFIX "C:/Users/User/Documents/Career/Dialtek/components/sources/libdevice/libdeviced/")
+set(WIN32 1)
+set(CMAKE_DEBUG_POSTFIX d)
+
+set(CMAKE_BUILD_TYPE Release)
+
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS 1)
+
+
+add_compile_definitions(_WIN32_WINNT=0x0A00)
+
+
+set(CMAKE_INSTALL_PREFIX "C:/Users/User/Documents/Career/Dialtek/components/sources/libdevice/libdeviced/${COMPILER_NAME}/")
 
 set(BOOST_HEADERS_DIR "C:/Users/User/Documents/Soft/boost_include/")
-set(MODBUS_LIB_DIR "c:/Users/User/Documents/Career/Dialtek/components/releases/windows/libmodbus/")
+set(MODBUS_LIB_DIR "c:/Users/User/Documents/Career/Dialtek/components/releases/windows/libmodbus/${COMPILER_NAME}")
+
+set(UTILS_LIB_DIR "c:/Users/User/Documents/Career/Dialtek/components/releases/windows/libutilsd")
+include_directories(${UTILS_LIB_DIR}/include)
 
 
 include_directories(${BOOST_HEADERS_DIR})
@@ -27,7 +41,7 @@ message("${LIBMODBUS_CMAKE}")
 
 add_library(${PROJECT_NAME} SHARED ${SRC})
 #link_directories(${MODBUS_LIB_DIR})
-target_link_libraries(${PROJECT_NAME} "c:/Users/User/Documents/Career/Dialtek/components/releases/windows/libmodbus/libmodbusd.dll")
+target_link_libraries(${PROJECT_NAME} "c:/Users/User/Documents/Career/Dialtek/components/releases/windows/libmodbus/${COMPILER_NAME}/modbusd.lib")
 set_target_properties(${PROJECT_NAME} PROPERTIES
         OUTPUT_NAME ${PROJECT_NAME}
         VERSION 1.0.0

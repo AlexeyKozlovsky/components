@@ -1,182 +1,17 @@
 #ifndef DIALTEK_COMPONENTS_LIBMODBUS_MODBUS_H_
 #define DIALTEK_COMPONENTS_LIBMODBUS_MODBUS_H_
 
+#include <mutex>
+
 #include <boost/asio.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
-//#include <boost/
+
+#include <utils/modbusutils.h>
+
 #include "tcp_socket.h"
 
-#include <mutex>
-#include "export/libmodbus_Export.h"
-/**
- * Макрос для удобства обработки ошибок при чтении и записи по протоколу модбас через ModbusClient
- */
-#define MODBUS_RW_ERROR_HANDLE(request_method, positive_instructions, negative_instructions, error_status) \
-error_status = request_method; \
-if (error_status == modbus::NO_MODBUS_ERROR) {positive_instructions} else { negative_instructions; }
 
-/**
- * Пространство имен, содержащие основные функции и классы для взаимодействия танго девайса с физическим
- * устройством по протоколу Modbus RTU over TCP
- */
 namespace modbus {
-
-/**
- * Перечисление, характеризующее статус ответа клиенту по модбас
- */
-enum ModbusResult {
-  /**
-   * Ошибок нет
-   */
-  NO_MODBUS_ERROR = 0,
-
-  /**
-   * Принятый код функции не может быть обработан.
-   */
-  ILLEGAL_FUNCTION = 1,
-
-  /**
-   * Адрес данных, указанный в запросе, недоступен.
-   */
-  ILLEGAL_DATA_ADDRESS = 2,
-
-  /**
-   * 	Значение, содержащееся в поле данных запроса, является недопустимой величиной.
-   */
-  ILLEGAL_DATA_VALUE = 3,
-
-  /**
-   * Невосстанавливаемая ошибка имела место, пока ведомое устройство
-   * пыталось выполнить затребованное действие.
-   */
-  SERVER_DEVICE_FAILURE = 4,
-
-  /**
-   * Ведомое устройство приняло запрос и обрабатывает его, но это требует много времени.
-   * Этот ответ предохраняет ведущее устройство от генерации ошибки тайм-аута.
-   */
-  ACKNOWLEDGE = 5,
-
-  /**
-   * 06	Ведомое устройство занято обработкой команды.
-   * Ведущее устройство должно повторить сообщение позже, когда ведомое освободится.
-   */
-  SERVER_DEVICE_BUSY = 6,
-
-  /**
-   * Ведомое устройство не может выполнить программную функцию, заданную в запросе.
-   * Этот код возвращается для неуспешного программного запроса,
-   * использующего функции с номерами 13 или 14.
-   * Ведущее устройство должно запросить диагностическую информацию
-   * или информацию об ошибках от ведомого.
-   */
-  NEGATIVE_ACKNOWLEDGE = 7,
-
-  /**
-   * 	Ведомое устройство при чтении расширенной памяти обнаружило ошибку паритета.
-   * 	Ведущее устройство может повторить запрос, но обычно в таких случаях требуется ремонт.
-   */
-  MEMORY_PARITY_ERROR = 8,
-
-  /**
-   * Шлюз неправильно настроен или перегружен запросами.
-   */
-  GATEWAY_PATH_UNAVAILABLE = 10,
-
-  /**
-   * Slave устройства нет в сети или от него нет ответа.
-   */
-  GATEWAY_TARGET_DEVICE_FAILED_TO_RESPOND = 11,
-
-  //@section Далее идут ошибки, напрямую НЕ относяшиеся к modbus протоколу
-
-  /**
-   * Непонятная ошибка. Используется во всех тех случаях, под которые не подходит ни один
-   * из пунктов данного перечисления
-   */
-  UNHANDLED_ERROR = 255,
-
-  NO_SOCKET_CONNECTION = 254,
-
-  /**
-   * Ошибка таймаута, который вызван не обязательно самим мобдасом,
-   * но может и самим соединением
-   */
-  TCP_TIMEOUT_ERROR = 253,
-
-  /**
-   * Ответ не является корректным с точки зрения модбас протокола
-   */
-  INVALID_RESPONSE = 252,
-
-  /**
-   * Запрос не является корректным, с точки зрения модбас протокола
-   */
-  INVALID_REQUEST = 251,
-
-  /**
-   * Ошибка контрольной суммы, которая обнаружена непосредственно на стороне клиента
-   */
-  CRC_ERROR = 250,
-};
-
-
-uint16_t getMask(uint8_t byte_num, uint8_t byte_count);
-uint16_t readByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value);
-
-bool writeByteValue(uint8_t byte_num, uint8_t byte_count,
-                      uint16_t value_to_write, uint16_t &value);
-/**
- * Функция для подсчета контрольной суммы для связи по протоколу modbus
- * @param buffer -- буфер для которого необходимо сформирвать CRC
- * @param buffer_size -- размер буфера
- * @param crc_msb -- старший байт полученной контрольной суммы
- * @param crc_lsb -- младший байт полученной контрольной суммы
- */
-void crcRTU(const uint8_t *buffer, uint16_t buffer_size, uint8_t &crc_msb, uint8_t &crc_lsb);
-
-/**
- * Функция для разбиения 16-битного числа на старший и младший байты
- * @param data -- исходное число
- * @param lsb -- младший байт
- * @param msb -- старший байт
- */
-void toMsbLsb(uint16_t data, uint8_t &lsb, uint8_t &msb);
-
-/**
- * Функция для получения 16-битного числа из старшего и младшего байтов
- * @param lsb -- младший байт
- * @param msb -- старший байт
- * @param data -- полученное 16-битное число
- */
-void fromMsbLsb(uint8_t lsb, uint8_t msb, uint16_t &data);
-
-/**
- * Функция для разбиения 16-битного числа на старший и младший байты
- * @param data -- исходное число
- * @param lsb -- младший байт
- * @param msb -- старший байт
- */
-void toMsbLsb(uint32_t data, uint16_t &lsb, uint16_t &msb);
-
-/**
- * Функция для получения 16-битного числа из старшего и младшего байтов
- * @param lsb -- младший байт
- * @param msb -- старший байт
- * @param data -- полученное 16-битное число
- */
-void fromMsbLsb(uint16_t lsb, uint16_t msb, uint32_t &data);
-
-/**
- * Функция для конвертирования буффера как массива байтов в стркутуру данных буфера, который
- * пригоден для работы с boost
- * @param asio_buffer -- результат конвертации, буфер для работы с asio
- * @param buff -- исходный буфер в виде массива байт
- * @param buff_size -- размер исходного буфера
- * @return --
- */
-int make_stream_from_buffer(boost::asio::streambuf &asio_buffer, uint8_t *buff, size_t buff_size);
-
 
 /**
  * Класс для осуществления работы с модбас устройством по протоколу Modbus RTU over TCP
@@ -436,10 +271,10 @@ class ModbusClient {
    */
   void update();
 
-  modbus::ModbusResult handleError(uint8_t *request,
-                                   uint16_t request_size,
-                                   uint8_t *response,
-                                   uint16_t response_size);
+  ModbusResult handleError(uint8_t *request,
+                           uint16_t request_size,
+                           uint8_t *response,
+                           uint16_t response_size);
 
 };
 }

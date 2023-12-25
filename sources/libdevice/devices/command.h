@@ -6,14 +6,15 @@
 #include <memory>
 #include <mutex>
 
-#include "macros.h"
+#include <utils/baseutils.h>
+#include <utils/modbusutils.h>
+
 #include "enums.h"
 
 #include "devices/deviceattribute.h"
 
 
 using device::DeviceState;
-using device::ErrorCode;
 
 class Command: public DeviceAttribute {
  public:

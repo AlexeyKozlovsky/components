@@ -6,12 +6,11 @@
 #include <chrono>
 #include <functional>
 #include <memory>
+#include <utils/baseutils.h>
 
 #include "enums.h"
-#include "macros.h"
 
 using device::DeviceState;
-using device::ErrorCode;
 
 class Device;
 

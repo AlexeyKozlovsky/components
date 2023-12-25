@@ -8,14 +8,15 @@
 #include <map>
 #include <atomic>
 
-#include "macros.h"
+#include <utils/baseutils.h>
+#include <utils/deviceutils.h>
+
 #include "enums.h"
 #include "devices/property.h"
 #include "devices/command.h"
 
 class DeviceServer;
 
-using device::ErrorCode;
 using device::DeviceState;
 
 template <typename T>

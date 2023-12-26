@@ -12,10 +12,10 @@
       "binaryDir": "${sourceDir}/build",
       "hidden": true,
       "cacheVariables": {
-        "THREADPOOLING_BUILD_TESTS": "OFF",
-        "THREADPOOLING_BUILD_EXAMPLES": "OFF",
-        "THREADPOOLING_INSTALL": "ON",
-        "THREADPOOLING_SHARED_LIBS": "ON"
+        "UTILS_BUILD_TESTS": "OFF",
+        "UTILS_BUILD_EXAMPLES": "OFF",
+        "UTILS_INSTALL": "ON",
+        "UTILS_SHARED_LIBS": "OFF"
       }
     },
     {

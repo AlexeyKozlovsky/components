@@ -12,10 +12,10 @@
       "binaryDir": "${sourceDir}/build",
       "hidden": true,
       "cacheVariables": {
-        "UTILS_BUILD_TESTS": "OFF",
-        "UTILS_BUILD_EXAMPLES": "OFF",
-        "UTILS_INSTALL": "ON",
-        "UTILS_SHARED_LIBS": "OFF"
+        "MODBUS_BUILD_TESTS": "OFF",
+        "MODBUS_BUILD_EXAMPLES": "OFF",
+        "MODBUS_INSTALL": "ON",
+        "MODBUS_SHARED_LIBS": "ON"
       }
     },
     {
@@ -24,7 +24,7 @@
       "hidden": false,
       "inherits": ["dev"],
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": ""
+        "CMAKE_CXX_FLAGS": "/EHs"
       }
     },
     {

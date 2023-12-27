@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
 include (env.cmake)
-
 project(threadpooling
-        VERSION 1.0.0
-        DESCRIPTION "Template for C++ library built with CMake"
-        LANGUAGES CXX)
+    VERSION 1.0.0
+    DESCRIPTION "Template for C++ library built with CMake"
+    LANGUAGES CXX)
 
 #----------------------------------------------------------------------------------------------------------------------
 # general settings and options
@@ -21,7 +20,7 @@ option(THREADPOOLING_BUILD_EXAMPLES "Build threadpooling examples" OFF)
 option(THREADPOOLING_BUILD_DOCS "Build threadpooling documentation" OFF)
 option(THREADPOOLING_INSTALL "Generate target for installing threadpooling" ${is_top_level})
 set_if_undefined(THREADPOOLING_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/threadpooling" CACHE STRING
-        "Install path for threadpooling package-related CMake files")
+    "Install path for threadpooling package-related CMake files")
 
 if(DEFINED THREADPOOLING_SHARED_LIBS)
     set(BUILD_SHARED_LIBS ${THREADPOOLING_SHARED_LIBS})
@@ -38,14 +37,12 @@ set_if_undefined(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 add_library(threadpooling) # initialized below
 add_library(threadpooling::threadpooling ALIAS threadpooling)
 
-set_target_properties(threadpooling PROPERTIES LINKER_LANGUAGE CXX)
-
 #----------------------------------------------------------------------------------------------------------------------
 # threadpooling dependencies
 #----------------------------------------------------------------------------------------------------------------------
 
 find_package(utils REQUIRED)
-target_link_libraries(threadpooling utils::utils)
+target_link_libraries(${PROJECT_NAME} utils::utils)
 
 #----------------------------------------------------------------------------------------------------------------------
 # threadpooling sources
@@ -61,12 +58,11 @@ endif()
 generate_export_header(threadpooling EXPORT_FILE_NAME include/threadpooling/${export_file_name})
 
 file(GLOB sources
-        include/threadpooling/export.h
-        include/threadpooling/*.h
-        include/threadpooling/impls/*.h
-        src/threadpooling/*.cpp
-        src/threadpooling/impls/*.cpp
-        src/threadpooling/impls/periodic/*.cpp
+    include/threadpooling/*.h
+    include/threadpooling/impls/.h
+    src/threadpooling/*.cpp
+    src/threadpooling/impls/*.cpp
+    src/threadpooling/impls/periodic/*.cpp
         )
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
@@ -80,32 +76,32 @@ target_sources(threadpooling PRIVATE ${sources})
 target_compile_definitions(threadpooling PUBLIC "$<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:THREADPOOLING_STATIC_DEFINE>")
 
 target_include_directories(threadpooling
-        PUBLIC
+    PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>")
 
 set_target_properties(threadpooling PROPERTIES
-        SOVERSION ${PROJECT_VERSION_MAJOR}
-        VERSION ${PROJECT_VERSION})
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    VERSION ${PROJECT_VERSION})
 
 if(THREADPOOLING_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/threadpooling-config.cmake.in threadpooling-config.cmake
-            INSTALL_DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(threadpooling-config-version.cmake
-            COMPATIBILITY SameMajorVersion)
+        COMPATIBILITY SameMajorVersion)
 
     install(TARGETS threadpooling EXPORT threadpooling_export
-            RUNTIME COMPONENT threadpooling
-            LIBRARY COMPONENT threadpooling NAMELINK_COMPONENT threadpooling-dev
-            ARCHIVE COMPONENT threadpooling-dev
-            INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
+        RUNTIME COMPONENT threadpooling
+        LIBRARY COMPONENT threadpooling NAMELINK_COMPONENT threadpooling-dev
+        ARCHIVE COMPONENT threadpooling-dev
+        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
     install(DIRECTORY include/
-            TYPE INCLUDE
-            COMPONENT threadpooling-dev)
+        TYPE INCLUDE
+        COMPONENT threadpooling-dev)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/threadpooling/${export_file_name}"
-            COMPONENT threadpooling-dev
-            DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/threadpooling")
+        COMPONENT threadpooling-dev
+        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/threadpooling")
 
     set(targets_file "threadpooling-shared-targets.cmake")
 
@@ -114,16 +110,16 @@ if(THREADPOOLING_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     endif()
 
     install(EXPORT threadpooling_export
-            COMPONENT threadpooling-dev
-            FILE "${targets_file}"
-            DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}"
-            NAMESPACE threadpooling::)
+        COMPONENT threadpooling-dev
+        FILE "${targets_file}"
+        DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}"
+        NAMESPACE threadpooling::)
 
     install(FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/threadpooling-config.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/threadpooling-config-version.cmake"
-            COMPONENT threadpooling-dev
-            DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}")
+        "${CMAKE_CURRENT_BINARY_DIR}/threadpooling-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/threadpooling-config-version.cmake"
+        COMPONENT threadpooling-dev
+        DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -139,10 +135,10 @@ if(THREADPOOLING_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
         endif()
 
         install(FILES "${pdb_file}"
-                COMPONENT threadpooling-dev
-                CONFIGURATIONS Debug RelWithDebInfo
-                DESTINATION "${pdb_file_destination}"
-                OPTIONAL)
+            COMPONENT threadpooling-dev
+            CONFIGURATIONS Debug RelWithDebInfo
+            DESTINATION "${pdb_file_destination}"
+            OPTIONAL)
     endif()
 endif()
 

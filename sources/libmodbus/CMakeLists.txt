@@ -42,8 +42,6 @@ add_library(modbus::modbus ALIAS modbus)
 # modbus dependencies
 #----------------------------------------------------------------------------------------------------------------------
 
-set (BOOST_ROOT "c:/Users/User/Documents/Soft/boost_1_84_0/boost_1_84_0/") # Путь к библиотеке Boost
-
 set (Boost_NO_SYSTEM_PATHS ON)
 set (Boost_USE_MULTITHREADED ON)
 set (Boost_USE_STATIC_LIBS ON)
@@ -59,13 +57,6 @@ if (Boost_FOUND)
     target_link_libraries (${PROJECT_NAME} ${Boost_LIBRARIES}) # подключаем библиотеку
 endif ()
 
-
-#set(Boost_INCLUDE_DIR ${BOOST_HEADERS_DIR})
-#set(Boost_LIBRARY_DIR ${BOOST_HEADERS_DIR})
-#find_package(Boost COMPONENTS system filesystem REQUIRED)
-#find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
-
-#include_directories(${Boost_INCLUDE_DIR})
 
 find_package(utils REQUIRED)
 target_link_libraries(${PROJECT_NAME} utils::utils)

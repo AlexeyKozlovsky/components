@@ -12,7 +12,7 @@ project(widgets
 include(cmake/utils.cmake)
 include(GNUInstallDirs)
 
-string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "." is_top_level)
+string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
 # WIDGETS_SHARED_LIBS option (undefined by default) can be used to force shared/static build
 option(WIDGETS_BUILD_TESTS "Build widgets tests" OFF)
@@ -43,12 +43,12 @@ add_library(widgets::widgets ALIAS widgets)
 
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME}  Qt5::Widgets)
 
 if(WIN32)
     find_library(WSOCK32_LIBRARY wsock32)
     find_library(WS2_32_LIBRARY ws2_32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE wsock32 ws2_32)
+    target_link_libraries(${PROJECT_NAME}  wsock32 ws2_32)
 
 endif()
 
@@ -76,9 +76,8 @@ file(GLOB sources
         src/widgets/common/*.cpp
         src/widgets/common/basic/*.cpp
         src/widgets/common/composed/*.cpp
-
         )
-source_group(TREE "." FILES ${sources})
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
 #----------------------------------------------------------------------------------------------------------------------
 # widgets target
@@ -110,8 +109,8 @@ if(WIDGETS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
         LIBRARY COMPONENT widgets NAMELINK_COMPONENT widgets-dev
         ARCHIVE COMPONENT widgets-dev
         INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
-    install(DIRECTORY include
-        TYPE include
+    install(DIRECTORY include/
+        TYPE INCLUDE
         COMPONENT widgets-dev)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/widgets/${export_file_name}"
         COMPONENT widgets-dev

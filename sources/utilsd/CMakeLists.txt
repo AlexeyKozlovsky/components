@@ -1,20 +1,18 @@
 cmake_minimum_required(VERSION 3.14)
+include(env.cmake)
 project(utils
-        VERSION 1.0.0
-        DESCRIPTION "Template for C++ library built with CMake"
-        LANGUAGES CXX)
+    VERSION 1.0.0
+    DESCRIPTION "Template for C++ library built with CMake"
+    LANGUAGES CXX)
 
 #----------------------------------------------------------------------------------------------------------------------
 # general settings and options
 #----------------------------------------------------------------------------------------------------------------------
 
-include(env.cmake)
-
 include(cmake/utils.cmake)
 include(GNUInstallDirs)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
-message(${is_top_level})
 
 # UTILS_SHARED_LIBS option (undefined by default) can be used to force shared/static build
 option(UTILS_BUILD_TESTS "Build utils tests" OFF)
@@ -22,7 +20,7 @@ option(UTILS_BUILD_EXAMPLES "Build utils examples" OFF)
 option(UTILS_BUILD_DOCS "Build utils documentation" OFF)
 option(UTILS_INSTALL "Generate target for installing utils" ${is_top_level})
 set_if_undefined(UTILS_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/utils" CACHE STRING
-        "Install path for utils package-related CMake files")
+    "Install path for utils package-related CMake files")
 
 if(DEFINED UTILS_SHARED_LIBS)
     set(BUILD_SHARED_LIBS ${UTILS_SHARED_LIBS})
@@ -39,17 +37,24 @@ set_if_undefined(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 add_library(utils) # initialized below
 add_library(utils::utils ALIAS utils)
 
-set_target_properties(utils PROPERTIES LINKER_LANGUAGE CXX)
-
 #----------------------------------------------------------------------------------------------------------------------
 # utils dependencies
 #----------------------------------------------------------------------------------------------------------------------
 
+set (Boost_NO_SYSTEM_PATHS ON)
+set (Boost_USE_MULTITHREADED ON)
+set (Boost_USE_STATIC_LIBS ON)
+set (Boost_USE_STATIC_RUNTIME OFF)
+set (BOOST_ALL_DYN_LINK OFF)
 
-include_directories(${BOOST_HEADERS_DIR})
-if(WIN32)
-    target_link_libraries(${PROJECT_NAME} wsock32 ws2_32)
-endif()
+# Подключаем необходимые модули. Для примера подключим program_options
+find_package (Boost REQUIRED)
+
+# Если библиотека найдена, то
+if (Boost_FOUND)
+    include_directories (${Boost_INCLUDE_DIR}) # подключаем заголовочные файлы
+    target_link_libraries (${PROJECT_NAME}  ${Boost_LIBRARIES}) # подключаем библиотеку
+endif ()
 
 #----------------------------------------------------------------------------------------------------------------------
 # utils sources
@@ -65,15 +70,17 @@ endif()
 generate_export_header(utils EXPORT_FILE_NAME include/utils/${export_file_name})
 
 file(GLOB sources
-        include/utils/export.h
         include/utils/*.h
         include/utils/services/*.h
         include/utils/services/domain/*.h
+        include/utils/services/domain/impls/*.h
         include/utils/services/uidgeneratorimpls/*.h
         include/utils/services/uidgeneratorimpls/boost/*.h
+
         src/utils/*.cpp
         src/utils/services/*.cpp
         src/utils/services/domain/*.cpp
+        src/utils/services/domain/impls/*.cpp
         src/utils/services/uidgeneratorimpls/*.cpp
         src/utils/services/uidgeneratorimpls/boost/*.cpp)
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
@@ -88,32 +95,32 @@ target_sources(utils PRIVATE ${sources})
 target_compile_definitions(utils PUBLIC "$<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:UTILS_STATIC_DEFINE>")
 
 target_include_directories(utils
-        PUBLIC
+    PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>")
 
 set_target_properties(utils PROPERTIES
-        SOVERSION ${PROJECT_VERSION_MAJOR}
-        VERSION ${PROJECT_VERSION})
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    VERSION ${PROJECT_VERSION})
 
 if(UTILS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/utils-config.cmake.in utils-config.cmake
-            INSTALL_DESTINATION "${UTILS_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${UTILS_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(utils-config-version.cmake
-            COMPATIBILITY SameMajorVersion)
+        COMPATIBILITY SameMajorVersion)
 
     install(TARGETS utils EXPORT utils_export
-            RUNTIME COMPONENT utils
-            LIBRARY COMPONENT utils NAMELINK_COMPONENT utils-dev
-            ARCHIVE COMPONENT utils-dev
-            INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
+        RUNTIME COMPONENT utils
+        LIBRARY COMPONENT utils NAMELINK_COMPONENT utils-dev
+        ARCHIVE COMPONENT utils-dev
+        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
     install(DIRECTORY include/
-            TYPE INCLUDE
-            COMPONENT utils-dev)
+        TYPE INCLUDE
+        COMPONENT utils-dev)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/utils/${export_file_name}"
-            COMPONENT utils-dev
-            DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/utils")
+        COMPONENT utils-dev
+        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/utils")
 
     set(targets_file "utils-shared-targets.cmake")
 
@@ -122,16 +129,16 @@ if(UTILS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     endif()
 
     install(EXPORT utils_export
-            COMPONENT utils-dev
-            FILE "${targets_file}"
-            DESTINATION "${UTILS_INSTALL_CMAKEDIR}"
-            NAMESPACE utils::)
+        COMPONENT utils-dev
+        FILE "${targets_file}"
+        DESTINATION "${UTILS_INSTALL_CMAKEDIR}"
+        NAMESPACE utils::)
 
     install(FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/utils-config.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/utils-config-version.cmake"
-            COMPONENT utils-dev
-            DESTINATION "${UTILS_INSTALL_CMAKEDIR}")
+        "${CMAKE_CURRENT_BINARY_DIR}/utils-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/utils-config-version.cmake"
+        COMPONENT utils-dev
+        DESTINATION "${UTILS_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -147,10 +154,10 @@ if(UTILS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
         endif()
 
         install(FILES "${pdb_file}"
-                COMPONENT utils-dev
-                CONFIGURATIONS Debug RelWithDebInfo
-                DESTINATION "${pdb_file_destination}"
-                OPTIONAL)
+            COMPONENT utils-dev
+            CONFIGURATIONS Debug RelWithDebInfo
+            DESTINATION "${pdb_file_destination}"
+            OPTIONAL)
     endif()
 endif()
 
@@ -171,4 +178,3 @@ if(UTILS_BUILD_DOCS)
     find_package(Doxygen REQUIRED)
     doxygen_add_docs(docs include)
 endif()
-

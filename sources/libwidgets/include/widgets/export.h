@@ -1,7 +1,7 @@
 #ifndef SOURCES_LIBWIDGETS_WIDGETS_INCLUDE_WIDGETS_EXPORT_H_
 #define SOURCES_LIBWIDGETS_WIDGETS_INCLUDE_WIDGETS_EXPORT_H_
 
-#ifndef MYLIB_STATIC_DEFINE
+#ifndef WIDGETS_STATIC_DEFINE
 #  include <widgets/export_shared.h>
 #else
 #  include <widgets/export_static.h>

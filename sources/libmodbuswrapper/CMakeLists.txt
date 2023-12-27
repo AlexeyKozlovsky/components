@@ -55,18 +55,18 @@ find_package (Boost REQUIRED)
 # Если библиотека найдена, то
 if (Boost_FOUND)
     include_directories (${Boost_INCLUDE_DIR}) # подключаем заголовочные файлы
-    target_link_libraries (${PROJECT_NAME} ${Boost_LIBRARIES}) # подключаем библиотеку
+    target_link_libraries (${PROJECT_NAME}  ${Boost_LIBRARIES}) # подключаем библиотеку
 endif ()
 
 
 find_package(utils REQUIRED)
-target_link_libraries(${PROJECT_NAME} utils::utils)
+target_link_libraries(${PROJECT_NAME}  utils::utils)
 
 find_package(modbus REQUIRED)
-target_link_libraries(${PROJECT_NAME} modbus::modbus)
+target_link_libraries(${PROJECT_NAME}  modbus::modbus)
 
 find_package(threadpooling REQUIRED)
-target_link_libraries(${PROJECT_NAME} threadpooling::threadpooling)
+target_link_libraries(${PROJECT_NAME}  threadpooling::threadpooling)
 
 
 #----------------------------------------------------------------------------------------------------------------------

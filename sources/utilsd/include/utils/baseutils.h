@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 
-
 #define SCALAR_VARIANT__D \
 std::variant<bool, uint8_t, int8_t, uint16_t, int16_t, uint32_t, int32_t, \
 uint64_t, int64_t, float, double, std::string, char>

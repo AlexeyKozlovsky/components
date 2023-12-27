@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+
 /**
  * Макрос для удобства обработки ошибок при чтении и записи по протоколу модбас через ModbusClient
  */
@@ -119,21 +120,21 @@ enum ModbusResult {
       CRC_ERROR = 250,
 };
 
-uint16_t getMask(uint8_t byte_num, uint8_t byte_count) {
+inline uint16_t getMask(uint8_t byte_num, uint8_t byte_count) {
   uint16_t mask_right = ((0xffff) << (byte_num + byte_count));
   uint16_t mask_left = ((0xffff) >> (15 - (byte_num - 1)));
   uint16_t mask = mask_left | mask_right;
   return mask;
 }
 
-uint16_t readByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value) {
+inline uint16_t readByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value) {
   uint16_t mask = getMask(byte_num, byte_count) ^0xffff;
   uint16_t result = (value & mask) >> byte_num;
 
   return result;
 }
 
-bool writeByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value_to_write, uint16_t &value) {
+inline bool writeByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value_to_write, uint16_t &value) {
   std::cout << "VALUE BEFORE: " << unsigned(value) << std::endl;
   uint16_t mask = getMask(byte_num, byte_count);
   uint16_t value_mask = (0xffff >> (15 - byte_count - 1));
@@ -153,29 +154,29 @@ bool writeByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value_to_writ
   return true;
 }
 
-void toMsbLsb(uint16_t data, uint8_t &lsb, uint8_t &msb) {
+inline void toMsbLsb(uint16_t data, uint8_t &lsb, uint8_t &msb) {
   lsb = data >> 8;
   msb = data & 0x00FF;
 }
 
-void fromMsbLsb(uint8_t lsb, uint8_t msb, uint16_t &data) {
+inline void fromMsbLsb(uint8_t lsb, uint8_t msb, uint16_t &data) {
   data = lsb;
   data <<= 8;
   data = msb | data;
 }
 
-void toMsbLsb(uint32_t data, uint16_t &lsb, uint16_t &msb) {
+inline void toMsbLsb(uint32_t data, uint16_t &lsb, uint16_t &msb) {
   msb = data >> 16;
   lsb = data & 0xFFFF;
 }
 
-void fromMsbLsb(uint16_t lsb, uint16_t msb, uint32_t &data) {
+inline void fromMsbLsb(uint16_t lsb, uint16_t msb, uint32_t &data) {
   data = msb;
   data <<= 16;
   data = lsb | data;
 }
 
-void crcRTU(const uint8_t *buffer, uint16_t buffer_size, uint8_t &crc_msb, uint8_t &crc_lsb) {
+inline void crcRTU(const uint8_t *buffer, uint16_t buffer_size, uint8_t &crc_msb, uint8_t &crc_lsb) {
   uint16_t pos;
   uint8_t i;
   uint16_t crc = 0xFFFF;
@@ -197,7 +198,7 @@ void crcRTU(const uint8_t *buffer, uint16_t buffer_size, uint8_t &crc_msb, uint8
   // Note, this number has low and high bytes swapped, so use it accordingly (or swap bytes)
 }
 
-int make_stream_from_buffer(boost::asio::streambuf &asio_buffer, uint8_t *buff, size_t buff_size) {
+inline int make_stream_from_buffer(boost::asio::streambuf &asio_buffer, uint8_t *buff, size_t buff_size) {
   auto out = std::ostreambuf_iterator<char>(&asio_buffer);
   for (size_t i = 0; i < buff_size; i++)
     *out++ = buff[i];

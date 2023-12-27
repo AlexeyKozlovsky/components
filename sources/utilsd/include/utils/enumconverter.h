@@ -3,8 +3,9 @@
 
 #include "modbusutils.h"
 #include "deviceutils.h"
+#include "baseutils.h"
 
-ErrorCode toErrorCode(modbus::ModbusResult input_code) {
+inline ErrorCode toErrorCode(modbus::ModbusResult input_code) {
   switch (input_code) {
     case modbus::NO_MODBUS_ERROR:
       return ErrorCode::SUCCESS;

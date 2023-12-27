@@ -42,7 +42,7 @@ add_library(threadpooling::threadpooling ALIAS threadpooling)
 #----------------------------------------------------------------------------------------------------------------------
 
 find_package(utils REQUIRED)
-target_link_libraries(${PROJECT_NAME} utils::utils)
+target_link_libraries(${PROJECT_NAME}  utils::utils)
 
 #----------------------------------------------------------------------------------------------------------------------
 # threadpooling sources

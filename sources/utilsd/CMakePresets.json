@@ -15,7 +15,7 @@
         "UTILS_BUILD_TESTS": "OFF",
         "UTILS_BUILD_EXAMPLES": "OFF",
         "UTILS_INSTALL": "ON",
-        "UTILS_SHARED_LIBS": "ON"
+        "UTILS_SHARED_LIBS": "OFF"
       }
     },
     {

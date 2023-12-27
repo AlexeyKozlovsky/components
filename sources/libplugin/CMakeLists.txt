@@ -61,18 +61,18 @@ find_package(modbus REQUIRED)
 find_package(threadpooling REQUIRED)
 find_package(modbuswrappers REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE utils::utils)
-target_link_libraries(${PROJECT_NAME} PRIVATE modbus::modbus)
-target_link_libraries(${PROJECT_NAME} PRIVATE threadpooling::threadpooling)
-target_link_libraries(${PROJECT_NAME} PRIVATE modbuswrappers::modbuswrappers)
+target_link_libraries(${PROJECT_NAME}  utils::utils)
+target_link_libraries(${PROJECT_NAME}  modbus::modbus)
+target_link_libraries(${PROJECT_NAME}  threadpooling::threadpooling)
+target_link_libraries(${PROJECT_NAME}  modbuswrappers::modbuswrappers)
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME}  Qt5::Widgets)
 
 if(WIN32)
     find_library(WSOCK32_LIBRARY wsock32)
     find_library(WS2_32_LIBRARY ws2_32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE wsock32 ws2_32)
+    target_link_libraries(${PROJECT_NAME}  wsock32 ws2_32)
 
 endif()
 

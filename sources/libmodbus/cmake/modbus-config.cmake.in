@@ -1,12 +1,12 @@
-# CMake package config file for threadpooling library.
+# CMake package config file for modbus library.
 #
 # The following target is imported:
 #
-#   threadpooling::threadpooling
+#   modbus::modbus
 #
 # Type of target to import (static or shared) is determined by the following algorithm:
 #
-#   1. if THREADPOOLING_SHARED_LIBS is defined and:
+#   1. if MODBUS_SHARED_LIBS is defined and:
 #     1.1 is true, then import shared library target or issue error
 #     1.2 is false, then import static library target or issue error
 #
@@ -20,33 +20,33 @@
 @PACKAGE_INIT@
 
 macro(import_targets type)
-    if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/threadpooling-${type}-targets.cmake")
-        set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE "threadpooling ${type} libraries were requested but not found")
+    if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/modbus-${type}-targets.cmake")
+        set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE "modbus ${type} libraries were requested but not found")
         set(${CMAKE_FIND_PACKAGE_NAME}_FOUND OFF)
         return()
     endif()
 
-    include("${CMAKE_CURRENT_LIST_DIR}/threadpooling-${type}-targets.cmake")
+    include("${CMAKE_CURRENT_LIST_DIR}/modbus-${type}-targets.cmake")
 endmacro()
 
-if(NOT TARGET threadpooling::threadpooling)
+if(NOT TARGET modbus::modbus)
     set(type "")
 
-    if(DEFINED THREADPOOLING_SHARED_LIBS)
-        if(THREADPOOLING_SHARED_LIBS)
+    if(DEFINED MODBUS_SHARED_LIBS)
+        if(MODBUS_SHARED_LIBS)
             set(type "shared")
         else()
             set(type "static")
         endif()
-    elseif(BUILD_SHARED_LIBS AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/threadpooling-shared-targets.cmake")
+    elseif(BUILD_SHARED_LIBS AND EXISTS "${CMAKE_CURRENT_LIST_DIR}/modbus-shared-targets.cmake")
         set(type "shared")
-    elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/threadpooling-static-targets.cmake")
+    elseif(EXISTS "${CMAKE_CURRENT_LIST_DIR}/modbus-static-targets.cmake")
         set(type "static")
     else()
         set(type "shared")
     endif()
 
     import_targets(${type})
-    check_required_components(threadpooling)
-    message("-- Found ${type} threadpooling (version ${${CMAKE_FIND_PACKAGE_NAME}_VERSION})")
+    check_required_components(modbus)
+    message("-- Found ${type} modbus (version ${${CMAKE_FIND_PACKAGE_NAME}_VERSION})")
 endif()

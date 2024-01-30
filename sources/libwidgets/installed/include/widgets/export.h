@@ -1,0 +1,11 @@
+#ifndef SOURCES_LIBWIDGETS_WIDGETS_INCLUDE_WIDGETS_EXPORT_H_
+#define SOURCES_LIBWIDGETS_WIDGETS_INCLUDE_WIDGETS_EXPORT_H_
+
+#ifndef WIDGETS_STATIC_DEFINE
+#  include <widgets/export_shared.h>
+#else
+#  include <widgets/export_static.h>
+#endif
+
+
+#endif //SOURCES_LIBWIDGETS_WIDGETS_INCLUDE_WIDGETS_EXPORT_H_

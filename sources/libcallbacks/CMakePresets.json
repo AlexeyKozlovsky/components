@@ -1,0 +1,40 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 14,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "dev",
+      "description": "Base preset for library developers",
+      "binaryDir": "${sourceDir}/build",
+      "hidden": true,
+      "cacheVariables": {
+        "CALLBACKS_BUILD_TESTS": "OFF",
+        "CALLBACKS_BUILD_EXAMPLES": "OFF",
+        "CALLBACKS_INSTALL": "ON",
+        "CALLBACKS_SHARED_LIBS": "OFF"
+      }
+    },
+    {
+      "name": "dev-win",
+      "description": "Windows preset for library developers",
+      "hidden": false,
+      "inherits": ["dev"],
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHs"
+      }
+    },
+    {
+      "name": "dev-linux",
+      "description": "Linux preset for library developers",
+      "hidden": false,
+      "inherits": ["dev"],
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wcast-align -Wcast-qual -Wnull-dereference -Woverloaded-virtual -Wformat=2 -Werror"
+      }
+    }
+  ]
+}

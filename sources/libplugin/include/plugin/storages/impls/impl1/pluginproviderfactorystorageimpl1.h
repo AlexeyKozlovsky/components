@@ -12,6 +12,10 @@ class PluginProviderFactoryStorageImpl1: public PluginProviderFactoryStorage {
   std::shared_ptr<QWidget> getPluginProviderFactoryView(const std::string &name) override;
   bool removePluginProviderFactoryView(const std::string &name) override;
 
+  std::vector<std::string> getPluginProviderFactoryNames() override;
+
+  int getRowCount() override;
+
  private:
   std::map<std::string, std::shared_ptr<QWidget>> _factory_views;
 };

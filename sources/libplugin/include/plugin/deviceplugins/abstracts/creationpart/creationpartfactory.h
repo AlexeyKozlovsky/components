@@ -28,7 +28,7 @@ class CreationPartFactory {
   virtual CreationPartFactoryResponse createCreationPart(CreationPartFactoryRequest request) = 0;
 };
 
-#define TestPluginInterface_iid "org.dialtek.syncsys.test-plugin"
-Q_DECLARE_INTERFACE(CreationPartFactory, TestPluginInterface_iid)
+#define DevicePluginInterface_iid "org.dialtek.syncsys.device-plugin"
+Q_DECLARE_INTERFACE(CreationPartFactory, DevicePluginInterface_iid)
 
 #endif //TEST_PROJECT_WITH_MODULE_ARCH_DEVICEPLUGINS_ABSTRACTS_CREATIONPART_CREATIONPARTFACTORY_H_

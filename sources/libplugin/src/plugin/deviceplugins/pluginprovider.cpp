@@ -202,7 +202,7 @@ bool PluginProvider::hasCommandByKey(const std::string &key) {
   bool result = false;
 
   if (_command_provider != nullptr) {
-    _command_provider->hasCommand(key);
+    result = _command_provider->hasCommand(key);
   }
 
   return result;

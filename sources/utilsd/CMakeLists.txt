@@ -56,6 +56,7 @@ if (Boost_FOUND)
     target_link_libraries (${PROJECT_NAME}  ${Boost_LIBRARIES}) # подключаем библиотеку
 endif ()
 
+
 #----------------------------------------------------------------------------------------------------------------------
 # utils sources
 #----------------------------------------------------------------------------------------------------------------------
@@ -71,6 +72,7 @@ generate_export_header(utils EXPORT_FILE_NAME include/utils/${export_file_name})
 
 file(GLOB sources
         include/utils/*.h
+        include/utils/storages/*.h
         include/utils/services/*.h
         include/utils/services/domain/*.h
         include/utils/services/domain/impls/*.h
@@ -78,11 +80,14 @@ file(GLOB sources
         include/utils/services/uidgeneratorimpls/boost/*.h
 
         src/utils/*.cpp
+        src/utils/storages/*.cpp
         src/utils/services/*.cpp
         src/utils/services/domain/*.cpp
         src/utils/services/domain/impls/*.cpp
         src/utils/services/uidgeneratorimpls/*.cpp
-        src/utils/services/uidgeneratorimpls/boost/*.cpp)
+        src/utils/services/uidgeneratorimpls/boost/*.cpp
+
+        )
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 
 #----------------------------------------------------------------------------------------------------------------------

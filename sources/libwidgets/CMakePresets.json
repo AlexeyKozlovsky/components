@@ -15,7 +15,7 @@
         "WIDGETS_BUILD_TESTS": "OFF",
         "WIDGETS_BUILD_EXAMPLES": "OFF",
         "WIDGETS_INSTALL": "ON",
-        "WIDGETS_SHARED_LIBS": "ON"
+        "WIDGETS_SHARED_LIBS": "OFF"
       }
     },
     {

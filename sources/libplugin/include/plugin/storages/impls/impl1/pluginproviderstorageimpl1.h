@@ -3,8 +3,6 @@
 
 #include "plugin/storages/pluginproviderstorage.h"
 
-#include "plugin/storages/devicepack.h"
-
 
 class PluginProviderStorageImpl1: public PluginProviderStorage {
  public:
@@ -13,6 +11,10 @@ class PluginProviderStorageImpl1: public PluginProviderStorage {
   std::shared_ptr<PluginProvider> getDevice(const std::string &uid) override;
   bool removeDevice(const std::string &uid) override;
   std::vector<std::string> getDeviceUIDByName(const std::string &name) override;
+
+  std::vector<std::pair<std::string, std::shared_ptr<PluginProvider>>> getAllDevices() override;
+  int getDevicesCount() override;
+  int getRowCount() override;
 
  private:
   std::map<std::string, std::shared_ptr<PluginProvider>> _plugin_providers;

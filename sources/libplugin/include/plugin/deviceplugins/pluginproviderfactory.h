@@ -3,18 +3,18 @@
 
 #include "pluginprovider.h"
 
-struct TestPluginProviderRequest {
+struct PluginProviderRequest {
   std::string name;
   std::string description;
 };
 
-struct TestPluginProviderResponse {
+struct PluginProviderResponse {
   std::shared_ptr<PluginProvider> plugin_provider = nullptr;
 };
 
 class PluginProviderFactory {
  public:
-  virtual TestPluginProviderResponse createPluginProvider(TestPluginProviderRequest request) = 0;
+  virtual PluginProviderResponse createPluginProvider(PluginProviderRequest request) = 0;
 };
 
 #endif //TEST_PROJECT_WITH_MODULE_ARCH_DEVICEPLUGINS_PLUGINPROVIDERFACTORY_H_

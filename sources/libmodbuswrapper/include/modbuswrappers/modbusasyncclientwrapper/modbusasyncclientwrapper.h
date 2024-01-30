@@ -2,6 +2,7 @@
 #define TEST_PROJECT_WITH_MODULE_ARCH_MODBUSWRAPPERS_MODBUSASYNCCLIENTWRAPPER_H_
 
 #include <threadpooling/iprocessable.h>
+#include <utils/services/domain/regreaddivider.h>
 
 #include "modbuswrappers/modbuswrapper.h"
 
@@ -29,6 +30,9 @@ class ModbusAsyncClientWrapper: public ModbusWrapper {
 
   std::vector<uint16_t> _holding_regs;
   std::vector<uint16_t> _input_regs;
+
+  std::shared_ptr<RegReadDivider> _holding_regs_divider = nullptr;
+  std::shared_ptr<RegReadDivider> _input_regs_divider = nullptr;
 
   std::atomic<bool> _is_processed{false};
 };

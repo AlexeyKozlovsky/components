@@ -41,7 +41,7 @@ void ModbusAsyncClientWrapper::process() {
     std::vector<uint16_t> current_input_reg_vector;
     std::for_each(std::begin(input_regs_read_data), std::end(input_regs_read_data), [&](const RegReadData &data) {
       current_input_reg_vector.resize(data.reg_num);
-      _modbus_wrapper->readHoldingRegisters(data.reg_num, data.reg_count, current_input_reg_vector);
+      _modbus_wrapper->readInputRegisters(data.reg_num, data.reg_count, current_input_reg_vector);
 
       for (int i = 0; i < current_input_reg_vector.size(); i++) {
         auto input_reg = data.reg_num + i;

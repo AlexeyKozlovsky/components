@@ -2,7 +2,7 @@
 #include "modbuswrappers/modbuspostponedwritewrapper/modbuspostponedwritewrapper.h"
 
 
-ModbusPostponedWriteWrapper::ModbusPostponedWriteWrapper(const std::shared_ptr<ModbusAsyncClientWrapper> &modbus_wrapper):
+ModbusPostponedWriteWrapper::ModbusPostponedWriteWrapper(const std::shared_ptr<AbstractModbusAsyncClientWrapper> &modbus_wrapper):
   _modbus_wrapper(modbus_wrapper) {
 
 }

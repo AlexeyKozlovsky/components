@@ -2,12 +2,12 @@
 #define MODBUSWRAPPERS_LIBMODBUSWRAPPER_INCLUDE_MODBUSWRAPPERS_MODBUSPOSTPONEDWRITEWRAPPER_MODBUSPOSTPONEDWRITEWRAPPER_H_
 
 #include <memory>
-#include "modbuswrappers/modbusasyncclientwrapper/modbusasyncclientwrapper.h"
+#include "modbuswrappers/modbusasyncclientwrapper/abstractmodbusasyncclientwrapper.h"
 
 
 class ModbusPostponedWriteWrapper: public ModbusWrapper {
  public:
-  explicit ModbusPostponedWriteWrapper(const std::shared_ptr<ModbusAsyncClientWrapper> &modbus_wrapper);
+  explicit ModbusPostponedWriteWrapper(const std::shared_ptr<AbstractModbusAsyncClientWrapper> &modbus_wrapper);
 
   ErrorCode connect() override;
   ErrorCode disconnect() override;
@@ -27,7 +27,7 @@ class ModbusPostponedWriteWrapper: public ModbusWrapper {
   int _holding_regs_count = 0;
   std::vector<uint16_t> _tmp_holding_regs;
 
-  std::shared_ptr<ModbusAsyncClientWrapper> _modbus_wrapper = nullptr;
+  std::shared_ptr<AbstractModbusAsyncClientWrapper> _modbus_wrapper = nullptr;
 
   std::shared_ptr<RegReadDivider> _holding_regs_divider = nullptr;
 

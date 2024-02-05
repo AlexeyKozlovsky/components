@@ -1,14 +1,14 @@
-#ifndef TEST_PROJECT_WITH_MODULE_ARCH_MODBUSWRAPPERS_MODBUSASYNCCLIENTWRAPPER_H_
-#define TEST_PROJECT_WITH_MODULE_ARCH_MODBUSWRAPPERS_MODBUSASYNCCLIENTWRAPPER_H_
+#ifndef MODBUSWRAPPERS_LIBMODBUSWRAPPER_INCLUDE_MODBUSWRAPPERS_MODBUSASYNCCLIENTWRAPPER_MODBUSASYNCCLIENTWRAPPER2_H_
+#define MODBUSWRAPPERS_LIBMODBUSWRAPPER_INCLUDE_MODBUSWRAPPERS_MODBUSASYNCCLIENTWRAPPER_MODBUSASYNCCLIENTWRAPPER2_H_
 
 #include <threadpooling/iprocessable.h>
 #include <utils/services/domain/regreaddivider.h>
 
 #include "abstractmodbusasyncclientwrapper.h"
 
-class ModbusAsyncClientWrapper: public AbstractModbusAsyncClientWrapper {
+class ModbusAsyncClientWrapper2: public AbstractModbusAsyncClientWrapper {
  public:
-  explicit ModbusAsyncClientWrapper(const std::shared_ptr<ModbusWrapper> &modbus_wrapper, int holding_regs_count, int input_regs_count);
+  explicit ModbusAsyncClientWrapper2(const std::shared_ptr<ModbusWrapper> &modbus_wrapper, int holding_regs_count, int input_regs_count);
 
   ErrorCode connect() override;
   ErrorCode disconnect() override;
@@ -34,11 +34,6 @@ class ModbusAsyncClientWrapper: public AbstractModbusAsyncClientWrapper {
   std::vector<uint16_t> _holding_regs;
   std::vector<uint16_t> _input_regs;
 
-  std::shared_ptr<RegReadDivider> _holding_regs_divider = nullptr;
-  std::shared_ptr<RegReadDivider> _input_regs_divider = nullptr;
-
   std::atomic<bool> _is_processed{false};
 };
-
-
-#endif //TEST_PROJECT_WITH_MODULE_ARCH_MODBUSWRAPPERS_MODBUSASYNCCLIENTWRAPPER_H_
+#endif //MODBUSWRAPPERS_LIBMODBUSWRAPPER_INCLUDE_MODBUSWRAPPERS_MODBUSASYNCCLIENTWRAPPER_MODBUSASYNCCLIENTWRAPPER2_H_

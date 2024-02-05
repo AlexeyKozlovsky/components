@@ -1,6 +1,6 @@
 
 #include "modbuswrappers/modbusasyncclientwrapper/modbusasyncclientwrapperfactory.h"
-#include "modbuswrappers/modbusasyncclientwrapper/modbusasyncclientwrapper.h"
+#include "modbuswrappers/modbusasyncclientwrapper/modbusasyncclientwrapper2.h"
 
 ModbusAsyncClientWrapperFactory::ModbusAsyncClientWrapperFactory(const std::shared_ptr<ModbusWrapperFactory> &modbus_wrapper_factory):
   _base_modbus_wrapper_factory(modbus_wrapper_factory) {
@@ -16,7 +16,7 @@ std::shared_ptr<ModbusWrapper> ModbusAsyncClientWrapperFactory::createModbusWrap
   if (_base_modbus_wrapper_factory != nullptr) {
     auto base_modbus_wrapper = _base_modbus_wrapper_factory->createModbusWrapper(ip, port, modbus_id, holding_regs_count, input_regs_count);
     if (base_modbus_wrapper != nullptr) {
-      result = std::make_shared<ModbusAsyncClientWrapper>(base_modbus_wrapper, holding_regs_count, input_regs_count);
+      result = std::make_shared<ModbusAsyncClientWrapper2>(base_modbus_wrapper, holding_regs_count, input_regs_count);
     }
   }
   return result;

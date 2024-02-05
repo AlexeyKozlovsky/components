@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include <QVariant>
+#include <QString>
 #include <QWidget>
 
 #include <utils/baseutils.h>
@@ -44,15 +46,18 @@ class PluginProvider {
 
   std::shared_ptr<QWidget> getFactoryWidget();
   std::shared_ptr<QWidget> getManagementWidget();
-  bool hasManagementWidgetByKey(const std::string &key);
-  std::shared_ptr<QWidget> getManagementWidget(const std::string &key);
-  bool hasCommandByKey(const std::string &key);
+  bool hasManagementWidgetByKey(const QString &key);
+  std::shared_ptr<QWidget> getManagementWidget(const QString &key, QVariant arg = {});
+  bool hasCommandByKey(const QString &key);
   CommandResponse executeCommandByKey(CommandRequest request);
 
   std::shared_ptr<IProcessable> getBackgroundTask();
 
   bool hasBackgroundTaskByKey(const std::string &key);
   std::shared_ptr<IProcessable> getBackgroundTask(const std::string &key);
+
+  std::string serialize();
+  ErrorCode deserialize(const std::string &data);
 
  private:
   std::shared_ptr<PluginDataProvider> _data_provider = nullptr;

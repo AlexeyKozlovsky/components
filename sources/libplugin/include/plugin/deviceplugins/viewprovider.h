@@ -10,8 +10,8 @@ class PluginViewProvider {
   virtual std::shared_ptr<QWidget> getFactoryWidget() = 0;
   virtual std::shared_ptr<QWidget> getManagementWidget() = 0;
 
-  virtual bool hasManagementWidgetByKey(const std::string &key) = 0;
-  virtual std::shared_ptr<QWidget> getManagementWidget(const std::string &key, QVariant arg = {}) = 0;
+  virtual bool hasManagementWidgetByKey(const QString &key) = 0;
+  virtual std::shared_ptr<QWidget> getManagementWidget(const QString &key, QVariant arg = {}) = 0;
 };
 
 

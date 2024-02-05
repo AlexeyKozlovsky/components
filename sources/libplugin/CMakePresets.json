@@ -15,7 +15,7 @@
         "PLUGIN_BUILD_TESTS": "OFF",
         "PLUGIN_BUILD_EXAMPLES": "OFF",
         "PLUGIN_INSTALL": "ON",
-        "PLUGIN_SHARED_LIBS": "OFF"
+        "PLUGIN_SHARED_LIBS": "ON"
       }
     },
     {

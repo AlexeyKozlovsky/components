@@ -134,6 +134,19 @@ ErrorCode ModbusAsyncClientWrapper::writeHoldingRegister(int reg_num, uint16_t v
   auto result = OPERATION_INTERRUPTED;
   if (_modbus_wrapper != nullptr) {
     result = _modbus_wrapper->writeHoldingRegister(reg_num, value, modbus_id);
+
+    // Обновление
+
+    if (result == SUCCESS) {
+      uint16_t reg_value;
+      result = _modbus_wrapper->readHoldingRegister(reg_num, reg_value, modbus_id);
+
+      if (result == SUCCESS) {
+        if (reg_num >= 0 && reg_num < _holding_regs.size()) {
+          _holding_regs[reg_num] = reg_value;
+        }
+      }
+    }
   }
 
   return result;
@@ -143,6 +156,21 @@ ErrorCode ModbusAsyncClientWrapper::writeHoldingRegisters(int reg_num, std::vect
   auto result = OPERATION_INTERRUPTED;
   if (_modbus_wrapper != nullptr) {
     result = _modbus_wrapper->writeHoldingRegisters(reg_num, value, modbus_id);
+
+    // Обновление
+    if (result == SUCCESS) {
+      uint16_t reg_count = value.size();
+      std::vector<uint16_t> reg_values;
+      result = _modbus_wrapper->readHoldingRegisters(reg_num, reg_count, reg_values, modbus_id);
+
+      if (result == SUCCESS) {
+        if (reg_num >= 0 && reg_num < _holding_regs.size() && reg_num + reg_count <= _holding_regs.size()) {
+          for (int i = reg_num; i < reg_num + reg_count; i++) {
+            _holding_regs[i] = reg_values[i - reg_num];
+          }
+        }
+      }
+    }
   }
 
   return result;

@@ -16,7 +16,7 @@ class PluginSerializer {
    * Сразу сериализовывает данные в DTO девайса
    * @return
    */
-  virtual ErrorCode deserialize() = 0;
+  virtual ErrorCode deserialize(const std::string &data) = 0;
 };
 
 #endif //TEST_PROJECT_WITH_MODULE_ARCH_DEVICEPLUGINS_SERIALIZER_H_

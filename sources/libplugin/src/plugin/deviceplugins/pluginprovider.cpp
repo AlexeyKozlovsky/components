@@ -1,4 +1,6 @@
 
+#include <utility>
+
 #include "plugin/deviceplugins/pluginprovider.h"
 
 
@@ -177,7 +179,7 @@ std::shared_ptr<QWidget> PluginProvider::getManagementWidget() {
   return result;
 }
 
-bool PluginProvider::hasManagementWidgetByKey(const std::string &key) {
+bool PluginProvider::hasManagementWidgetByKey(const QString &key) {
   bool result = false;
 
   if (_view_provider != nullptr) {
@@ -187,18 +189,18 @@ bool PluginProvider::hasManagementWidgetByKey(const std::string &key) {
   return result;
 }
 
-std::shared_ptr<QWidget> PluginProvider::getManagementWidget(const std::string &key) {
+std::shared_ptr<QWidget> PluginProvider::getManagementWidget(const QString &key, QVariant arg) {
   std::shared_ptr<QWidget> result = nullptr;
 
 
   if (_view_provider != nullptr) {
-    result = _view_provider->getManagementWidget(key);
+    result = _view_provider->getManagementWidget(key, std::move(arg));
   }
 
   return result;
 }
 
-bool PluginProvider::hasCommandByKey(const std::string &key) {
+bool PluginProvider::hasCommandByKey(const QString &key) {
   bool result = false;
 
   if (_command_provider != nullptr) {
@@ -243,6 +245,26 @@ std::shared_ptr<IProcessable> PluginProvider::getBackgroundTask(const std::strin
 
   if (_service_provider != nullptr) {
     result = _service_provider->getBackgroundTaskByKey(key);
+  }
+
+  return result;
+}
+
+std::string PluginProvider::serialize() {
+  std::string result;
+
+  if (_serializer != nullptr) {
+    result = _serializer->serialize();
+  }
+
+  return result;
+}
+
+ErrorCode PluginProvider::deserialize(const std::string &data) {
+  ErrorCode result = OPERATION_INTERRUPTED;
+
+  if (_serializer != nullptr) {
+    result = _serializer->deserialize(data);
   }
 
   return result;

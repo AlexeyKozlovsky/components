@@ -38,7 +38,7 @@ ErrorCode ModbusClientModbusIDDecorator::isConnected(bool &is_connected) {
 ErrorCode ModbusClientModbusIDDecorator::readHoldingRegister(int reg_num, uint16_t &value, int modbus_id) {
   auto result = OPERATION_INTERRUPTED;
   if (_modbus_wrapper != nullptr) {
-    result = _modbus_wrapper->readHoldingRegister(reg_num, value, modbus_id);
+    result = _modbus_wrapper->readHoldingRegister(reg_num, value, _modbus_id);
   }
 
   return result;

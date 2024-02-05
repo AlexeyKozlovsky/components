@@ -88,13 +88,15 @@ file(GLOB sources
     include/modbuswrappers/modbusasyncclientwrapper/*.h
     include/modbuswrappers/modbusclientwrapper/*.h
     include/modbuswrappers/modbuswrappermodbusiddecorator/*.h
+        include/modbuswrappers/modbuspostponedwritewrapper/*.h
     include/modbuswrappers/storages/*.h
-        src/modbuswrappers/*.cpp
-        src/modbuswrappers/mocks/*.cpp
-        src/modbuswrappers/modbusasyncclientwrapper/*.cpp
-        src/modbuswrappers/modbusclientwrapper/*.cpp
-        src/modbuswrappers/modbuswrappermodbusiddecorator/*.cpp
-        src/modbuswrappers/storages/*.cpp
+    src/modbuswrappers/*.cpp
+    src/modbuswrappers/mocks/*.cpp
+    src/modbuswrappers/modbusasyncclientwrapper/*.cpp
+    src/modbuswrappers/modbusclientwrapper/*.cpp
+    src/modbuswrappers/modbuswrappermodbusiddecorator/*.cpp
+    src/modbuswrappers/modbuspostponedwritewrapper/*.cpp
+    src/modbuswrappers/storages/*.cpp
     )
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 

@@ -203,3 +203,11 @@ ErrorCode ModbusAsyncClientWrapper::readInputRegisters(int reg_num,
 
   return result;
 }
+
+const std::vector<uint16_t> &ModbusAsyncClientWrapper::getHoldingRegs() {
+  return _holding_regs;
+}
+
+const std::vector<uint16_t> &ModbusAsyncClientWrapper::getInputRegs() {
+  return _input_regs;
+}

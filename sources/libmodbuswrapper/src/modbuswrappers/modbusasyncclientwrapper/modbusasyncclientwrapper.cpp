@@ -69,7 +69,6 @@ void ModbusAsyncClientWrapper::process() {
       std::cout << "REG READ DATA " << data.reg_num << " " << data.reg_count << std::endl;
     });
   }
-
 }
 
 //  _is_processed = false;

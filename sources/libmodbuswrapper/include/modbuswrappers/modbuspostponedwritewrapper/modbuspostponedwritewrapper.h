@@ -2,6 +2,9 @@
 #define MODBUSWRAPPERS_LIBMODBUSWRAPPER_INCLUDE_MODBUSWRAPPERS_MODBUSPOSTPONEDWRITEWRAPPER_MODBUSPOSTPONEDWRITEWRAPPER_H_
 
 #include <memory>
+
+#include <utils/services/domain/regreaddivider.h>
+
 #include "modbuswrappers/modbusasyncclientwrapper/abstractmodbusasyncclientwrapper.h"
 
 

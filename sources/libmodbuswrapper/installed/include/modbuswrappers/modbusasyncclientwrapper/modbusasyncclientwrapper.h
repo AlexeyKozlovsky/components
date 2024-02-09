@@ -4,23 +4,26 @@
 #include <threadpooling/iprocessable.h>
 #include <utils/services/domain/regreaddivider.h>
 
-#include "modbuswrappers/modbuswrapper.h"
+#include "abstractmodbusasyncclientwrapper.h"
 
-class ModbusAsyncClientWrapper: public ModbusWrapper {
+class ModbusAsyncClientWrapper: public AbstractModbusAsyncClientWrapper {
  public:
   explicit ModbusAsyncClientWrapper(const std::shared_ptr<ModbusWrapper> &modbus_wrapper, int holding_regs_count, int input_regs_count);
 
   ErrorCode connect() override;
   ErrorCode disconnect() override;
   ErrorCode isConnected(bool &is_connected) override;
-  ErrorCode readHoldingRegister(int reg_num, uint16_t &value, int modbus_id) override;
-  ErrorCode readHoldingRegisters(int reg_num, int reg_count, std::vector<uint16_t> &values, int modbus_id) override;
-  ErrorCode writeHoldingRegister(int reg_num, uint16_t value, int modbus_id) override;
-  ErrorCode writeHoldingRegisters(int reg_num, std::vector<uint16_t> value, int modbus_id) override;
-  ErrorCode readInputRegister(int reg_num, uint16_t &value, int modbus_id) override;
-  ErrorCode readInputRegisters(int reg_num, int reg_count, std::vector<uint16_t> &values, int modbus_id) override;
+  ErrorCode readHoldingRegister(int reg_num, uint16_t &value, int modbus_id = 1) override;
+  ErrorCode readHoldingRegisters(int reg_num, int reg_count, std::vector<uint16_t> &values, int modbus_id = 1) override;
+  ErrorCode writeHoldingRegister(int reg_num, uint16_t value, int modbus_id = 1) override;
+  ErrorCode writeHoldingRegisters(int reg_num, std::vector<uint16_t> value, int modbus_id = 1) override;
+  ErrorCode readInputRegister(int reg_num, uint16_t &value, int modbus_id = 1) override;
+  ErrorCode readInputRegisters(int reg_num, int reg_count, std::vector<uint16_t> &values, int modbus_id = 1) override;
 
   void process() override;
+
+  const std::vector<uint16_t> &getHoldingRegs();
+  const std::vector<uint16_t> &getInputRegs();
 
  private:
   std::shared_ptr<ModbusWrapper> _modbus_wrapper = nullptr;

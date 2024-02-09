@@ -9,27 +9,39 @@
     {
       "name": "dev",
       "description": "Base preset for library developers",
-      "binaryDir": "${sourceDir}/build",
       "hidden": true,
       "cacheVariables": {
         "MODBUSWRAPPERS_BUILD_TESTS": "OFF",
-        "MODBUSWRAPPERS_BUILD_EXAMPLES": "OFF",
-        "MODBUSWRAPPERS_INSTALL": "ON",
-        "MODBUSWRAPPERS_SHARED_LIBS": "OFF"
+        "MODBUSWRAPPERS_BUILD_EXAMPLES": "ON",
+        "MODBUSWRAPPERS_INSTALL": "ON"
       }
     },
     {
       "name": "dev-win",
       "description": "Windows preset for library developers",
+      "binaryDir": "${sourceDir}/build-win",
       "hidden": false,
       "inherits": ["dev"],
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/EHsc"
+        "CMAKE_CXX_FLAGS": "/EHsc",
+        "MODBUSWRAPPERS_SHARED_LIBS": "OFF"
+      }
+    },
+    {
+      "name": "dev-win-dll",
+      "description": "Windows preset for library developers",
+      "binaryDir": "${sourceDir}/build-win-dll",
+      "hidden": false,
+      "inherits": ["dev"],
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHsc",
+        "MODBUSWRAPPERS_SHARED_LIBS": "ON"
       }
     },
     {
       "name": "dev-linux",
       "description": "Linux preset for library developers",
+      "binaryDir": "${sourceDir}/build-linux",
       "hidden": false,
       "inherits": ["dev"],
       "cacheVariables": {

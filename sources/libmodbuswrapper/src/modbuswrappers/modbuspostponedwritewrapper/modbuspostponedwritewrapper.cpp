@@ -41,7 +41,14 @@ ErrorCode ModbusPostponedWriteWrapper::readHoldingRegister(int reg_num, uint16_t
   ErrorCode result = OPERATION_INTERRUPTED;
 
   if (_modbus_wrapper != nullptr) {
-    result = _modbus_wrapper->readHoldingRegister(reg_num, value, modbus_id);
+
+    if (start_postponing) {
+      if (validateRegNum(reg_num)) {
+        value = _tmp_holding_regs[reg_num];
+      }
+    } else {
+      result = _modbus_wrapper->readHoldingRegister(reg_num, value, modbus_id);
+    }
   }
 
   return result;
@@ -54,7 +61,19 @@ ErrorCode ModbusPostponedWriteWrapper::readHoldingRegisters(int reg_num,
   ErrorCode result = OPERATION_INTERRUPTED;
 
   if (_modbus_wrapper != nullptr) {
-    result = _modbus_wrapper->readHoldingRegisters(reg_num, reg_count, values, modbus_id);
+
+    if (start_postponing) {
+      values.resize(reg_count);
+
+      for (int i = reg_num; i < reg_num + reg_count; i++) {
+        if (validateRegNum(i) && i - reg_num < values.size()) {
+          values[i - reg_num] = _tmp_holding_regs[i];
+        }
+      }
+
+    } else {
+      result = _modbus_wrapper->readHoldingRegisters(reg_num, reg_count, values, modbus_id);
+    }
   }
 
   return result;
@@ -135,6 +154,7 @@ void ModbusPostponedWriteWrapper::updateTempHoldingRegs() {
     start_postponing = true;
 
     if (_modbus_wrapper != nullptr) {
+      _modbus_wrapper->process();
       _tmp_holding_regs = _modbus_wrapper->getHoldingRegs();
     }
   }

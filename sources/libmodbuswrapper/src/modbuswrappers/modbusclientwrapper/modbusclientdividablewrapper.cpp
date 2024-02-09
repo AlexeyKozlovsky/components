@@ -119,16 +119,20 @@ ErrorCode ModbusClientDividableWrapper::writeHoldingRegisters(int reg_num, std::
   if (_modbus_wrapper != nullptr && _holding_regs_divider != nullptr) {
 
     _holding_regs_divider->setParams(reg_num, reg_count, _holding_regs_per_request);
-
     auto holding_regs_read_data = _holding_regs_divider->getRegReadData();
     std::vector<uint16_t> current_holding_reg_vector;
     std::for_each(std::begin(holding_regs_read_data), std::end(holding_regs_read_data), [&](const RegReadData &data) {
       current_holding_reg_vector.resize(data.reg_num);
 
-      std::vector<uint16_t> current_vector_to_write;
+      std::cout << reg_num << "" << reg_count << "\t" << data.reg_num << " " << data.reg_count << "\t\tFOR READING\t" << __func__ << std::endl;
+//      std::vector<uint16_t> current_vector_to_write;
+//      current_vector_to_write.reserve(data.reg_count);
       int start_pos = data.reg_num - reg_num;
       int stop_pos = start_pos + data.reg_count;
-      std::copy(std::begin(values) + start_pos, std::end(values) + stop_pos, std::back_inserter(current_vector_to_write));
+//      std::copy(std::begin(values) + start_pos, std::end(values) + stop_pos, std::back_inserter(current_vector_to_write));
+
+      std::vector<uint16_t> current_vector_to_write(std::begin(values) + start_pos, std::begin(values) + stop_pos);
+      std::cout << "current vector to write " << current_vector_to_write.size() << std::endl;
       _modbus_wrapper->writeHoldingRegisters(data.reg_num, current_vector_to_write);
 
       std::cout << "REG READ DATA " << data.reg_num << " " << data.reg_count << std::endl;
@@ -162,7 +166,7 @@ ErrorCode ModbusClientDividableWrapper::readInputRegisters(int reg_num,
     std::vector<uint16_t> current_input_reg_vector;
     std::for_each(std::begin(input_regs_read_data), std::end(input_regs_read_data), [&](const RegReadData &data) {
       current_input_reg_vector.resize(data.reg_num);
-      _modbus_wrapper->readHoldingRegisters(data.reg_num, data.reg_count, current_input_reg_vector);
+      _modbus_wrapper->readInputRegisters(data.reg_num, data.reg_count, current_input_reg_vector);
 
       for (int i = 0; i < current_input_reg_vector.size(); i++) {
         auto input_reg = data.reg_num + i;

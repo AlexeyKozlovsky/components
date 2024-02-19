@@ -6,6 +6,8 @@ static const int DEFAULT_HOLDING_FIRST_REG_NUM = 0;
 static const int DEFAULT_INPUT_REG_PER_REQUEST_COUNT = 30;
 static const int DEFAULT_HOLDING_REG_PER_REQUEST_COUNT = 30;
 
+// TODO: Добавить потом более правильную обработку ошибок в множественной записи
+
 
 ModbusClientDividableWrapper::ModbusClientDividableWrapper(const std::shared_ptr<ModbusWrapper> &modbus_wrapper,
                                                            int holding_regs_count,
@@ -133,9 +135,13 @@ ErrorCode ModbusClientDividableWrapper::writeHoldingRegisters(int reg_num, std::
 
       std::vector<uint16_t> current_vector_to_write(std::begin(values) + start_pos, std::begin(values) + stop_pos);
       std::cout << "current vector to write " << current_vector_to_write.size() << std::endl;
-      _modbus_wrapper->writeHoldingRegisters(data.reg_num, current_vector_to_write);
+      result = _modbus_wrapper->writeHoldingRegisters(data.reg_num, current_vector_to_write);
 
       std::cout << "REG READ DATA " << data.reg_num << " " << data.reg_count << std::endl;
+
+      if (result != SUCCESS) {
+        return result;
+      }
     });
   }
 
@@ -166,7 +172,11 @@ ErrorCode ModbusClientDividableWrapper::readInputRegisters(int reg_num,
     std::vector<uint16_t> current_input_reg_vector;
     std::for_each(std::begin(input_regs_read_data), std::end(input_regs_read_data), [&](const RegReadData &data) {
       current_input_reg_vector.resize(data.reg_num);
-      _modbus_wrapper->readInputRegisters(data.reg_num, data.reg_count, current_input_reg_vector);
+      result = _modbus_wrapper->readInputRegisters(data.reg_num, data.reg_count, current_input_reg_vector);
+
+      if (result != SUCCESS) {
+        return result;
+      }
 
       for (int i = 0; i < current_input_reg_vector.size(); i++) {
         auto input_reg = data.reg_num + i;

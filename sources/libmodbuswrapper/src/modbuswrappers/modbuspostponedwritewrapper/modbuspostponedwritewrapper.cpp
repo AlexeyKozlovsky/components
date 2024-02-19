@@ -45,6 +45,7 @@ ErrorCode ModbusPostponedWriteWrapper::readHoldingRegister(int reg_num, uint16_t
     if (start_postponing) {
       if (validateRegNum(reg_num)) {
         value = _tmp_holding_regs[reg_num];
+        result = SUCCESS;
       }
     } else {
       result = _modbus_wrapper->readHoldingRegister(reg_num, value, modbus_id);
@@ -71,6 +72,8 @@ ErrorCode ModbusPostponedWriteWrapper::readHoldingRegisters(int reg_num,
         }
       }
 
+      result = SUCCESS;
+
     } else {
       result = _modbus_wrapper->readHoldingRegisters(reg_num, reg_count, values, modbus_id);
     }
@@ -85,6 +88,7 @@ ErrorCode ModbusPostponedWriteWrapper::writeHoldingRegister(int reg_num, uint16_
 
   if (validateRegNum(reg_num)) {
     _tmp_holding_regs[reg_num] = value;
+    result = SUCCESS;
   } else {
     result = INVALID_REQUEST;
   }

@@ -9,22 +9,33 @@
     {
       "name": "dev",
       "description": "Base preset for library developers",
-      "binaryDir": "${sourceDir}/build",
       "hidden": true,
       "cacheVariables": {
         "PLUGIN_BUILD_TESTS": "OFF",
         "PLUGIN_BUILD_EXAMPLES": "OFF",
-        "PLUGIN_INSTALL": "ON",
-        "PLUGIN_SHARED_LIBS": "ON"
+        "PLUGIN_INSTALL": "ON"
       }
     },
     {
       "name": "dev-win",
       "description": "Windows preset for library developers",
+      "binaryDir": "${sourceDir}/build",
       "hidden": false,
       "inherits": ["dev"],
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/EHs"
+        "CMAKE_CXX_FLAGS": "/EHs",
+        "PLUGIN_SHARED_LIBS": "OFF"
+      }
+    },
+    {
+      "name": "dev-win-dll",
+      "description": "Windows preset for library developers",
+      "binaryDir": "${sourceDir}/build-dll",
+      "hidden": false,
+      "inherits": ["dev"],
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "/EHs",
+        "PLUGIN_SHARED_LIBS": "ON"
       }
     },
     {

@@ -21,6 +21,11 @@ std::shared_ptr<PluginProvider> PluginProviderStorageImpl1::getDevice(const std:
 }
 
 bool PluginProviderStorageImpl1::removeDevice(const std::string &uid) {
+  if (_plugin_providers.count(uid) != 0) {
+    _plugin_providers.erase(uid);
+    rowRemovedNotify();
+    return true;
+  }
   return false;
 }
 

@@ -30,7 +30,7 @@ void BaseStorage::rowRemovedNotify() {
   int row_to_remove = 1;
   std::for_each(std::begin(_dim_change_notifiers), std::end(_dim_change_notifiers), [&](const std::shared_ptr<DimChangeNotifier> &notifier) {
     if (notifier != nullptr) {
-      notifier->insertRows(rows_count, row_to_remove);
+      notifier->removeRows(rows_count, row_to_remove);
     }
   });
 }

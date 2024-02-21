@@ -37,7 +37,7 @@ std::shared_ptr<ModbusWrapper> ModbusClientWrapperFactory::createBaseModbusWrapp
 //
 //  // TODO: УБРАААААААААААААААть !
 //  modbus_client->connect();
-  modbus_wrapper->connect();
+//  modbus_wrapper->connect();
 
 
 //  result = std::make_shared<ModbusClientWrapper>(modbus_client);

@@ -9,6 +9,8 @@
 #include "plugin/storages/pluginproviderstorage.h"
 #include "plugin/storages/pluginproviderfactorystorage.h"
 
+#include "plugin/deviceplugins/pluginproviderfactory.h"
+
 
 struct CreationPartFactoryRequest {
   std::shared_ptr<PluginProviderStorage> device_pack_storage = nullptr;
@@ -20,6 +22,7 @@ struct CreationPartFactoryRequest {
 };
 
 struct CreationPartFactoryResponse {
+  std::shared_ptr<PluginProviderFactory> plugin_provider_factory = nullptr;
   std::shared_ptr<QWidget> view = nullptr;
 };
 

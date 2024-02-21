@@ -7,15 +7,20 @@
 #include <QWidget>
 #include <utils/storages/basestorage.h>
 
+#include "plugin/deviceplugins/pluginproviderfactory.h"
+
 
 // !note Для плагинов используются имена плагинов вместо UID для упрощения
 
 
 class PluginProviderFactoryStorage: public BaseStorage {
  public:
-  virtual void addPluginProviderFactoryView(const std::string &name, const std::shared_ptr<QWidget> &view) = 0;
+  // TODO: Потом заменить имя
+  virtual void addPluginProviderFactoryView(const std::string &name,
+                                            const std::shared_ptr<PluginProviderFactory> &plugin_provider_factory) = 0;
 
   virtual std::shared_ptr<QWidget> getPluginProviderFactoryView(const std::string &name) = 0;
+  virtual std::shared_ptr<PluginProviderFactory> getPluginProviderFactory(const std::string &name) = 0;
   virtual bool removePluginProviderFactoryView(const std::string &name) = 0;
 
   virtual std::vector<std::string> getPluginProviderFactoryNames() = 0;

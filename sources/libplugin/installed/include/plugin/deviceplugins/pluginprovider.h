@@ -32,7 +32,9 @@ class PluginProvider {
   QIcon *getPluginIcon();
   
   std::string getDeviceName();
+  void setDeviceName(const std::string &value);
   std::string getDeviceDescription();
+  void setDeviceDescription(const std::string &value);
   std::string getDeviceFirmwareVersion();
   std::string getDeviceDeveloperInfo();
   

@@ -79,6 +79,12 @@ std::string PluginProvider::getDeviceName() {
   return result;
 }
 
+void PluginProvider::setDeviceName(const std::string &value) {
+  if (_data_provider != nullptr) {
+    _data_provider->setDeviceName(value);
+  }
+}
+
 std::string PluginProvider::getDeviceDescription() {
   std::string result;
 
@@ -87,6 +93,12 @@ std::string PluginProvider::getDeviceDescription() {
   }
 
   return result;
+}
+
+void PluginProvider::setDeviceDescription(const std::string &value) {
+  if (_data_provider != nullptr) {
+    _data_provider->setDeviceDescription(value);
+  }
 }
 
 std::string PluginProvider::getDeviceFirmwareVersion() {

@@ -18,7 +18,9 @@ class PluginDataProvider {
   virtual QIcon *getPluginIcon() = 0;
 
   virtual std::string getDeviceName() = 0;
+  virtual void setDeviceName(const std::string &value) = 0;
   virtual std::string getDeviceDescription() = 0;
+  virtual void setDeviceDescription(const std::string &value) = 0;
   virtual std::string getDeviceType() = 0;
   virtual std::string getDeviceFirmwareVersion() = 0;
   virtual std::string getDeviceDeveloperInfo() = 0;

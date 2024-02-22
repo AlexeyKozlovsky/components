@@ -14,16 +14,16 @@ include(GNUInstallDirs)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
-# UTILS_SHARED_LIBS option (undefined by default) can be used to force shared/static build
-option(UTILS_BUILD_TESTS "Build utils tests" OFF)
-option(UTILS_BUILD_EXAMPLES "Build utils examples" OFF)
+# LIB_SHARED_LIBS option (undefined by default) can be used to force shared/static build
+option(LIB_BUILD_TESTS "Build utils tests" OFF)
+option(LIB_BUILD_EXAMPLES "Build utils examples" OFF)
 option(UTILS_BUILD_DOCS "Build utils documentation" OFF)
-option(UTILS_INSTALL "Generate target for installing utils" ${is_top_level})
-set_if_undefined(UTILS_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/utils" CACHE STRING
+option(LIB_INSTALL "Generate target for installing utils" ${is_top_level})
+set_if_undefined(LIB_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/utils" CACHE STRING
     "Install path for utils package-related CMake files")
 
-if(DEFINED UTILS_SHARED_LIBS)
-    set(BUILD_SHARED_LIBS ${UTILS_SHARED_LIBS})
+if(DEFINED LIB_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${LIB_SHARED_LIBS})
 endif()
 
 if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
@@ -108,9 +108,9 @@ set_target_properties(utils PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
     VERSION ${PROJECT_VERSION})
 
-if(UTILS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+if(LIB_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/utils-config.cmake.in utils-config.cmake
-        INSTALL_DESTINATION "${UTILS_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(utils-config-version.cmake
         COMPATIBILITY SameMajorVersion)
@@ -136,14 +136,14 @@ if(UTILS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(EXPORT utils_export
         COMPONENT utils-dev
         FILE "${targets_file}"
-        DESTINATION "${UTILS_INSTALL_CMAKEDIR}"
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}"
         NAMESPACE utils::)
 
     install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/utils-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/utils-config-version.cmake"
         COMPONENT utils-dev
-        DESTINATION "${UTILS_INSTALL_CMAKEDIR}")
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -170,12 +170,12 @@ endif()
 # other targets
 #----------------------------------------------------------------------------------------------------------------------
 
-if(UTILS_BUILD_TESTS)
+if(LIB_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-if(UTILS_BUILD_EXAMPLES)
+if(LIB_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 

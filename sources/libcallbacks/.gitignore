@@ -2,6 +2,7 @@
 build*/
 _build*/
 cmake-build*/
+installed/
 
 # CMake
 CMakeUserPresets.json

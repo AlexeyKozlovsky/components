@@ -15,16 +15,16 @@ include(GNUInstallDirs)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
-# MODBUS_SHARED_LIBS option (undefined by default) can be used to force shared/static build
-option(MODBUS_BUILD_TESTS "Build modbus tests" OFF)
-option(MODBUS_BUILD_EXAMPLES "Build modbus examples" OFF)
+# LIB_SHARED_LIBS option (undefined by default) can be used to force shared/static build
+option(LIB_BUILD_TESTS "Build modbus tests" OFF)
+option(LIB_BUILD_EXAMPLES "Build modbus examples" OFF)
 option(MODBUS_BUILD_DOCS "Build modbus documentation" OFF)
-option(MODBUS_INSTALL "Generate target for installing modbus" ${is_top_level})
-set_if_undefined(MODBUS_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/modbus" CACHE STRING
+option(LIB_INSTALL "Generate target for installing modbus" ${is_top_level})
+set_if_undefined(LIB_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/modbus" CACHE STRING
     "Install path for modbus package-related CMake files")
 
-if(DEFINED MODBUS_SHARED_LIBS)
-    set(BUILD_SHARED_LIBS ${MODBUS_SHARED_LIBS})
+if(DEFINED LIB_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${LIB_SHARED_LIBS})
 endif()
 
 if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
@@ -98,9 +98,9 @@ set_target_properties(modbus PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
     VERSION ${PROJECT_VERSION})
 
-if(MODBUS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+if(LIB_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/modbus-config.cmake.in modbus-config.cmake
-        INSTALL_DESTINATION "${MODBUS_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(modbus-config-version.cmake
         COMPATIBILITY SameMajorVersion)
@@ -126,14 +126,14 @@ if(MODBUS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(EXPORT modbus_export
         COMPONENT modbus-dev
         FILE "${targets_file}"
-        DESTINATION "${MODBUS_INSTALL_CMAKEDIR}"
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}"
         NAMESPACE modbus::)
 
     install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/modbus-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/modbus-config-version.cmake"
         COMPONENT modbus-dev
-        DESTINATION "${MODBUS_INSTALL_CMAKEDIR}")
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -160,12 +160,12 @@ endif()
 # other targets
 #----------------------------------------------------------------------------------------------------------------------
 
-if(MODBUS_BUILD_TESTS)
+if(LIB_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-if(MODBUS_BUILD_EXAMPLES)
+if(LIB_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 

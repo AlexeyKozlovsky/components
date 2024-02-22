@@ -14,16 +14,16 @@ include(GNUInstallDirs)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
-# THREADPOOLING_SHARED_LIBS option (undefined by default) can be used to force shared/static build
-option(THREADPOOLING_BUILD_TESTS "Build threadpooling tests" OFF)
-option(THREADPOOLING_BUILD_EXAMPLES "Build threadpooling examples" OFF)
+# LIB_SHARED_LIBS option (undefined by default) can be used to force shared/static build
+option(LIB_BUILD_TESTS "Build threadpooling tests" OFF)
+option(LIB_BUILD_EXAMPLES "Build threadpooling examples" OFF)
 option(THREADPOOLING_BUILD_DOCS "Build threadpooling documentation" OFF)
-option(THREADPOOLING_INSTALL "Generate target for installing threadpooling" ${is_top_level})
-set_if_undefined(THREADPOOLING_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/threadpooling" CACHE STRING
+option(LIB_INSTALL "Generate target for installing threadpooling" ${is_top_level})
+set_if_undefined(LIB_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/threadpooling" CACHE STRING
     "Install path for threadpooling package-related CMake files")
 
-if(DEFINED THREADPOOLING_SHARED_LIBS)
-    set(BUILD_SHARED_LIBS ${THREADPOOLING_SHARED_LIBS})
+if(DEFINED LIB_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${LIB_SHARED_LIBS})
 endif()
 
 if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
@@ -84,9 +84,9 @@ set_target_properties(threadpooling PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
     VERSION ${PROJECT_VERSION})
 
-if(THREADPOOLING_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+if(LIB_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/threadpooling-config.cmake.in threadpooling-config.cmake
-        INSTALL_DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(threadpooling-config-version.cmake
         COMPATIBILITY SameMajorVersion)
@@ -112,14 +112,14 @@ if(THREADPOOLING_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(EXPORT threadpooling_export
         COMPONENT threadpooling-dev
         FILE "${targets_file}"
-        DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}"
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}"
         NAMESPACE threadpooling::)
 
     install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/threadpooling-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/threadpooling-config-version.cmake"
         COMPONENT threadpooling-dev
-        DESTINATION "${THREADPOOLING_INSTALL_CMAKEDIR}")
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -146,12 +146,12 @@ endif()
 # other targets
 #----------------------------------------------------------------------------------------------------------------------
 
-if(THREADPOOLING_BUILD_TESTS)
+if(LIB_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-if(THREADPOOLING_BUILD_EXAMPLES)
+if(LIB_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 

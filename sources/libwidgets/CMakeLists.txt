@@ -14,16 +14,16 @@ include(GNUInstallDirs)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
-# WIDGETS_SHARED_LIBS option (undefined by default) can be used to force shared/static build
-option(WIDGETS_BUILD_TESTS "Build widgets tests" OFF)
-option(WIDGETS_BUILD_EXAMPLES "Build widgets examples" OFF)
+# LIB_SHARED_LIBS option (undefined by default) can be used to force shared/static build
+option(LIB_BUILD_TESTS "Build widgets tests" OFF)
+option(LIB_BUILD_EXAMPLES "Build widgets examples" OFF)
 option(WIDGETS_BUILD_DOCS "Build widgets documentation" OFF)
-option(WIDGETS_INSTALL "Generate target for installing widgets" ${is_top_level})
-set_if_undefined(WIDGETS_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/widgets" CACHE STRING
+option(LIB_INSTALL "Generate target for installing widgets" ${is_top_level})
+set_if_undefined(LIB_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/widgets" CACHE STRING
     "Install path for widgets package-related CMake files")
 
-if(DEFINED WIDGETS_SHARED_LIBS)
-    set(BUILD_SHARED_LIBS ${WIDGETS_SHARED_LIBS})
+if(DEFINED LIB_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${LIB_SHARED_LIBS})
 endif()
 
 if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
@@ -97,9 +97,9 @@ set_target_properties(widgets PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
     VERSION ${PROJECT_VERSION})
 
-if(WIDGETS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+if(LIB_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/widgets-config.cmake.in widgets-config.cmake
-        INSTALL_DESTINATION "${WIDGETS_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(widgets-config-version.cmake
         COMPATIBILITY SameMajorVersion)
@@ -125,14 +125,14 @@ if(WIDGETS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(EXPORT widgets_export
         COMPONENT widgets-dev
         FILE "${targets_file}"
-        DESTINATION "${WIDGETS_INSTALL_CMAKEDIR}"
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}"
         NAMESPACE widgets::)
 
     install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/widgets-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/widgets-config-version.cmake"
         COMPONENT widgets-dev
-        DESTINATION "${WIDGETS_INSTALL_CMAKEDIR}")
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -159,12 +159,12 @@ endif()
 # other targets
 #----------------------------------------------------------------------------------------------------------------------
 
-if(WIDGETS_BUILD_TESTS)
+if(LIB_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-if(WIDGETS_BUILD_EXAMPLES)
+if(LIB_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 

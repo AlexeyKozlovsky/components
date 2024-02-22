@@ -14,16 +14,16 @@ include(GNUInstallDirs)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
-# PLUGIN_SHARED_LIBS option (undefined by default) can be used to force shared/static build
-option(PLUGIN_BUILD_TESTS "Build plugin tests" OFF)
-option(PLUGIN_BUILD_EXAMPLES "Build plugin examples" OFF)
+# LIB_SHARED_LIBS option (undefined by default) can be used to force shared/static build
+option(LIB_BUILD_TESTS "Build plugin tests" OFF)
+option(LIB_BUILD_EXAMPLES "Build plugin examples" OFF)
 option(PLUGIN_BUILD_DOCS "Build plugin documentation" OFF)
-option(PLUGIN_INSTALL "Generate target for installing plugin" ${is_top_level})
-set_if_undefined(PLUGIN_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/plugin" CACHE STRING
+option(LIB_INSTALL "Generate target for installing plugin" ${is_top_level})
+set_if_undefined(LIB_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/plugin" CACHE STRING
     "Install path for plugin package-related CMake files")
 
-if(DEFINED PLUGIN_SHARED_LIBS)
-    set(BUILD_SHARED_LIBS ${PLUGIN_SHARED_LIBS})
+if(DEFINED LIB_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${LIB_SHARED_LIBS})
 endif()
 
 if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
@@ -129,9 +129,9 @@ set_target_properties(plugin PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
     VERSION ${PROJECT_VERSION})
 
-if(PLUGIN_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+if(LIB_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/plugin-config.cmake.in plugin-config.cmake
-        INSTALL_DESTINATION "${PLUGIN_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(plugin-config-version.cmake
         COMPATIBILITY SameMajorVersion)
@@ -157,14 +157,14 @@ if(PLUGIN_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(EXPORT plugin_export
         COMPONENT plugin-dev
         FILE "${targets_file}"
-        DESTINATION "${PLUGIN_INSTALL_CMAKEDIR}"
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}"
         NAMESPACE plugin::)
 
     install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/plugin-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/plugin-config-version.cmake"
         COMPONENT plugin-dev
-        DESTINATION "${PLUGIN_INSTALL_CMAKEDIR}")
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -191,12 +191,12 @@ endif()
 # other targets
 #----------------------------------------------------------------------------------------------------------------------
 
-if(PLUGIN_BUILD_TESTS)
+if(LIB_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-if(PLUGIN_BUILD_EXAMPLES)
+if(LIB_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 

@@ -15,16 +15,16 @@ include(GNUInstallDirs)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
-# MODBUSWRAPPERS_SHARED_LIBS option (undefined by default) can be used to force shared/static build
-option(MODBUSWRAPPERS_BUILD_TESTS "Build modbuswrappers tests" OFF)
-option(MODBUSWRAPPERS_BUILD_EXAMPLES "Build modbuswrappers examples" OFF)
+# LIB_SHARED_LIBS option (undefined by default) can be used to force shared/static build
+option(LIB_BUILD_TESTS "Build modbuswrappers tests" OFF)
+option(LIB_BUILD_EXAMPLES "Build modbuswrappers examples" OFF)
 option(MODBUSWRAPPERS_BUILD_DOCS "Build modbuswrappers documentation" OFF)
-option(MODBUSWRAPPERS_INSTALL "Generate target for installing modbuswrappers" ${is_top_level})
-set_if_undefined(MODBUSWRAPPERS_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/modbuswrappers" CACHE STRING
+option(LIB_INSTALL "Generate target for installing modbuswrappers" ${is_top_level})
+set_if_undefined(LIB_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/modbuswrappers" CACHE STRING
     "Install path for modbuswrappers package-related CMake files")
 
-if(DEFINED MODBUSWRAPPERS_SHARED_LIBS)
-    set(BUILD_SHARED_LIBS ${MODBUSWRAPPERS_SHARED_LIBS})
+if(DEFINED LIB_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${LIB_SHARED_LIBS})
 endif()
 
 if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
@@ -118,9 +118,9 @@ set_target_properties(modbuswrappers PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
     VERSION ${PROJECT_VERSION})
 
-if(MODBUSWRAPPERS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+if(LIB_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/modbuswrappers-config.cmake.in modbuswrappers-config.cmake
-        INSTALL_DESTINATION "${MODBUSWRAPPERS_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(modbuswrappers-config-version.cmake
         COMPATIBILITY SameMajorVersion)
@@ -146,14 +146,14 @@ if(MODBUSWRAPPERS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(EXPORT modbuswrappers_export
         COMPONENT modbuswrappers-dev
         FILE "${targets_file}"
-        DESTINATION "${MODBUSWRAPPERS_INSTALL_CMAKEDIR}"
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}"
         NAMESPACE modbuswrappers::)
 
     install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/modbuswrappers-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/modbuswrappers-config-version.cmake"
         COMPONENT modbuswrappers-dev
-        DESTINATION "${MODBUSWRAPPERS_INSTALL_CMAKEDIR}")
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -180,12 +180,12 @@ endif()
 # other targets
 #----------------------------------------------------------------------------------------------------------------------
 
-if(MODBUSWRAPPERS_BUILD_TESTS)
+if(LIB_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-if(MODBUSWRAPPERS_BUILD_EXAMPLES)
+if(LIB_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 

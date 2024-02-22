@@ -15,16 +15,16 @@ include(env.cmake)
 
 string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 
-# CALLBACKS_SHARED_LIBS option (undefined by default) can be used to force shared/static build
-option(CALLBACKS_BUILD_TESTS "Build callbacks tests" OFF)
-option(CALLBACKS_BUILD_EXAMPLES "Build callbacks examples" OFF)
+# LIB_SHARED_LIBS option (undefined by default) can be used to force shared/static build
+option(LIB_BUILD_TESTS "Build callbacks tests" OFF)
+option(LIB_BUILD_EXAMPLES "Build callbacks examples" OFF)
 option(CALLBACKS_BUILD_DOCS "Build callbacks documentation" OFF)
-option(CALLBACKS_INSTALL "Generate target for installing callbacks" ${is_top_level})
-set_if_undefined(CALLBACKS_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/callbacks" CACHE STRING
+option(LIB_INSTALL "Generate target for installing callbacks" ${is_top_level})
+set_if_undefined(LIB_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/callbacks" CACHE STRING
     "Install path for callbacks package-related CMake files")
 
-if(DEFINED CALLBACKS_SHARED_LIBS)
-    set(BUILD_SHARED_LIBS ${CALLBACKS_SHARED_LIBS})
+if(DEFINED LIB_SHARED_LIBS)
+    set(BUILD_SHARED_LIBS ${LIB_SHARED_LIBS})
 endif()
 
 if(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
@@ -112,9 +112,9 @@ set_target_properties(callbacks PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
     VERSION ${PROJECT_VERSION})
 
-if(CALLBACKS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
+if(LIB_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     configure_package_config_file(cmake/callbacks-config.cmake.in callbacks-config.cmake
-        INSTALL_DESTINATION "${CALLBACKS_INSTALL_CMAKEDIR}")
+        INSTALL_DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     write_basic_package_version_file(callbacks-config-version.cmake
         COMPATIBILITY SameMajorVersion)
@@ -140,14 +140,14 @@ if(CALLBACKS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
     install(EXPORT callbacks_export
         COMPONENT callbacks-dev
         FILE "${targets_file}"
-        DESTINATION "${CALLBACKS_INSTALL_CMAKEDIR}"
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}"
         NAMESPACE callbacks::)
 
     install(FILES
         "${CMAKE_CURRENT_BINARY_DIR}/callbacks-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/callbacks-config-version.cmake"
         COMPONENT callbacks-dev
-        DESTINATION "${CALLBACKS_INSTALL_CMAKEDIR}")
+        DESTINATION "${LIB_INSTALL_CMAKEDIR}")
 
     if(MSVC)
         set(pdb_file "")
@@ -174,12 +174,12 @@ endif()
 # other targets
 #----------------------------------------------------------------------------------------------------------------------
 
-if(CALLBACKS_BUILD_TESTS)
+if(LIB_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-if(CALLBACKS_BUILD_EXAMPLES)
+if(LIB_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
 

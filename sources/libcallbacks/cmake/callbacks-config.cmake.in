@@ -6,7 +6,7 @@
 #
 # Type of target to import (static or shared) is determined by the following algorithm:
 #
-#   1. if CALLBACKS_SHARED_LIBS is defined and:
+#   1. if LIB_SHARED_LIBS is defined and:
 #     1.1 is true, then import shared library target or issue error
 #     1.2 is false, then import static library target or issue error
 #
@@ -32,8 +32,8 @@ endmacro()
 if(NOT TARGET callbacks::callbacks)
     set(type "")
 
-    if(DEFINED CALLBACKS_SHARED_LIBS)
-        if(CALLBACKS_SHARED_LIBS)
+    if(DEFINED LIB_SHARED_LIBS)
+        if(LIB_SHARED_LIBS)
             set(type "shared")
         else()
             set(type "static")

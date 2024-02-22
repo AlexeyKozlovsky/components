@@ -15,7 +15,8 @@
         "LIB_BUILD_TESTS": "OFF",
         "LIB_BUILD_EXAMPLES": "OFF",
         "LIB_INSTALL": "ON",
-        "LIB_SHARED_LIBS": "OFF"
+        "LIB_SHARED_LIBS": "OFF",
+        "CMAKE_DEBUG_POSTFIX": "d"
       }
     },
     {
@@ -25,7 +26,6 @@
       "inherits": ["dev"],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_INSTALL_PREFIX": "C:/Users/User/Documents/Career/Dialtek/components/sources/utilsd/installed-release",
         "CMAKE_CXX_FLAGS": "/EHs"
       }
     },
@@ -36,7 +36,6 @@
       "inherits": ["dev"],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_INSTALL_PREFIX": "C:/Users/User/Documents/Career/Dialtek/components/sources/utilsd/installed",
         "CMAKE_CXX_FLAGS": "/EHs"
       }
     },

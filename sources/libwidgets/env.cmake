@@ -9,7 +9,7 @@ set(LIB_NAME "modbuswrappers")
 set(LIB_DESCRIPTION "modbuswrappers library")
 set(LIB_VERSION 1.0.0)
 
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON CACHE INTERNAL "" FORCE)
 set(utils_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/utilsd/installed/lib/cmake/utils")
 set(modbus_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/libmodbus/installed/lib/cmake/modbus")
 set(threadpooling_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/libthreadpooling/installed/lib/cmake/threadpooling")

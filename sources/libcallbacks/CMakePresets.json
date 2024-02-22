@@ -16,7 +16,8 @@
         "LIB_BUILD_EXAMPLES": "OFF",
         "LIB_INSTALL": "ON",
         "LIB_SHARED_LIBS": "OFF",
-        "CMAKE_DEBUG_POSTFIX": "d"
+        "CMAKE_DEBUG_POSTFIX": "d",
+        "CMAKE_AUTOMOC": "ON"
       }
     },
     {
@@ -26,6 +27,7 @@
       "inherits": ["dev"],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS": "ON",
         "CMAKE_CXX_FLAGS": "/EHs"
       }
     },
@@ -36,6 +38,7 @@
       "inherits": ["dev"],
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS": "ON",
         "CMAKE_CXX_FLAGS": "/EHs"
       }
     },

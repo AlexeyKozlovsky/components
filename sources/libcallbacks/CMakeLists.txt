@@ -79,6 +79,7 @@ endif()
 generate_export_header(callbacks EXPORT_FILE_NAME include/callbacks/${export_file_name})
 
 file(GLOB sources
+        include/callbacks/*.h
         include/callbacks/models/*.h
         include/callbacks/models/impls/*.h
         include/callbacks/models/impls/standaloneimpl/*.h
@@ -101,7 +102,7 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 include(CMakePackageConfigHelpers)
 
 target_sources(callbacks PRIVATE ${sources})
-target_compile_definitions(callbacks PUBLIC "$<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:CALLBACKS_STATIC_DEFINE>")
+target_compile_definitions(callbacks PUBLIC "$<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:LIB_STATIC_DEFINE>")
 
 target_include_directories(callbacks
     PUBLIC

@@ -160,7 +160,7 @@ if(UTILS_INSTALL AND NOT CMAKE_SKIP_INSTALL_RULES)
 
         install(FILES "${pdb_file}"
             COMPONENT utils-dev
-            CONFIGURATIONS Debug RelWithDebInfo
+            CONFIGURATIONS ${CMAKE_BUILD_TYPE}
             DESTINATION "${pdb_file_destination}"
             OPTIONAL)
     endif()

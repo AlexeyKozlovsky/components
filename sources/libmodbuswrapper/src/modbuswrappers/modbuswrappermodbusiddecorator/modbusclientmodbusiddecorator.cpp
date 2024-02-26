@@ -98,3 +98,15 @@ ErrorCode ModbusClientModbusIDDecorator::readInputRegisters(int reg_num,
 
   return result;
 }
+
+void ModbusClientModbusIDDecorator::addConnectable(const std::shared_ptr<Connectable> &connectable) {
+  if (_modbus_wrapper != nullptr) {
+    _modbus_wrapper->addConnectable(connectable);
+  }
+}
+
+void ModbusClientModbusIDDecorator::sendConnectionStatus(bool connection_status) {
+  if (_modbus_wrapper != nullptr) {
+   _modbus_wrapper->sendConnectionStatus(connection_status);
+  }
+}

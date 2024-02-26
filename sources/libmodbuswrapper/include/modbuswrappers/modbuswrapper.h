@@ -29,7 +29,6 @@ class ModbusWrapper: public IProcessable {
   virtual ErrorCode readInputRegister(int reg_num, uint16_t &value, int modbus_id = 1) = 0;
   virtual ErrorCode readInputRegisters(int reg_num, int reg_count, std::vector<uint16_t> &values, int modbus_id = 1) = 0;
 
-
   virtual void addConnectable(const std::shared_ptr<Connectable> &connectable);
   virtual void sendConnectionStatus(bool connection_status);
 

@@ -12,6 +12,7 @@ class ModbusAsyncClientWrapper: public AbstractModbusAsyncClientWrapper {
 
   ErrorCode connect() override;
   ErrorCode disconnect() override;
+
   ErrorCode isConnected(bool &is_connected) override;
   ErrorCode readHoldingRegister(int reg_num, uint16_t &value, int modbus_id = 1) override;
   ErrorCode readHoldingRegisters(int reg_num, int reg_count, std::vector<uint16_t> &values, int modbus_id = 1) override;
@@ -19,6 +20,9 @@ class ModbusAsyncClientWrapper: public AbstractModbusAsyncClientWrapper {
   ErrorCode writeHoldingRegisters(int reg_num, std::vector<uint16_t> value, int modbus_id = 1) override;
   ErrorCode readInputRegister(int reg_num, uint16_t &value, int modbus_id = 1) override;
   ErrorCode readInputRegisters(int reg_num, int reg_count, std::vector<uint16_t> &values, int modbus_id = 1) override;
+
+  void addConnectable(const std::shared_ptr<Connectable> &connectable) override;
+  void sendConnectionStatus(bool connection_status) override;
 
   void process() override;
 

@@ -210,3 +210,15 @@ const std::vector<uint16_t> &ModbusAsyncClientWrapper::getHoldingRegs() {
 const std::vector<uint16_t> &ModbusAsyncClientWrapper::getInputRegs() {
   return _input_regs;
 }
+
+void ModbusAsyncClientWrapper::addConnectable(const std::shared_ptr<Connectable> &connectable) {
+  if (_modbus_wrapper != nullptr) {
+   _modbus_wrapper->addConnectable(connectable);
+  }
+}
+
+void ModbusAsyncClientWrapper::sendConnectionStatus(bool connection_status) {
+  if (_modbus_wrapper != nullptr) {
+    _modbus_wrapper->sendConnectionStatus(connection_status);
+  }
+}

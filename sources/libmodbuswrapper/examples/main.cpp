@@ -52,6 +52,9 @@ int main() {
   auto modbus_wrapper_postponed = postponed_modbus_wrapper_factory->createModbusWrapper(ip, port, modbus_id, holding_regs_count, input_regs_count);
 
 
+  modbus_wrapper_async->connect();
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
   modbus_wrapper_async->process();
 
   std::this_thread::sleep_for(std::chrono::milliseconds(1000));

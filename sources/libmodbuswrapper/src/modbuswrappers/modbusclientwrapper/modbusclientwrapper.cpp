@@ -103,14 +103,6 @@ ErrorCode ModbusClientWrapper::readInputRegisters(int reg_num,
   return result;
 }
 
-void ModbusClientWrapper::addConnectable(const std::shared_ptr<Connectable> &connectable) {
-  ModbusWrapper::addConnectable(connectable);
-}
-
-void ModbusClientWrapper::sendConnectionStatus(bool connection_status) {
-  ModbusWrapper::sendConnectionStatus(connection_status);
-}
-
 void ModbusClientWrapper::checkConnectionStatusByResponse(modbus::ModbusResult response) {
   if (response == modbus::TCP_TIMEOUT_ERROR || response == modbus::NO_SOCKET_CONNECTION) {
     sendConnectionStatus(false);
@@ -124,6 +116,24 @@ void ModbusClientWrapper::checkConnectionStatusByResponse(modbus::ModbusResult r
 void ModbusClientWrapper::changeState(DeviceState state) {
   if (_states.count(state) != 0) {
     _current_state = _states[state];
+    switch (state) {
+      case CONNECTED:
+        sendConnectionStatus(true);
+        std::cout << "CONNECTION STATUS SENT CONNECTED " << __func__ << std::endl;
+        break;
+      case NOT_CONNECTED:
+        sendConnectionStatus(false);
+        std::cout << "CONNECTION STATUS SENT DISCONNECTED " << __func__ << std::endl;
+        break;
+      case DISCONNECTED:
+        sendConnectionStatus(false);
+        break;
+      case READ_ONLY:break;
+      case OPEN:break;
+      case CLOSE:break;
+      case INVALID:break;
+      case EMPTY:break;
+    }
   }
 }
 

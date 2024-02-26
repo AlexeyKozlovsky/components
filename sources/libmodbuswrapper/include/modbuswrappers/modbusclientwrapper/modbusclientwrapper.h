@@ -32,9 +32,6 @@ class ModbusClientWrapper: public ModbusWrapper {
   ErrorCode readInputRegister(int reg_num, uint16_t &value, int modbus_id) override;
   ErrorCode readInputRegisters(int reg_num, int reg_count, std::vector<uint16_t> &values, int modbus_id) override;
 
-  void addConnectable(const std::shared_ptr<Connectable> &connectable) override;
-  void sendConnectionStatus(bool connection_status) override;
-
   void checkConnectionStatusByResponse(modbus::ModbusResult response);
 
   void changeState(DeviceState state);

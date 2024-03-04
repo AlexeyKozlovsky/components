@@ -11,6 +11,7 @@
 #include "modbuswrappers/modbusclientwrapper/modbusclientwrapper.h"
 #include "modbuswrappers/modbusclientwrapper/modbusclientdividablewrapper.h"
 #include "modbuswrappers/modbusclientwrapper/modbusclientdividablewrapperfactory.h"
+#include "modbuswrappers/mocks/modbuswrappermockfactory.h"
 
 int main() {
   setlocale(LC_ALL, "Russian");
@@ -39,8 +40,8 @@ int main() {
   int input_regs_per_request = 30;
 
   auto modbus_wrapper_storage = std::make_shared<ModbusWrapperStorageImpl1>();
-  auto base_modbus_wrapper_factory = std::make_shared<ModbusClientWrapperFactory>();
-//  auto base_modbus_wrapper_factory = std::make_shared<ModbusWrapperMockFactory>();
+//  auto base_modbus_wrapper_factory = std::make_shared<ModbusClientWrapperFactory>();
+  auto base_modbus_wrapper_factory = std::make_shared<ModbusWrapperMockFactory>();
   auto main_modbus_wrapper_factory = std::make_shared<ModbusClientModbusIDDecoratorFactory>(base_modbus_wrapper_factory, modbus_wrapper_storage);
 
   auto dividable_modbus_wrapper_factory = std::make_shared<ModbusClientDividableWrapperFactory>(main_modbus_wrapper_factory);

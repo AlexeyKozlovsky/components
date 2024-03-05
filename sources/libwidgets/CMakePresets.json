@@ -13,7 +13,7 @@
       "hidden": true,
       "cacheVariables": {
         "LIB_BUILD_TESTS": "OFF",
-        "LIB_BUILD_EXAMPLES": "OFF",
+        "LIB_BUILD_EXAMPLES": "ON",
         "LIB_INSTALL": "ON",
         "LIB_SHARED_LIBS": "OFF",
         "CMAKE_DEBUG_POSTFIX": "d"

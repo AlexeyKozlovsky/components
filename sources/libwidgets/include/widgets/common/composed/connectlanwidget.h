@@ -7,8 +7,9 @@
 #include "widgets/common/basic/softvalidationspinbox.h"
 #include "widgets/common/basic/lampwidget.h"
 #include "widgets/common/basic/standardbutton.h"
+#include "widgets/export.h"
 
-class ConnectLANWidget : public QGroupBox {
+class WIDGETS_EXPORT ConnectLANWidget : public QGroupBox {
   Q_OBJECT
  public:
   explicit  ConnectLANWidget(QWidget *parent);

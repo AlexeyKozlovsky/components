@@ -2,9 +2,10 @@
 #define MODBUSWRAPPERS_LIBMODBUSWRAPPER_SRC_MODBUSWRAPPERS_MODBUSPOSTPONEDWRITEWRAPPER_MODBUSPOSTPONEDWRITEWRAPPERFACTORY_H_
 
 #include "modbuswrappers/modbuswrapperfactory.h"
+#include <modbuswrappers/export.h>
 
 
-class ModbusPostponedWriteWrapperFactory: public ModbusWrapperFactory {
+class MODBUSWRAPPERS_EXPORT ModbusPostponedWriteWrapperFactory: public ModbusWrapperFactory {
  public:
   explicit ModbusPostponedWriteWrapperFactory(const std::shared_ptr<ModbusWrapperFactory> &base_modbus_wrapper_factory);
 

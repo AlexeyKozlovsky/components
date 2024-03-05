@@ -5,9 +5,9 @@
 #include "widgets/enums.h"
 
 #include <QWidget>
+#include "widgets/export.h"
 
-
-class LampWidget : public QWidget{
+class WIDGETS_EXPORT LampWidget : public QWidget{
  public:
   explicit LampWidget(QWidget *parent = nullptr);
   void setState(LampStates new_state);

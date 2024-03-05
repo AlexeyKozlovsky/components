@@ -9,9 +9,10 @@
 
 #include "threadpooling/threadpool.h"
 #include "threadpooling/threadpooltask.h"
+#include <threadpooling/export.h>
 
 
-class ThreadPoolPeriodicImpl: public ThreadPool {
+class THREADPOOLING_EXPORT ThreadPoolPeriodicImpl: public ThreadPool {
  public:
   explicit ThreadPoolPeriodicImpl(int threads_count, std::chrono::system_clock::duration sleep_duration);
   virtual ~ThreadPoolPeriodicImpl();

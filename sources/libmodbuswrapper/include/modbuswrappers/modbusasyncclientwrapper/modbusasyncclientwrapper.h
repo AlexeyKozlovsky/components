@@ -5,8 +5,9 @@
 #include <utils/services/domain/regreaddivider.h>
 
 #include "abstractmodbusasyncclientwrapper.h"
+#include <modbuswrappers/export.h>
 
-class ModbusAsyncClientWrapper: public AbstractModbusAsyncClientWrapper {
+class MODBUSWRAPPERS_EXPORT ModbusAsyncClientWrapper: public AbstractModbusAsyncClientWrapper {
  public:
   explicit ModbusAsyncClientWrapper(const std::shared_ptr<ModbusWrapper> &modbus_wrapper, int holding_regs_count, int input_regs_count);
 

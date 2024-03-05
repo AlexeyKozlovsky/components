@@ -5,8 +5,10 @@
 
 #include "threadpooling/threadpoolbuilder.h"
 #include "threadpoolperiodicimpl.h"
+#include <threadpooling/export.h>
 
-class ThreadPoolPeriodicImplBuilder: public ThreadPoolBuilder {
+
+class THREADPOOLING_EXPORT ThreadPoolPeriodicImplBuilder: public ThreadPoolBuilder {
  public:
   explicit ThreadPoolPeriodicImplBuilder(const std::shared_ptr<UIDGenerator> &uid_generator);
   virtual ~ThreadPoolPeriodicImplBuilder() = default;

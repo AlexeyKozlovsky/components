@@ -3,10 +3,12 @@
 
 #include <QAbstractSpinBox>
 
+#include "widgets/export.h"
+
 class SoftValidationLineEdit;
 
 
-class SoftValidationSpinBox2 : public QAbstractSpinBox{
+class WIDGETS_EXPORT SoftValidationSpinBox2 : public QAbstractSpinBox{
   Q_OBJECT
   friend SoftValidationLineEdit;
  public:

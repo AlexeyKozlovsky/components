@@ -93,6 +93,7 @@ file(GLOB sources
     include/plugin/*.h
     include/plugin/deviceplugins/*.h
     include/plugin/deviceplugins/commandproviders/*.h
+        include/plugin/deviceplugins/viewproviders/*.h
     include/plugin/deviceplugins/abstracts/*.h
     include/plugin/deviceplugins/abstracts/creationpart/*.h
     include/plugin/deviceplugins/abstracts/managementpart/*.h
@@ -103,6 +104,7 @@ file(GLOB sources
        src/plugin/*.cpp
        src/plugin/deviceplugins/*.cpp
        src/plugin/deviceplugins/commandproviders/*.cpp
+       src/plugin/deviceplugins/viewproviders/*.cpp
        src/plugin/deviceplugins/abstracts/*.cpp
        src/plugin/deviceplugins/abstracts/creationpart/*.cpp
        src/plugin/deviceplugins/abstracts/managementpart/*.cpp

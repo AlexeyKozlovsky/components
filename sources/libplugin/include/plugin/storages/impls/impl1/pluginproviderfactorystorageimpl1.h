@@ -4,9 +4,10 @@
 #include <map>
 
 #include "plugin/storages/pluginproviderfactorystorage.h"
+#include <plugin/export.h>
 
 
-class PluginProviderFactoryStorageImpl1: public PluginProviderFactoryStorage {
+class PLUGIN_EXPORT PluginProviderFactoryStorageImpl1: public PluginProviderFactoryStorage {
  public:
   void addPluginProviderFactoryView(const std::string &name, const std::shared_ptr<PluginProviderFactory> &plugin_provider_factory) override;
   std::shared_ptr<QWidget> getPluginProviderFactoryView(const std::string &name) override;

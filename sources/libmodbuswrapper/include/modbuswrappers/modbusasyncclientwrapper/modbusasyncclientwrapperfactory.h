@@ -3,9 +3,10 @@
 
 #include "modbuswrappers/modbuswrapperfactory.h"
 //#include "modbuswrappers/modbuswrapper.h"
+#include <modbuswrappers/export.h>
 
 
-class ModbusAsyncClientWrapperFactory: public ModbusWrapperFactory {
+class MODBUSWRAPPERS_EXPORT ModbusAsyncClientWrapperFactory: public ModbusWrapperFactory {
  public:
   explicit ModbusAsyncClientWrapperFactory(const std::shared_ptr<ModbusWrapperFactory> &modbus_wrapper_factory);
 

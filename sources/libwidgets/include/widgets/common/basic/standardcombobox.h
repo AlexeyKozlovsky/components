@@ -5,8 +5,9 @@
 
 #include "widgets/common/basic/readwritewidget.h"
 
+#include "widgets/export.h"
 
-class StandardUShortCombobox: public QComboBox, public ReadWriteWidget {
+class WIDGETS_EXPORT StandardUShortCombobox: public QComboBox, public ReadWriteWidget {
   Q_OBJECT
  public:
   explicit StandardUShortCombobox(const QMap<int, QString>& states, QWidget *parent = nullptr);

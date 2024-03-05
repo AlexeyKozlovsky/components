@@ -5,8 +5,9 @@
 #include <vector>
 
 #include "dimchangenotifier.h"
+#include <utils/export.h>
 
-class BaseStorage {
+class UTILS_EXPORT BaseStorage {
  public:
   virtual void addDimChangeNotifier(const std::shared_ptr<DimChangeNotifier> &notifier);
   virtual void removeDimChangeNotifier(const std::shared_ptr<DimChangeNotifier> &notifier);

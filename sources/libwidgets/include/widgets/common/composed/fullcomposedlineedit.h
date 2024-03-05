@@ -4,12 +4,13 @@
 #include <QGroupBox>
 
 #include "widgets/common/basic/readwritewidget.h"
+#include "widgets/export.h"
 
 class StandardLineEdit;
 class StandardButton;
 
 
-class FullComposedLineEdit : public QGroupBox, public ReadWriteWidget {
+class WIDGETS_EXPORT FullComposedLineEdit : public QGroupBox, public ReadWriteWidget {
   Q_OBJECT
  public:
   explicit FullComposedLineEdit(const QString &caption,

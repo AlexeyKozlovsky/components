@@ -4,9 +4,9 @@
 #include <QWidget>
 
 #include <QPushButton>
+#include "widgets/export.h"
 
-
-class DataSaverWidget: public QWidget {
+class WIDGETS_EXPORT DataSaverWidget: public QWidget {
   Q_OBJECT
  public:
   explicit DataSaverWidget(QWidget *parent = nullptr);

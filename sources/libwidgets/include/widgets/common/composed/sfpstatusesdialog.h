@@ -4,9 +4,10 @@
 #include <QDialog>
 
 #include "sfpstatuseswidget.h"
+#include "widgets/export.h"
 
 
-class SFPStatusesDialog: public QDialog {
+class WIDGETS_EXPORT SFPStatusesDialog: public QDialog {
  public:
   explicit SFPStatusesDialog(QWidget *parent = nullptr);
 

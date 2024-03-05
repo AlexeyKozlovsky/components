@@ -4,8 +4,9 @@
 #include <QLineEdit>
 #include <QRegExpValidator>
 #include <functional>
+#include "widgets/export.h"
 
-class SoftValidationLineEdit : public QLineEdit {
+class WIDGETS_EXPORT SoftValidationLineEdit : public QLineEdit {
   Q_OBJECT
  public:
   /*!

@@ -9,6 +9,7 @@
 #include <utils/modbusutils.h>
 
 #include "tcp_socket.h"
+#include <modbus/export.h>
 
 
 namespace modbus {
@@ -20,7 +21,7 @@ namespace modbus {
  *
  * Так же, планируется предусмотреть обработку ошибок
  */
-class ModbusClient {
+class MODBUS_EXPORT ModbusClient {
   friend class ModbusClientTest;
  public:
   inline std::string getIP() const {

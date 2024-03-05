@@ -5,11 +5,12 @@
 
 #include "modbuswrappers/modbuswrapper.h"
 #include "modbusclientwrapper.h"
+#include <modbuswrappers/export.h>
 
 using modbus::ModbusClient;
 
 
-class ModbusClientWrapperDisconnectedState: public ModbusWrapper {
+class MODBUSWRAPPERS_EXPORT ModbusClientWrapperDisconnectedState: public ModbusWrapper {
  public:
   explicit ModbusClientWrapperDisconnectedState(const std::shared_ptr<ModbusClientWrapper> &state_machine,
       const std::shared_ptr<ModbusClient> &modbus_client,

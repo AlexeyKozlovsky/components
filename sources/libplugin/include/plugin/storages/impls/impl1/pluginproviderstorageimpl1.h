@@ -2,9 +2,10 @@
 #define TEST_PROJECT_WITH_MODULE_ARCH_STORAGES_IMPLS_IMPL1_PLUGINPROVIDERSTORAGEIMPL1_H_
 
 #include "plugin/storages/pluginproviderstorage.h"
+#include <plugin/export.h>
 
 
-class PluginProviderStorageImpl1: public PluginProviderStorage {
+class PLUGIN_EXPORT PluginProviderStorageImpl1: public PluginProviderStorage {
  public:
   std::shared_ptr<PluginProvider> addDevice(const std::string &uid,
                                             const std::shared_ptr<PluginProvider> &device) override;

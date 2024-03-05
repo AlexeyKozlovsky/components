@@ -2,8 +2,9 @@
 #define TEST_PROJECT_WITH_MODULE_ARCH_MODBUSWRAPPERS_MOCKS_MODBUSWRAPPERMOCK1_H_
 
 #include "modbuswrappers/modbuswrapper.h"
+#include <modbuswrappers/export.h>
 
-class ModbusWrapperMock1: public ModbusWrapper {
+class MODBUSWRAPPERS_EXPORT ModbusWrapperMock1: public ModbusWrapper {
  public:
   ErrorCode connect() override;
   ErrorCode disconnect() override;

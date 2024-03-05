@@ -7,13 +7,14 @@
 #include "widgets/common/basic/readwritewidget.h"
 
 #include <QDebug>
+#include "widgets/export.h"
 
 struct ButtonState {
   QString button_caption;
   QColor button_color;
 };
 
-class StateButton: public QPushButton, public ReadWriteWidget {
+class WIDGETS_EXPORT StateButton: public QPushButton, public ReadWriteWidget {
   Q_OBJECT
  public:
   explicit  StateButton(const QString &button_true_state_caption,

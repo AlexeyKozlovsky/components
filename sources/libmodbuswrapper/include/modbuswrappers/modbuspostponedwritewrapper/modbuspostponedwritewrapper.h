@@ -6,9 +6,10 @@
 #include <utils/services/domain/regreaddivider.h>
 
 #include "modbuswrappers/modbusasyncclientwrapper/abstractmodbusasyncclientwrapper.h"
+#include <modbuswrappers/export.h>
 
 
-class ModbusPostponedWriteWrapper: public ModbusWrapper {
+class MODBUSWRAPPERS_EXPORT ModbusPostponedWriteWrapper: public ModbusWrapper {
  public:
   explicit ModbusPostponedWriteWrapper(const std::shared_ptr<AbstractModbusAsyncClientWrapper> &modbus_wrapper);
 

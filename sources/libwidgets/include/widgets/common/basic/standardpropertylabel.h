@@ -2,9 +2,9 @@
 #define SYNCSYS_DEVICE_WIDGET_WIDGETS_COMMON_BASIC_STANDARDPROPERTYLABEL_H_
 
 #include <QLabel>
+#include "widgets/export.h"
 
-
-class StandardPropertyLabel: public QLabel {
+class WIDGETS_EXPORT StandardPropertyLabel: public QLabel {
   Q_OBJECT
  public:
   explicit StandardPropertyLabel(const QString &caption, int font_size, QWidget *parent = nullptr);

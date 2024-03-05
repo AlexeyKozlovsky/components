@@ -2,6 +2,7 @@
 #define SYNCSYS_DEVICE_WIDGET_WIDGETS_COMMON_BASIC_SOFTVALIDATIONSPINBOX_H_
 
 #include <QAbstractSpinBox>
+#include "widgets/export.h"
 
 
 /*!
@@ -10,7 +11,7 @@
  * В соответствии с состоянием валидации у поля меняется цвет.
  * Так же имеется возможность проверки дополнительных условий помимо валидации.
  */
-class SoftValidationSpinBox : public QAbstractSpinBox {
+class WIDGETS_EXPORT SoftValidationSpinBox : public QAbstractSpinBox {
   Q_OBJECT
  public:
   /*!

@@ -6,10 +6,11 @@
 
 
 #include "modbuswrappers/modbuswrapper.h"
+#include <modbuswrappers/export.h>
 
 using RegCardType = std::map<int, std::vector<uint16_t>>;
 
-class ModbusWrapperMock2: public ModbusWrapper {
+class MODBUSWRAPPERS_EXPORT ModbusWrapperMock2: public ModbusWrapper {
  public:
   ~ModbusWrapperMock2() override = default;
   ErrorCode connect() override;

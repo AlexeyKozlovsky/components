@@ -2,12 +2,13 @@
 #define SYNC_SYS_DEVICE_WIDGET_WIDGETS_COMMON_COMPOSED_SFPMODULEWIDGET_H_
 
 #include <QGroupBox>
+#include "widgets/export.h"
 
 class EditableLedWidget;
 class LedWidget;
 
 
-class SFPModuleWidget: public QGroupBox {
+class WIDGETS_EXPORT SFPModuleWidget: public QGroupBox {
   Q_OBJECT
  public:
   explicit SFPModuleWidget(const QString &sfp_module_name, QWidget *parent = nullptr);

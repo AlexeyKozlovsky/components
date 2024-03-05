@@ -6,12 +6,12 @@
 
 
 #include "widgets/common/basic/readwritewidget.h"
-
+#include "widgets/export.h"
 
 /*!
  * Класс отвечает за поле ввода длины или задержки
  */
-class TimeInputSpinBox : public SoftValidationSpinBox, public ReadWriteWidget {
+class WIDGETS_EXPORT TimeInputSpinBox : public SoftValidationSpinBox, public ReadWriteWidget {
   Q_OBJECT
  public:
   explicit TimeInputSpinBox(QWidget *parent = nullptr);

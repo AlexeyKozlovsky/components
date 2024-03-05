@@ -11,11 +11,12 @@
 
 
 #include "modbuswrappers/modbuswrapper.h"
+#include <modbuswrappers/export.h>
 
 // TODO: Добавить состояние NOT_CONNECTED и вынести туда логику из DISCONNECTED. Состояние DISCONNECTED сделать таким, чтобы там была логика восстановления коннекта
 
 
-class ModbusClientWrapper: public ModbusWrapper {
+class MODBUSWRAPPERS_EXPORT ModbusClientWrapper: public ModbusWrapper {
  public:
   explicit ModbusClientWrapper();
 

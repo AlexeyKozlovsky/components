@@ -5,7 +5,9 @@
 
 #include <utils/baseutils.h>
 
-class ValueCallback: public QObject {
+#include "callbacks/export.h"
+
+class CALLBACKS_EXPORT ValueCallback: public QObject {
   Q_OBJECT
  public:
   explicit ValueCallback(QObject *parent = nullptr);
@@ -16,10 +18,12 @@ class ValueCallback: public QObject {
 };
 
 
-class BoolValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT BoolValueCallback: public ValueCallback {
   Q_OBJECT
  public:
   explicit BoolValueCallback(QObject *parent = nullptr);
+
+ public:
   virtual void pushEvent(bool value) {
     emit statusChanged(value);
   };
@@ -29,7 +33,7 @@ class BoolValueCallback: public ValueCallback {
 };
 
 
-class BoolValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT BoolValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit BoolValuesCallback(QObject *parent = nullptr);
@@ -42,7 +46,7 @@ class BoolValuesCallback: public ValueCallback {
 };
 
 
-class UShortValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT UShortValueCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit UShortValueCallback(QObject *parent = nullptr);
@@ -54,7 +58,7 @@ class UShortValueCallback: public ValueCallback {
   void statusChanged(quint16 status);
 };
 
-class UShortValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT UShortValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit UShortValuesCallback(QObject *parent = nullptr);
@@ -66,7 +70,7 @@ class UShortValuesCallback: public ValueCallback {
   void statusChanged(const QVector<quint16> &status);
 };
 
-class ShortValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT ShortValueCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit ShortValueCallback(QObject *parent = nullptr);
@@ -78,7 +82,7 @@ class ShortValueCallback: public ValueCallback {
   void statusChanged(qint16 status);
 };
 
-class ShortValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT ShortValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit ShortValuesCallback(QObject *parent = nullptr);
@@ -91,7 +95,7 @@ class ShortValuesCallback: public ValueCallback {
 };
 
 
-class ULongValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT ULongValueCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit ULongValueCallback(QObject *parent = nullptr);
@@ -103,7 +107,7 @@ class ULongValueCallback: public ValueCallback {
   void statusChanged(quint32 status);
 };
 
-class ULongValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT ULongValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit ULongValuesCallback(QObject *parent = nullptr);
@@ -116,7 +120,7 @@ class ULongValuesCallback: public ValueCallback {
 };
 
 
-class LongValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT LongValueCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit LongValueCallback(QObject *parent = nullptr);
@@ -128,7 +132,7 @@ class LongValueCallback: public ValueCallback {
   void statusChanged(qint32 status);
 };
 
-class LongValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT LongValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit LongValuesCallback(QObject *parent = nullptr);
@@ -140,7 +144,7 @@ class LongValuesCallback: public ValueCallback {
   void statusChanged(const QVector<qint32> &status);
 };
 
-class ULong64ValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT ULong64ValueCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit ULong64ValueCallback(QObject *parent = nullptr);
@@ -152,7 +156,7 @@ class ULong64ValueCallback: public ValueCallback {
   void statusChanged(quint64 status);
 };
 
-class ULong64ValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT ULong64ValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit ULong64ValuesCallback(QObject *parent = nullptr);
@@ -164,7 +168,7 @@ class ULong64ValuesCallback: public ValueCallback {
   void statusChanged(const QVector<quint64> &status);
 };
 
-class Long64ValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT Long64ValueCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit Long64ValueCallback(QObject *parent = nullptr);
@@ -176,7 +180,7 @@ class Long64ValueCallback: public ValueCallback {
   void statusChanged(qint64 status);
 };
 
-class Long64ValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT Long64ValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit Long64ValuesCallback(QObject *parent = nullptr);
@@ -189,7 +193,7 @@ class Long64ValuesCallback: public ValueCallback {
 };
 
 
-class StringValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT StringValueCallback: public ValueCallback {
   Q_OBJECT
  public:
   explicit StringValueCallback(QObject *parent = nullptr);
@@ -201,7 +205,7 @@ class StringValueCallback: public ValueCallback {
   void statusChanged(const QString &status);
 };
 
-class StringValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT StringValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit StringValuesCallback(QObject *parent = nullptr);
@@ -213,7 +217,7 @@ class StringValuesCallback: public ValueCallback {
   void statusChanged(const QVector<QString> &status);
 };
 
-class DoubleValueCallback: public ValueCallback {
+class CALLBACKS_EXPORT DoubleValueCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit DoubleValueCallback(QObject *parent = nullptr);
@@ -225,7 +229,7 @@ class DoubleValueCallback: public ValueCallback {
   void statusChanged(double status);
 };
 
-class DoubleValuesCallback: public ValueCallback {
+class CALLBACKS_EXPORT DoubleValuesCallback: public ValueCallback {
  Q_OBJECT
  public:
   explicit DoubleValuesCallback(QObject *parent = nullptr);

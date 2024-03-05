@@ -4,9 +4,9 @@
 #include <QPushButton>
 
 #include "widgets/common/basic/readwritewidget.h"
+#include "widgets/export.h"
 
-
-class StandardButton: public QPushButton, public ReadWriteWidget {
+class WIDGETS_EXPORT StandardButton: public QPushButton, public ReadWriteWidget {
   Q_OBJECT
  public:
   explicit StandardButton(const QString& caption, QWidget *parent = nullptr);

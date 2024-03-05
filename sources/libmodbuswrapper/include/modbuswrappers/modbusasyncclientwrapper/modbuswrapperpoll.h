@@ -6,9 +6,10 @@
 #include <threadpooling/iprocessable.h>
 
 #include "modbusasyncclientwrapper.h"
+#include <modbuswrappers/export.h>
 
 
-class ModbusWrapperPoll: public IProcessable {
+class MODBUSWRAPPERS_EXPORT ModbusWrapperPoll: public IProcessable {
  public:
   explicit ModbusWrapperPoll(const std::shared_ptr<ModbusAsyncClientWrapper> &modbus_client_wrapper);
 

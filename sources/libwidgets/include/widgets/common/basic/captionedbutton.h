@@ -6,8 +6,10 @@
 #include "standardbutton.h"
 #include "readwritewidget.h"
 
+#include "widgets/export.h"
 
-class CaptionedButton: public QWidget {
+
+class WIDGETS_EXPORT CaptionedButton: public QWidget {
   Q_OBJECT
  public:
   explicit CaptionedButton(const QString& above_caption, const QString& inside_caption, QWidget *parent = nullptr);

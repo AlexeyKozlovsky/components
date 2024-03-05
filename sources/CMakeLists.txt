@@ -1,0 +1,3 @@
+add_subdirectory(libcallbacks)
+add_subdirectory(libwidgets)
+add_subdirectory(libplugin)

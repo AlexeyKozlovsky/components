@@ -7,6 +7,8 @@ set (Boost_USE_STATIC_LIBS ON)
 set (Boost_USE_STATIC_RUNTIME OFF)
 set (BOOST_ALL_DYN_LINK OFF)
 
+set(CMAKE_AUTOMOC ON)
+
 set(CMAKE_DEBUG_POSTFIX d)
 
 set(PLUGIN_NAME ou6u-device-plugin)

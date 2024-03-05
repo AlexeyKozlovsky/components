@@ -5,9 +5,10 @@
 
 #include <QWidget>
 #include <QLabel>
+#include "widgets/export.h"
 
 
-class SFPStatusesWidget: public QWidget {
+class WIDGETS_EXPORT SFPStatusesWidget: public QWidget {
   Q_OBJECT
  public:
   explicit SFPStatusesWidget(QWidget *parent = nullptr);

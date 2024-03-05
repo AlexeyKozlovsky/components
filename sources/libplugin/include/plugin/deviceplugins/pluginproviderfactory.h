@@ -3,6 +3,7 @@
 
 #include "pluginprovider.h"
 #include "plugin/storages/pluginproviderstorage.h"
+#include <plugin/export.h>
 
 
 struct PluginProviderRequest {
@@ -16,7 +17,7 @@ struct PluginProviderResponse {
 };
 
 
-class PluginProviderFactory {
+class PLUGIN_EXPORT PluginProviderFactory {
  public:
   explicit PluginProviderFactory(const std::shared_ptr<QWidget> &plugin_provider_factory_view,
                                  const std::shared_ptr<PluginProviderStorage> &plugin_provider_storage,

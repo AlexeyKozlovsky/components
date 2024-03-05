@@ -2,13 +2,14 @@
 #define CRATE_SYNCSYS_CLIENT_WIDGETS_COMMON_COMPOSED_LANWIDGET_H_
 
 #include <QGroupBox>
+#include "widgets/export.h"
 
 class LedWidget;
 class StandardLineEdit;
 class StandardButton;
 
 
-class LanWidget: public QGroupBox {
+class WIDGETS_EXPORT LanWidget: public QGroupBox {
   Q_OBJECT
  public:
   explicit LanWidget(QWidget *parent = nullptr);

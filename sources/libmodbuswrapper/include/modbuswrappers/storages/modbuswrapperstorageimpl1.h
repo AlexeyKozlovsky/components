@@ -4,8 +4,9 @@
 #include <map>
 
 #include "modbuswrappers/modbuswrapperstorage.h"
+#include <modbuswrappers/export.h>
 
-class ModbusWrapperStorageImpl1: public ModbusWrapperStorage {
+class MODBUSWRAPPERS_EXPORT ModbusWrapperStorageImpl1: public ModbusWrapperStorage {
  public:
   std::shared_ptr<ModbusWrapper> getBaseModbusWrapper(const std::string &ip) override;
   void addBaseModbusWrapper(const std::shared_ptr<ModbusWrapper> &modbus_wrapper, const std::string &ip) override;

@@ -5,12 +5,12 @@
 #include <QMap>
 #include <QPen>
 #include <QBrush>
-
+#include "widgets/export.h"
 
 /**
  * Виджет лампочки для представления булевских свойств
  */
-class LedWidget: public QWidget {
+class WIDGETS_EXPORT LedWidget: public QWidget {
   Q_OBJECT
  public:
   explicit LedWidget(QColor true_color = QColor::fromRgb(0, 176, 80),
@@ -42,7 +42,7 @@ class LedWidget: public QWidget {
 };
 
 
-class EditableLedWidget: public LedWidget {
+class  WIDGETS_EXPORT EditableLedWidget: public LedWidget {
   Q_OBJECT
  public:
   explicit EditableLedWidget(QColor true_color, QColor false_color, QWidget *parent = nullptr);

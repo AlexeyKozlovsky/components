@@ -4,9 +4,10 @@
 #include <memory>
 
 #include <threadpooling/iprocessable.h>
+#include <callbacks/export.h>
 
 
-class ThreadPoolDeviceTask: public IProcessable {
+class CALLBACKS_EXPORT ThreadPoolDeviceTask: public IProcessable {
  public:
   explicit ThreadPoolDeviceTask(const std::shared_ptr<IProcessable> &modbus_wrapper_device_task,
                                 const std::shared_ptr<IProcessable> &device_task);

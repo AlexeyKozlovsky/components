@@ -2,9 +2,10 @@
 #define TEST_PROJECT_WITH_MODULE_ARCH_MODBUSWRAPPERS_MODBUSCLIENTWRAPPER_MODBUSCLIENTWRAPPERFACTORY_H_
 
 #include "modbuswrappers/modbuswrapperfactory.h"
+#include <modbuswrappers/export.h>
 
 
-class ModbusClientWrapperFactory: public ModbusWrapperFactory {
+class MODBUSWRAPPERS_EXPORT ModbusClientWrapperFactory: public ModbusWrapperFactory {
  public:
   std::shared_ptr<ModbusWrapper> createModbusWrapper(const std::string &ip,
                                                      int port,

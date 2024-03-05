@@ -5,13 +5,13 @@
 #include <QLabel>
 
 #include "widgets/common/basic/readwritewidget.h"
-
+#include "widgets/export.h"
 
 class ComposedTimeInput;
 class QLabel;
 
 
-class FullComposedTimeInput: public QWidget, public ReadWriteWidget {
+class WIDGETS_EXPORT FullComposedTimeInput: public QWidget, public ReadWriteWidget {
   Q_OBJECT
  public:
   explicit FullComposedTimeInput(const QString &caption,

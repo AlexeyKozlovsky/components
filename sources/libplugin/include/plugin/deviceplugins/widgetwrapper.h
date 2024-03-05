@@ -2,9 +2,10 @@
 #define PLUGIN_LIBPLUGIN_INCLUDE_PLUGIN_DEVICEPLUGINS_WIDGETWRAPPER_H_
 
 #include <QWidget>
+#include <plugin/export.h>
 
 
-class WidgetWrapper: public QWidget {
+class PLUGIN_EXPORT WidgetWrapper: public QWidget {
  public:
   explicit WidgetWrapper(QWidget *parent = nullptr);
 

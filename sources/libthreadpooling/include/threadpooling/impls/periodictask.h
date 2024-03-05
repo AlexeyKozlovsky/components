@@ -7,9 +7,10 @@
 #include <mutex>
 
 #include "threadpooling/threadpooltask.h"
+#include <threadpooling/export.h>
 
 
-class PeriodicTask: public ThreadPoolTask {
+class THREADPOOLING_EXPORT PeriodicTask: public ThreadPoolTask {
  public:
   explicit PeriodicTask(const std::shared_ptr<IProcessable> &processable, std::chrono::system_clock::duration period);
   virtual ~PeriodicTask() = default;

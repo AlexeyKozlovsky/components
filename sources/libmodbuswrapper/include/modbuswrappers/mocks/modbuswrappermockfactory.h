@@ -2,9 +2,10 @@
 #define TEST_PROJECT_WITH_MODULE_ARCH_MODBUSWRAPPERS_MOCKS_MODBUSWRAPPERMOCKFACTORY_H_
 
 #include "modbuswrappers/modbuswrapperfactory.h"
+#include <modbuswrappers/export.h>
 
 
-class ModbusWrapperMockFactory: public ModbusWrapperFactory {
+class MODBUSWRAPPERS_EXPORT ModbusWrapperMockFactory: public ModbusWrapperFactory {
  public:
   std::shared_ptr<ModbusWrapper> createModbusWrapper(const std::string &ip,
                                                      int port,

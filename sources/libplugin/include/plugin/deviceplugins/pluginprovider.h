@@ -15,8 +15,9 @@
 #include "connectionmanager.h"
 #include "serializer.h"
 #include "serviceprovider.h"
+#include <plugin/export.h>
 
-class PluginProvider {
+class PLUGIN_EXPORT PluginProvider {
  public:
   explicit PluginProvider(const std::shared_ptr<PluginDataProvider> &data_provider,
                           const std::shared_ptr<ConnectionManager> &connection_manager,

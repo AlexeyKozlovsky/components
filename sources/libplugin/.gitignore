@@ -2,3 +2,4 @@
 cmake-build-debug
 build*
 installed/
+/cmake-build-release/

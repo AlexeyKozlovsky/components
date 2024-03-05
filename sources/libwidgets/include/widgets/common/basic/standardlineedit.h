@@ -4,9 +4,9 @@
 #include <QLineEdit>
 
 #include "widgets/common/basic/readwritewidget.h"
+#include "widgets/export.h"
 
-
-class StandardLineEdit: public QLineEdit, public ReadWriteWidget {
+class WIDGETS_EXPORT StandardLineEdit: public QLineEdit, public ReadWriteWidget {
   Q_OBJECT
  public:
   explicit StandardLineEdit(QWidget *parent = nullptr);

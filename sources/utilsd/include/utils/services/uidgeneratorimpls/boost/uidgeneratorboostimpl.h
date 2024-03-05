@@ -6,9 +6,10 @@
 #include <boost/uuid/uuid_io.hpp>
 
 #include <utils/services/uidgenerator.h>
+#include <utils/export.h>
 
 
-class UIDGeneratorBoostImpl: public UIDGenerator {
+class UTILS_EXPORT UIDGeneratorBoostImpl: public UIDGenerator {
  public:
   virtual ~UIDGeneratorBoostImpl() = default;
   std::string generateUIDString() override;

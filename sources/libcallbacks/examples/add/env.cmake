@@ -16,12 +16,14 @@ set(PLUGIN_NAME ou6u-device-plugin)
 set(_WIN32_WINNT 0x0601)
 
 
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-set(utils_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/utilsd/installed/lib/cmake/utils")
-set(modbus_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/libmodbus/installed/lib/cmake/modbus")
-set(threadpooling_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/libthreadpooling/installed/lib/cmake/threadpooling")
-set(modbuswrappers_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/libmodbuswrapper/installed/lib/cmake/modbuswrappers")
-set(plugin_DIR "c:/Users/User/Documents/Career/Dialtek/components/sources/libplugin/installed/lib/cmake/plugin")
-set(widgets_DIR "c:/Users/User/Documents/Career/Dialtek/components/sources/libwidgets/installed/lib/cmake/widgets")
-set(callbacks_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/libcallbacks/installed/lib/cmake/callbacks")
+set(BASE_INSTALLED_DIR "C:/Users/User/Documents/Career/Dialtek/components/sources/installedlibs")
+
+set(utils_DIR "${BASE_INSTALLED_DIR}/lib/cmake/utils")
+set(modbus_DIR "${BASE_INSTALLED_DIR}/lib/cmake/modbus")
+set(threadpooling_DIR "${BASE_INSTALLED_DIR}/lib/cmake/threadpooling")
+set(modbuswrappers_DIR "${BASE_INSTALLED_DIR}/lib/cmake/modbuswrappers")
+set(callbacks_DIR "${BASE_INSTALLED_DIR}/lib/cmake/callbacks")
+set(widgets_DIR "${BASE_INSTALLED_DIR}/lib/cmake/widgets")
+set(plugin_DIR "${BASE_INSTALLED_DIR}/lib/cmake/plugin")

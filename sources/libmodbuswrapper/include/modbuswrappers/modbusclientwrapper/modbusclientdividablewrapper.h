@@ -4,9 +4,10 @@
 #include "modbusclientwrapper.h"
 
 #include <utils/services/domain/regreaddivider.h>
+#include <modbuswrappers/export.h>
 
 
-class ModbusClientDividableWrapper: public ModbusWrapper {
+class MODBUSWRAPPERS_EXPORT ModbusClientDividableWrapper: public ModbusWrapper {
  public:
   explicit ModbusClientDividableWrapper(const std::shared_ptr<ModbusWrapper> &modbus_wrapper,
                                         int holding_regs_count,

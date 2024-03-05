@@ -3,9 +3,10 @@
 
 
 #include "modbuswrappers/modbuswrapperfactory.h"
+#include <modbuswrappers/export.h>
 
 
-class ModbusClientDividableWrapperFactory: public ModbusWrapperFactory {
+class MODBUSWRAPPERS_EXPORT ModbusClientDividableWrapperFactory: public ModbusWrapperFactory {
  public:
   explicit ModbusClientDividableWrapperFactory(const std::shared_ptr<ModbusWrapperFactory> &modbus_wrapper_factory);
   explicit ModbusClientDividableWrapperFactory(const std::shared_ptr<ModbusWrapperFactory> &modbus_wrapper_factory,

@@ -10,9 +10,10 @@
 #include <threadpooling/iprocessable.h>
 
 #include "connectable.h"
+#include <modbuswrappers/export.h>
 
 
-class ModbusWrapper: public IProcessable {
+class MODBUSWRAPPERS_EXPORT ModbusWrapper: public IProcessable {
  public:
   virtual ~ModbusWrapper() = default;
 

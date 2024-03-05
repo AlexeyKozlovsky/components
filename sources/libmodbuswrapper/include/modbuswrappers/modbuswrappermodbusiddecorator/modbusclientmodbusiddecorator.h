@@ -5,8 +5,9 @@
 #include <vector>
 
 #include "modbuswrappers/modbuswrapper.h"
+#include <modbuswrappers/export.h>
 
-class ModbusClientModbusIDDecorator: public ModbusWrapper {
+class MODBUSWRAPPERS_EXPORT ModbusClientModbusIDDecorator: public ModbusWrapper {
  public:
   explicit ModbusClientModbusIDDecorator(const std::shared_ptr<ModbusWrapper> &modbus_wrapper, int modbus_id);
 

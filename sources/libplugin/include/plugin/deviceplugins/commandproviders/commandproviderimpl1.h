@@ -4,9 +4,10 @@
 #include <QMap>
 
 #include "plugin/deviceplugins/commandprovider.h"
+#include <plugin/export.h>
 
 
-class CommandProviderImpl1: public PluginCommandProvider {
+class PLUGIN_EXPORT CommandProviderImpl1: public PluginCommandProvider {
  public:
   bool hasCommand(const QString &command_name) override;
   CommandResponse executeCommand(CommandRequest request) override;

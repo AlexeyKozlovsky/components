@@ -9,8 +9,9 @@
 
 #include "standardpropertylabel.h"
 #include "readwritewidget.h"
+#include "widgets/export.h"
 
-class ComposedTimeInput: public QWidget, public ReadWriteWidget {
+class WIDGETS_EXPORT ComposedTimeInput: public QWidget, public ReadWriteWidget {
   Q_OBJECT
  public:
   explicit ComposedTimeInput(const QString &caption,

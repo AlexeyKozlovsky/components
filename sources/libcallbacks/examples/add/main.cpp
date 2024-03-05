@@ -16,16 +16,16 @@ int main(int argc, char *argv[])
   qRegisterMetaType<QVector<bool> >("QVector<quint32>");
   qRegisterMetaType<QVector<bool> >("QVector<qint32>");
   QApplication a(argc, argv);
-  auto bool_callback = std::make_shared<BoolValueCallback>();
+  auto bool_callback = std::make_shared<BoolValuesCallback>();
   QVector<bool> aa = {true};
-  bool_callback->pushEvent(false);
+  bool_callback->pushEvent(aa);
 
   auto line_edit = std::make_shared<StandardLineEdit>();
   line_edit->show();
 
 
-  QObject::connect(bool_callback.get(), &BoolValueCallback::statusChanged,
-                   line_edit.get(), [&](bool tilt) {
+  QObject::connect(bool_callback.get(), &BoolValuesCallback::statusChanged,
+                   line_edit.get(), [&](const QVector<bool> &tilt) {
 
   });
 

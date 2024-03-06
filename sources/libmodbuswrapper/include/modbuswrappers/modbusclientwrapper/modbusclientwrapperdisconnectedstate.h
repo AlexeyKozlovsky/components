@@ -13,8 +13,7 @@ using modbus::ModbusClient;
 class MODBUSWRAPPERS_EXPORT ModbusClientWrapperDisconnectedState: public ModbusWrapper {
  public:
   explicit ModbusClientWrapperDisconnectedState(const std::shared_ptr<ModbusClientWrapper> &state_machine,
-      const std::shared_ptr<ModbusClient> &modbus_client,
-      const std::shared_ptr<std::mutex> &modbus_client_mutex);
+      const std::shared_ptr<ModbusClient> &modbus_client);
 
   ErrorCode connect() override;
   ErrorCode disconnect() override;
@@ -29,7 +28,7 @@ class MODBUSWRAPPERS_EXPORT ModbusClientWrapperDisconnectedState: public ModbusW
  private:
   std::shared_ptr<ModbusClientWrapper> _state_machine = nullptr;
 
-  std::shared_ptr<std::mutex> _modbus_client_mutex = nullptr;
+  std::mutex _modbus_client_mutex;
   std::shared_ptr<ModbusClient> _modbus_client;
 
 };

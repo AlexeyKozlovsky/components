@@ -175,7 +175,7 @@ ErrorCode ModbusClientDividableWrapper::readInputRegisters(int reg_num,
       result = _modbus_wrapper->readInputRegisters(data.reg_num, data.reg_count, current_input_reg_vector);
 
       if (result != SUCCESS) {
-        return result;
+        return ;
       }
 
       for (int i = 0; i < current_input_reg_vector.size(); i++) {
@@ -187,7 +187,9 @@ ErrorCode ModbusClientDividableWrapper::readInputRegisters(int reg_num,
       std::cout << "REG READ DATA " << data.reg_num << " " << data.reg_count << std::endl;
     });
 
-    values = std::move(input_regs);
+
+    // TODO: Потом поменять на нормальный move
+    values = input_regs;
   }
 
   return result;

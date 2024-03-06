@@ -22,11 +22,10 @@ std::shared_ptr<ModbusWrapper> ModbusClientWrapperFactory::createModbusWrapper(c
 std::shared_ptr<ModbusWrapper> ModbusClientWrapperFactory::createBaseModbusWrapper(const std::string &ip, int port) {
   std::shared_ptr<ModbusWrapper> result = nullptr;
   auto modbus_client = std::make_shared<ModbusClient>(ip, port);
-  auto modbus_client_mutex = std::make_shared<std::mutex>();
 
   auto modbus_wrapper = std::make_shared<ModbusClientWrapper>();
-  auto modbus_wrapper_connected_state = std::make_shared<ModbusClientWrapperConnectedState>(modbus_wrapper, modbus_client, modbus_client_mutex);
-  auto modbus_wrapper_disconnected_state = std::make_shared<ModbusClientWrapperDisconnectedState>(modbus_wrapper, modbus_client, modbus_client_mutex);
+  auto modbus_wrapper_connected_state = std::make_shared<ModbusClientWrapperConnectedState>(modbus_wrapper, modbus_client);
+  auto modbus_wrapper_disconnected_state = std::make_shared<ModbusClientWrapperDisconnectedState>(modbus_wrapper, modbus_client);
 
   modbus_wrapper->addState({CONNECTED, modbus_wrapper_connected_state});
   modbus_wrapper->addState({DISCONNECTED, modbus_wrapper_disconnected_state});

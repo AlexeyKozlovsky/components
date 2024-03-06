@@ -49,6 +49,9 @@ class PLUGIN_EXPORT PluginProvider {
 
   std::shared_ptr<QWidget> getFactoryWidget();
   std::shared_ptr<QWidget> getManagementWidget();
+  std::shared_ptr<QWidget> getConnectionWidget();
+  std::shared_ptr<QWidget> getMonitoringWidget();
+
   bool hasManagementWidgetByKey(const QString &key);
   std::shared_ptr<QWidget> getManagementWidget(const QString &key, QVariant arg = {});
   bool hasCommandByKey(const QString &key);

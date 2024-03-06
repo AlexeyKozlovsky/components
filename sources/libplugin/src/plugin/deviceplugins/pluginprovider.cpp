@@ -191,6 +191,25 @@ std::shared_ptr<QWidget> PluginProvider::getManagementWidget() {
   return result;
 }
 
+std::shared_ptr<QWidget> PluginProvider::getConnectionWidget() {
+  std::shared_ptr<QWidget> result = nullptr;
+
+  if (_view_provider != nullptr) {
+    result = _view_provider->getConnectionWidget();
+  }
+
+  return result;
+}
+std::shared_ptr<QWidget> PluginProvider::getMonitoringWidget() {
+  std::shared_ptr<QWidget> result = nullptr;
+
+  if (_view_provider != nullptr) {
+    result = _view_provider->getMonitoringWidget();
+  }
+
+  return result;
+}
+
 bool PluginProvider::hasManagementWidgetByKey(const QString &key) {
   bool result = false;
 

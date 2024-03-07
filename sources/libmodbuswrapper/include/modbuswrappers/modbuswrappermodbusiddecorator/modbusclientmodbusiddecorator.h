@@ -11,6 +11,10 @@ class MODBUSWRAPPERS_EXPORT ModbusClientModbusIDDecorator: public ModbusWrapper 
  public:
   explicit ModbusClientModbusIDDecorator(const std::shared_ptr<ModbusWrapper> &modbus_wrapper, int modbus_id);
 
+  std::string getIP() override;
+  int getPort() override;
+  int getModbusID() override;
+
   ErrorCode connect() override;
   ErrorCode disconnect() override;
   ErrorCode isConnected(bool &is_connected) override;

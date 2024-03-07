@@ -31,6 +31,38 @@ ModbusClientDividableWrapper::ModbusClientDividableWrapper(const std::shared_ptr
                                                            _input_regs_divider(input_regs_divider) {
 }
 
+std::string ModbusClientDividableWrapper::getIP() {
+  std::string result;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getIP();
+  }
+
+  return result;
+}
+
+int ModbusClientDividableWrapper::getPort() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getPort();
+  }
+
+  return result;
+}
+
+int ModbusClientDividableWrapper::getModbusID() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getModbusID();
+  }
+
+  return result;
+}
+
+
+
 ErrorCode ModbusClientDividableWrapper::connect() {
   ErrorCode result = OPERATION_INTERRUPTED;
 

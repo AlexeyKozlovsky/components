@@ -10,6 +10,36 @@ ModbusClientWrapperConnectedState::ModbusClientWrapperConnectedState(const std::
 
 }
 
+std::string ModbusClientWrapperConnectedState::getIP() {
+  std::string result;
+
+  if (_modbus_client != nullptr) {
+    result = _modbus_client->getIP();
+  }
+
+  return result;
+}
+
+int ModbusClientWrapperConnectedState::getPort() {
+  int result = 0;
+
+  if (_modbus_client != nullptr) {
+    result = _modbus_client->getPort();
+  }
+
+  return result;
+}
+
+int ModbusClientWrapperConnectedState::getModbusID() {
+  int result = 0;
+
+  if (_modbus_client != nullptr) {
+    result = 1;
+  }
+
+  return result;
+}
+
 ErrorCode ModbusClientWrapperConnectedState::connect() {
   auto result = OPERATION_INTERRUPTED;
 //  if (_modbus_client != nullptr) {

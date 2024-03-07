@@ -18,7 +18,11 @@
 
 class MODBUSWRAPPERS_EXPORT ModbusClientWrapper: public ModbusWrapper {
  public:
-  explicit ModbusClientWrapper();
+  explicit ModbusClientWrapper(const std::string &ip, int port, int modbus_id);
+
+  std::string getIP() override;
+  int getPort() override;
+  int getModbusID() override;
 
   ErrorCode connect() override;
   ErrorCode disconnect() override;
@@ -39,6 +43,9 @@ class MODBUSWRAPPERS_EXPORT ModbusClientWrapper: public ModbusWrapper {
   void addState(const std::pair<DeviceState, std::shared_ptr<ModbusWrapper>> &state);
 
  private:
+  std::string _ip;
+  int _port = 4001;
+  int _modbus_id = 2;
 
   std::map<DeviceState, std::shared_ptr<ModbusWrapper>> _states;
   std::shared_ptr<ModbusWrapper> _current_state = nullptr;

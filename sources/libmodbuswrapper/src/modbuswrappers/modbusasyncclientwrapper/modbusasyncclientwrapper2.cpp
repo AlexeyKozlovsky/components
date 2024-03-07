@@ -19,6 +19,36 @@ ModbusAsyncClientWrapper2::ModbusAsyncClientWrapper2(const std::shared_ptr<Modbu
     _input_regs(input_regs_count) {
 }
 
+std::string ModbusAsyncClientWrapper2::getIP() {
+  std::string result;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getIP();
+  }
+
+  return result;
+}
+
+int ModbusAsyncClientWrapper2::getPort() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getPort();
+  }
+
+  return result;
+}
+
+int ModbusAsyncClientWrapper2::getModbusID() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getModbusID();
+  }
+
+  return result;
+}
+
 void ModbusAsyncClientWrapper2::process() {
   if (_modbus_wrapper != nullptr) {
     auto error_code = _modbus_wrapper->readInputRegisters(0, _input_regs_count, _input_regs);

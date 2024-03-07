@@ -7,6 +7,36 @@ ModbusClientWrapperDisconnectedState::ModbusClientWrapperDisconnectedState(const
 
 }
 
+std::string ModbusClientWrapperDisconnectedState::getIP() {
+  std::string result;
+
+  if (_modbus_client != nullptr) {
+    result = _modbus_client->getIP();
+  }
+
+  return result;
+}
+
+int ModbusClientWrapperDisconnectedState::getPort() {
+  int result = 0;
+
+  if (_modbus_client != nullptr) {
+    result = _modbus_client->getPort();
+  }
+
+  return result;
+}
+
+int ModbusClientWrapperDisconnectedState::getModbusID() {
+  int result = 0;
+
+  if (_modbus_client != nullptr) {
+    result = 1;
+  }
+
+  return result;
+}
+
 ErrorCode ModbusClientWrapperDisconnectedState::connect() {
   ErrorCode result = OPERATION_INTERRUPTED;
   _modbus_client_mutex.lock();

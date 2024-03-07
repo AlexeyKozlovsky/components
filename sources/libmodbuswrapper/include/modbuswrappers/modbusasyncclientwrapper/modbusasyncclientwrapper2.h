@@ -12,6 +12,10 @@ class MODBUSWRAPPERS_EXPORT ModbusAsyncClientWrapper2: public AbstractModbusAsyn
  public:
   explicit ModbusAsyncClientWrapper2(const std::shared_ptr<ModbusWrapper> &modbus_wrapper, int holding_regs_count, int input_regs_count);
 
+  std::string getIP() override;
+  int getPort() override;
+  int getModbusID() override;
+
   ErrorCode connect() override;
   ErrorCode disconnect() override;
   ErrorCode isConnected(bool &is_connected) override;

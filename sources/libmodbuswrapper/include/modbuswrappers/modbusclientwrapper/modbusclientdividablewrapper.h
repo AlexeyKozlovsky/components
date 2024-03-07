@@ -16,6 +16,10 @@ class MODBUSWRAPPERS_EXPORT ModbusClientDividableWrapper: public ModbusWrapper {
                                         const std::shared_ptr<RegReadDivider> &holding_regs_divider,
                                         const std::shared_ptr<RegReadDivider> &input_regs_divider);
 
+  std::string getIP() override;
+  int getPort() override;
+  int getModbusID() override;
+
   ErrorCode connect() override;
   ErrorCode disconnect() override;
   ErrorCode isConnected(bool &is_connected) override;

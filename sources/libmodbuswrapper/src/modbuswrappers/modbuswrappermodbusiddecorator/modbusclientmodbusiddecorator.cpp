@@ -8,6 +8,36 @@ ModbusClientModbusIDDecorator::ModbusClientModbusIDDecorator(const std::shared_p
 
 }
 
+std::string ModbusClientModbusIDDecorator::getIP() {
+  std::string result;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getIP();
+  }
+
+  return result;
+}
+
+int ModbusClientModbusIDDecorator::getPort() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getPort();
+  }
+
+  return result;
+}
+
+int ModbusClientModbusIDDecorator::getModbusID() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_id;
+  }
+
+  return result;
+}
+
 ErrorCode ModbusClientModbusIDDecorator::connect() {
   auto result = OPERATION_INTERRUPTED;
   if (_modbus_wrapper != nullptr) {

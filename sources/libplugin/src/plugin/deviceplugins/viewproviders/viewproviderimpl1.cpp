@@ -17,7 +17,7 @@ void ViewProviderImpl1::setMainManagementWidget(const std::shared_ptr<QWidget> &
 }
 
 void ViewProviderImpl1::setConnectionWidget(const std::shared_ptr<QWidget> &widget) {
-  if (_connection_widget != nullptr) {
+  if (widget != nullptr) {
     _connection_widget = widget;
   }
 }

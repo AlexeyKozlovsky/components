@@ -15,6 +15,10 @@ class MODBUSWRAPPERS_EXPORT ModbusClientWrapperDisconnectedState: public ModbusW
   explicit ModbusClientWrapperDisconnectedState(const std::shared_ptr<ModbusClientWrapper> &state_machine,
       const std::shared_ptr<ModbusClient> &modbus_client);
 
+  std::string getIP() override;
+  int getPort() override;
+  int getModbusID() override;
+
   ErrorCode connect() override;
   ErrorCode disconnect() override;
   ErrorCode isConnected(bool &is_connected) override;

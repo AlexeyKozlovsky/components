@@ -12,7 +12,13 @@ using RegCardType = std::map<int, std::vector<uint16_t>>;
 
 class MODBUSWRAPPERS_EXPORT ModbusWrapperMock2: public ModbusWrapper {
  public:
+  explicit ModbusWrapperMock2(const std::string &ip, int port, int modbus_id);
   ~ModbusWrapperMock2() override = default;
+
+  std::string getIP() override;
+  int getPort() override;
+  int getModbusID() override;
+
   ErrorCode connect() override;
   ErrorCode disconnect() override;
   ErrorCode isConnected(bool &is_connected) override;
@@ -27,6 +33,10 @@ class MODBUSWRAPPERS_EXPORT ModbusWrapperMock2: public ModbusWrapper {
   void process() override;
 
  private:
+  std::string _ip;
+  int _port = 4001;
+  int _modbus_id = 1;
+
   bool _is_connected = false;
 
   RegCardType _holding_reg_values;

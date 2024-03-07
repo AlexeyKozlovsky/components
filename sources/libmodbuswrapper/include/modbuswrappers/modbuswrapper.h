@@ -17,6 +17,10 @@ class MODBUSWRAPPERS_EXPORT ModbusWrapper: public IProcessable {
  public:
   virtual ~ModbusWrapper() = default;
 
+  virtual std::string getIP() = 0;
+  virtual int getPort() = 0;
+  virtual int getModbusID() = 0;
+
   virtual ErrorCode connect() = 0;
   virtual ErrorCode disconnect() = 0;
 

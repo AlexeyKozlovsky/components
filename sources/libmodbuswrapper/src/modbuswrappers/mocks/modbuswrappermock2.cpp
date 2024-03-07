@@ -6,6 +6,22 @@ static const int MAX_REG_NUM = 10000;
 static const int MAX_HOLDING_REG_NUM = 10000;
 static const int MAX_INPUT_REG_NUM = 10000;
 
+ModbusWrapperMock2::ModbusWrapperMock2(const std::string &ip, int port, int modbus_id):
+  _ip(ip), _port(port), _modbus_id(modbus_id) {
+
+}
+
+std::string ModbusWrapperMock2::getIP() {
+  return _ip;
+}
+
+int ModbusWrapperMock2::getPort() {
+  return _port;
+}
+
+int ModbusWrapperMock2::getModbusID() {
+  return _modbus_id;
+}
 
 ErrorCode ModbusWrapperMock2::connect() {
   auto result = OPERATION_INTERRUPTED;
@@ -200,3 +216,4 @@ void ModbusWrapperMock2::checkConnectionStatusByResponse(modbus::ModbusResult re
     sendConnectionStatus(true);
   }
 }
+

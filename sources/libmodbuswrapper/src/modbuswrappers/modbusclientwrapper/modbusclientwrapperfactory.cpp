@@ -23,7 +23,7 @@ std::shared_ptr<ModbusWrapper> ModbusClientWrapperFactory::createBaseModbusWrapp
   std::shared_ptr<ModbusWrapper> result = nullptr;
   auto modbus_client = std::make_shared<ModbusClient>(ip, port);
 
-  auto modbus_wrapper = std::make_shared<ModbusClientWrapper>();
+  auto modbus_wrapper = std::make_shared<ModbusClientWrapper>(ip, port, port);
   auto modbus_wrapper_connected_state = std::make_shared<ModbusClientWrapperConnectedState>(modbus_wrapper, modbus_client);
   auto modbus_wrapper_disconnected_state = std::make_shared<ModbusClientWrapperDisconnectedState>(modbus_wrapper, modbus_client);
 

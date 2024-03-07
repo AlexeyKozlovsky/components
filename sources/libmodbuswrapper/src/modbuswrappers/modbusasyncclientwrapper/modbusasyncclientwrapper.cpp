@@ -25,6 +25,36 @@ ModbusAsyncClientWrapper::ModbusAsyncClientWrapper(const std::shared_ptr<ModbusW
                                                            DEFAULT_HOLDING_REG_PER_REQUEST_COUNT);
 }
 
+std::string ModbusAsyncClientWrapper::getIP() {
+  std::string result;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getIP();
+  }
+
+  return result;
+}
+
+int ModbusAsyncClientWrapper::getPort() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getPort();
+  }
+
+  return result;
+}
+
+int ModbusAsyncClientWrapper::getModbusID() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getModbusID();
+  }
+
+  return result;
+}
+
 void ModbusAsyncClientWrapper::process() {
 ////  _is_processed = true;
 //

@@ -13,6 +13,10 @@ class MODBUSWRAPPERS_EXPORT ModbusPostponedWriteWrapper: public ModbusWrapper {
  public:
   explicit ModbusPostponedWriteWrapper(const std::shared_ptr<AbstractModbusAsyncClientWrapper> &modbus_wrapper);
 
+  std::string getIP() override;
+  int getPort() override;
+  int getModbusID() override;
+
   ErrorCode connect() override;
   ErrorCode disconnect() override;
   ErrorCode isConnected(bool &is_connected) override;

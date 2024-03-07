@@ -3,8 +3,39 @@
 #include <utils/enumconverter.h>
 
 
-ModbusClientWrapper::ModbusClientWrapper() {
+ModbusClientWrapper::ModbusClientWrapper(const std::string &ip, int port, int modbus_id):
+  _ip(ip), _port(port), _modbus_id(modbus_id) {
 
+}
+
+std::string ModbusClientWrapper::getIP() {
+  std::string result;
+
+  if (_current_state != nullptr) {
+    result = _current_state->getIP();
+  }
+
+  return result;
+}
+
+int ModbusClientWrapper::getPort() {
+  int result = 0;
+
+  if (_current_state != nullptr) {
+    result = _current_state->getPort();
+  }
+
+  return result;
+}
+
+int ModbusClientWrapper::getModbusID() {
+  int result = 0;
+
+  if (_current_state != nullptr) {
+    result = _current_state->getModbusID();
+  }
+
+  return result;
 }
 
 ErrorCode ModbusClientWrapper::connect() {

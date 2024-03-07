@@ -7,6 +7,36 @@ ModbusPostponedWriteWrapper::ModbusPostponedWriteWrapper(const std::shared_ptr<A
 
 }
 
+std::string ModbusPostponedWriteWrapper::getIP() {
+  std::string result;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getIP();
+  }
+
+  return result;
+}
+
+int ModbusPostponedWriteWrapper::getPort() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getPort();
+  }
+
+  return result;
+}
+
+int ModbusPostponedWriteWrapper::getModbusID() {
+  int result = 0;
+
+  if (_modbus_wrapper != nullptr) {
+    result = _modbus_wrapper->getModbusID();
+  }
+
+  return result;
+}
+
 ErrorCode ModbusPostponedWriteWrapper::connect() {
   ErrorCode result = OPERATION_INTERRUPTED;
 
@@ -168,4 +198,3 @@ bool ModbusPostponedWriteWrapper::validateRegNum(int reg_num) {
   bool result = reg_num >= 0 && reg_num < _tmp_holding_regs.size();
   return result;
 }
-

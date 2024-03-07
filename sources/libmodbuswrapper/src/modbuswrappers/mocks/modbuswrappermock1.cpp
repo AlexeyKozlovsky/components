@@ -2,6 +2,23 @@
 
 #include <utils/baseutils.h>
 
+ModbusWrapperMock1::ModbusWrapperMock1(const std::string &ip, int port, int modbus_id):
+  _ip(ip), _port(port), _modbus_id(modbus_id) {
+
+}
+
+std::string ModbusWrapperMock1::getIP() {
+  return _ip;
+}
+
+int ModbusWrapperMock1::getPort() {
+  return _port;
+}
+
+int ModbusWrapperMock1::getModbusID() {
+  return _modbus_id;
+}
+
 
 ErrorCode ModbusWrapperMock1::connect() {
   std::cout << "TEST CONNECT MOCK " << __func__ << std::endl;

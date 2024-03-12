@@ -3,6 +3,5 @@ cmake-build-debug
 /build*/
 installed/
 /cmake-build-release/
-
 /cmake-build-debug-remote-host/
 /cmake-build-release-remote-host/

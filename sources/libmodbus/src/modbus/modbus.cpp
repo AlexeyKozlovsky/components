@@ -3,7 +3,9 @@
 #include "../../include/modbus/modbus.h"
 #include "../../include/modbus/tcp_socket.h"
 
+#ifdef WIN32
 #include <sdkddkver.h>
+#endif
 
 // TODO: Надо решить проблемы с некорреткным количеством байт в ответе по модбас, которое иногда возникает. В следствие чего, пока не понятно
 

@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.14)
-include (env.cmake)
+
+if(${TARGET_SYSTEM} STREQUAL linux)
+    message("F")
+    include(env-linux.cmake)
+elseif(${TARGET_SYSTEM} STREQUAL win)
+    include(env.cmake)
+endif()
+
 project(threadpooling
     VERSION 1.0.0
     DESCRIPTION "Template for C++ library built with CMake"

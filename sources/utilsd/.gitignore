@@ -1,7 +1,8 @@
-.idea
 build
 cmake-build-debug
 /build*/
-/.idea/
 installed/
 /cmake-build-release/
+
+/cmake-build-debug-remote-host/
+/cmake-build-release-remote-host/

@@ -25,6 +25,7 @@
       "hidden": true,
       "inherits": ["dev"],
       "cacheVariables": {
+        "TARGET_SYSTEM": "win",
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_CXX_FLAGS": "/EHs"
       }
@@ -35,6 +36,7 @@
       "hidden": true,
       "inherits": ["dev"],
       "cacheVariables": {
+        "TARGET_SYSTEM": "win",
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_FLAGS": "/EHs"
       }

@@ -135,7 +135,7 @@ inline uint16_t readByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t val
 }
 
 inline bool writeByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value_to_write, uint16_t &value) {
-  std::cout << "VALUE BEFORE: " << unsigned(value) << std::endl;
+  // std::cout << "VALUE BEFORE: " << unsigned(value) << std::endl;
   uint16_t mask = getMask(byte_num, byte_count);
   uint16_t value_mask = (0xffff >> (15 - byte_count - 1));
 
@@ -145,11 +145,11 @@ inline bool writeByteValue(uint8_t byte_num, uint8_t byte_count, uint16_t value_
 
   value_to_write = ((value_to_write & value_mask) << byte_num);
 
-  std::cout << "VALUE TO WRITE AFTER: " << unsigned(value_to_write) << std::endl;
+  // std::cout << "VALUE TO WRITE AFTER: " << unsigned(value_to_write) << std::endl;
   value &= mask;
   value |= value_to_write;
 
-  std::cout << "VALUE AFTER: " << unsigned(value) << std::endl;
+  // std::cout << "VALUE AFTER: " << unsigned(value) << std::endl;
 
   return true;
 }

@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.14)
-include(env.cmake)
+
+if(${TARGET_SYSTEM} STREQUAL linux)
+    message("F")
+    include(env-linux.cmake)
+elseif(${TARGET_SYSTEM} STREQUAL win)
+    include(env.cmake)
+endif()
 
 project(modbuswrappers
     VERSION 1.0.0
@@ -89,14 +95,22 @@ file(GLOB sources
     include/modbuswrappers/modbusclientwrapper/*.h
     include/modbuswrappers/modbuswrappermodbusiddecorator/*.h
         include/modbuswrappers/modbuspostponedwritewrapper/*.h
+        include/modbuswrappers/tangoclientwrappers/*.h
     include/modbuswrappers/storages/*.h
+        include/modbuswrappers/factories/*.h
+        include/modbuswrappers/factories/modbuswrapperoneclient/*.h
+        include/modbuswrappers/factories/modbuswrapperoneclient/impls/*.h
     src/modbuswrappers/*.cpp
     src/modbuswrappers/mocks/*.cpp
     src/modbuswrappers/modbusasyncclientwrapper/*.cpp
     src/modbuswrappers/modbusclientwrapper/*.cpp
     src/modbuswrappers/modbuswrappermodbusiddecorator/*.cpp
     src/modbuswrappers/modbuspostponedwritewrapper/*.cpp
+    src/modbuswrappers/tangoclientwrappers/*.cpp
     src/modbuswrappers/storages/*.cpp
+       src/modbuswrappers/factories/*.cpp
+       src/modbuswrappers/factories/modbuswrapperoneclient/*.cpp
+       src/modbuswrappers/factories/modbuswrapperoneclient/impls/*.cpp
     )
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${sources})
 

@@ -18,8 +18,8 @@ int main() {
 
   std::string ip = "10.10.110.26";
   int port = 4001;
-  int modbus_id = 4;
-  int holding_regs_count = 83;
+  int modbus_id = 2;
+  int holding_regs_count = 50;
   int input_regs_count = 10;
 
   auto modbus_client = std::make_shared<modbus::ModbusClient>(ip, port);
@@ -40,8 +40,8 @@ int main() {
   int input_regs_per_request = 30;
 
   auto modbus_wrapper_storage = std::make_shared<ModbusWrapperStorageImpl1>();
-//  auto base_modbus_wrapper_factory = std::make_shared<ModbusClientWrapperFactory>();
-  auto base_modbus_wrapper_factory = std::make_shared<ModbusWrapperMockFactory>();
+  auto base_modbus_wrapper_factory = std::make_shared<ModbusClientWrapperFactory>();
+//  auto base_modbus_wrapper_factory = std::make_shared<ModbusWrapperMockFactory>();
   auto main_modbus_wrapper_factory = std::make_shared<ModbusClientModbusIDDecoratorFactory>(base_modbus_wrapper_factory, modbus_wrapper_storage);
 
   auto dividable_modbus_wrapper_factory = std::make_shared<ModbusClientDividableWrapperFactory>(main_modbus_wrapper_factory);

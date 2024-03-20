@@ -11,10 +11,12 @@
 
 #include <iostream>
 
-using namespace boost;
-using namespace boost::system;
-using namespace boost::asio;
-using namespace boost::asio::ip;
+using boost::asio::ip::tcp;
+using boost::beast::error_code;
+//using namespace boost;
+//using namespace boost::system;
+//using namespace boost::asio;
+//using namespace boost::asio::ip;
 
 // TODO: Добавить в этот класс ещё асинхронную запись с таймаутом
 
@@ -38,8 +40,8 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
   size_t read_with_timeout(boost::asio::ip::tcp::socket& sock,
                         const MutableBufferSequence& buffers,
                         size_t timeout,
-                        io_service &io) {
-    deadline_timer timer(io);
+                        boost::asio::io_service &io) {
+    boost::asio::deadline_timer timer(io);
     received_bytes = 0;
 
     bool data_available;
@@ -57,15 +59,15 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
     return received_bytes;
   }
 
-  void connect(boost::beast::tcp_stream& stream, ip::tcp::endpoint &ep, io_service &io) {
+  void connect(boost::beast::tcp_stream& stream, boost::asio::ip::tcp::endpoint &ep, boost::asio::io_service &io) {
     io.reset();
     io.run();
 
 
     stream.expires_after(std::chrono::seconds(4));
-    stream.async_connect(ep, [&] (beast::error_code _ec) {
+    stream.async_connect(ep, [&] (boost::beast::error_code _ec) {
       std::cout << "TTTTT" << std::endl;
-      if (_ec == beast::error::timeout) {
+      if (_ec == boost::beast::error::timeout) {
         std::cerr << "TILTTT" << std::endl;
         stream.close();
       }
@@ -77,7 +79,7 @@ class TcpConnection: public boost::enable_shared_from_this<TcpConnection>, boost
  private:
   size_t received_bytes;
 
-  void readCallback(bool& data_available, deadline_timer& timeout, const boost::system::error_code& error, std::size_t bytes_transferred) {
+  void readCallback(bool& data_available, boost::asio::deadline_timer& timeout, const boost::system::error_code& error, std::size_t bytes_transferred) {
     if (error || !bytes_transferred) {
      // No data was read!
      data_available = false;

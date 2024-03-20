@@ -338,7 +338,7 @@ bool modbus::ModbusClient::sendRawRequest(uint8_t *raw_request,
 //  if (!is_connected) socket.socket().connect(endpoint, ec);
 
   comm_mutex.lock();
-  beast::error_code _ec;
+  error_code _ec;
   service.stop();
   socket.socket().remote_endpoint(_ec);
   std::cout << "Remote endpoint ec: " << _ec.message() << _ec << std::endl;
@@ -434,13 +434,15 @@ modbus::ModbusResult modbus::ModbusClient::writeHoldingRegistersTrue(uint16_t re
 modbus::ModbusResult modbus::ModbusClient::writeHoldingRegisters(uint16_t reg_num, std::vector<uint16_t> values,
                                                                  uint8_t modbus_id,
                                                                  uint8_t *raw_request, uint8_t *raw_response) {
-  bool result = true;
-  for (uint8_t i = 0; i < values.size(); i++) {
-    auto error_status = writeHoldingRegister(reg_num + i, values[i], modbus_id);
-    if (error_status != modbus::NO_MODBUS_ERROR) return error_status;
-  }
+//  bool result = true;
+//  for (uint8_t i = 0; i < values.size(); i++) {
+//    auto error_status = writeHoldingRegister(reg_num + i, values[i], modbus_id);
+//    if (error_status != modbus::NO_MODBUS_ERROR) return error_status;
+//  }
 
-  return modbus::NO_MODBUS_ERROR;
+  auto error_code = modbus::UNHANDLED_ERROR;
+  error_code = writeHoldingRegistersTrue(reg_num, values, modbus_id, raw_request, raw_response);
+  return error_code;
 }
 
 void modbus::ModbusClient::update() {

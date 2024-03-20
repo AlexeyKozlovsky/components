@@ -118,7 +118,7 @@ ErrorCode ModbusClientDividableWrapper::readHoldingRegisters(int reg_num,
     std::vector<uint16_t> current_holding_reg_vector;
     std::for_each(std::begin(holding_regs_read_data), std::end(holding_regs_read_data), [&](const RegReadData &data) {
       current_holding_reg_vector.resize(data.reg_num);
-      _modbus_wrapper->readHoldingRegisters(data.reg_num, data.reg_count, current_holding_reg_vector);
+      result = _modbus_wrapper->readHoldingRegisters(data.reg_num, data.reg_count, current_holding_reg_vector);
 
       for (int i = 0; i < current_holding_reg_vector.size(); i++) {
         auto holding_reg = data.reg_num + i;
@@ -129,6 +129,7 @@ ErrorCode ModbusClientDividableWrapper::readHoldingRegisters(int reg_num,
       std::cout << "REG READ DATA " << data.reg_num << " " << data.reg_count << std::endl;
     });
 
+    result = SUCCESS;
     values = std::move(holding_regs);
   }
 
